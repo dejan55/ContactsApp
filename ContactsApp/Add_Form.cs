@@ -15,13 +15,10 @@ namespace ContactsApp
         private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
         private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
-        private bool n1 = false;
-        private bool s1 = false;
-        private bool t1 = false;
 
-        public String Name { get; set; }
-        public String Surname { get; set; }
-        public String TelephoneNumber { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string TelephoneNumber { get; set; }
 
         public Add_Form()
         {
@@ -30,19 +27,14 @@ namespace ContactsApp
 
         private void Add_Form_Load(object sender, EventArgs e)
         {
-            button1.Enabled = false;
+            btnAdd.Enabled = false;
+            btnAdd.BackColor = BlackColor;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.FlatAppearance.BorderSize = 0;
 
-
-            button1.Text = "Add";
-            button2.Text = "Cancel";
-
-            button1.BackColor = BlackColor;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.FlatAppearance.BorderSize = 0;
-
-            button2.BackColor = BlackColor;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.FlatAppearance.BorderSize = 0;
+            btnCancel.BackColor = BlackColor;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.FlatAppearance.BorderSize = 0;
 
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
@@ -56,79 +48,71 @@ namespace ContactsApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Name = textBox1.Text;
-            Surname = textBox2.Text;
-            TelephoneNumber = textBox3.Text;
+            var sb = new StringBuilder();
+            FirstName = (txtFirstName.Text = sb.Append(char.ToUpper(txtFirstName.Text[0]))
+                .Append(txtFirstName.Text.Substring(1)).ToString());
+            sb.Clear();
+            LastName = (txtLastName.Text = sb.Append(char.ToUpper(txtLastName.Text[0]))
+                .Append(txtLastName.Text.Substring(1)).ToString());
+            TelephoneNumber = txtNumber.Text;
             DialogResult = DialogResult.OK;
         }
 
-        private void textBox1_Validating(object sender, CancelEventArgs e)
+        private void txtName_Validating(object sender, CancelEventArgs e)
         {
-            if (textBox1.Text.Equals(""))
+            if (txtFirstName.Text.Equals(""))
             {
-                errorProvider1.SetError(textBox1, "You must enter a name!");
-                n1 = false;
+                e.Cancel = true;
+                errorProvider1.SetError(txtFirstName, "You must enter a first name!");
             }
             else
             {
-                errorProvider1.SetError(textBox1, "");
-                n1 = true;
-            }
-            if (n1 && s1 && t1)
-            {
-                button1.Enabled = true;
-            }
-            else
-            {
-                button1.Enabled = false;
+                e.Cancel = false;
+                errorProvider1.Clear();
             }
         }
 
-        private void textBox2_Validating(object sender, CancelEventArgs e)
+        private void txtLastName_Validating(object sender, CancelEventArgs e)
         {
-            if (textBox2.Text.Equals(""))
+            if (txtLastName.Text.Equals(""))
             {
-                s1 = false;
-                errorProvider1.SetError(textBox2, "You must enter a surname!");
+                e.Cancel = true;
+                errorProvider1.SetError(txtLastName, "You must enter a last name!");
             }
             else
             {
-                s1 = true;
-                errorProvider1.SetError(textBox2, "");
-            }
-
-            if (n1 && s1 && t1)
-            {
-                button1.Enabled = true;
-            }
-            else
-            {
-                button1.Enabled = false;
+                e.Cancel = false;
+                errorProvider1.Clear();
             }
         }
 
-        private void textBox3_Validating(object sender, CancelEventArgs e)
+        private void txtNumber_Validating(object sender, CancelEventArgs e)
         {
-            if (textBox3.Text.Equals(""))
+            if (txtNumber.Text.Equals(""))
             {
-                t1 = false;
-                errorProvider1.SetError(textBox3, "You must enter a telephone number!");
+                e.Cancel = true;
+                errorProvider1.SetError(txtNumber, "You must enter a telephone number!");
             }
             else
             {
-                t1 = true;
-                errorProvider1.SetError(textBox3, "");
-            }
-            if (n1 && s1 && t1)
-            {
-                button1.Enabled = true;
-            }
-            else
-            {
-                button1.Enabled = false;
+                e.Cancel = false;
+                errorProvider1.Clear();
             }
         }
 
-        
+        private void txt_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (!txtFirstName.Text.Equals("") &&
+                !txtLastName.Text.Equals("") &&
+                !txtNumber.Text.Equals(""))
+            {
+                btnAdd.Enabled = true;
+                errorProvider1.Clear();
+            }
+            else
+            {
+                btnAdd.Enabled = false;
+            }
+        }
     }
 }
