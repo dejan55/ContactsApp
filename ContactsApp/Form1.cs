@@ -167,13 +167,13 @@ namespace ContactsApp
             }
         }
 
-        private void textbox1_Enter(object sender, EventArgs e)
+        private void txtSearch_Enter(object sender, EventArgs e)
         {
             txtSearch.Text = "";
             txtSearch.BorderStyle = BorderStyle.Fixed3D;
         }
 
-        private void textBox1_Leave(object sender, EventArgs e)
+        private void txtSearch_Leave(object sender, EventArgs e)
         {
             txtSearch.BorderStyle = BorderStyle.FixedSingle;
         }

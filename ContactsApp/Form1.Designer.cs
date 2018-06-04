@@ -44,9 +44,9 @@
             this.txtSearch.Size = new System.Drawing.Size(411, 22);
             this.txtSearch.TabIndex = 2;
             this.txtSearch.Text = "Search...";
-            this.txtSearch.Enter += new System.EventHandler(this.textbox1_Enter);
+            this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
             this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
-            this.txtSearch.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.txtSearch.Leave += new System.EventHandler(this.txtSearch_Leave);
             // 
             // listView1
             // 
