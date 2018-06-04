@@ -256,10 +256,6 @@ namespace ContactsApp
             base.OnMouseLeave(e);
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
         private void listViews_MouseDown(object sender, MouseEventArgs e)
         {
             ListViewHitTestInfo test;

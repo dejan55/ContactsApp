@@ -59,7 +59,6 @@
             this.listView1.Size = new System.Drawing.Size(411, 366);
             this.listView1.TabIndex = 4;
             this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listViews_MouseDown);
             // 
             // Add_button
