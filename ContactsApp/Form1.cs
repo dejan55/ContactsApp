@@ -237,5 +237,17 @@ namespace ContactsApp
                 Display();
             }
         }
+
+        private void Add_button_MouseEnter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+            base.OnMouseEnter(e);
+        }
+
+        private void Add_button_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+            base.OnMouseLeave(e);
+        }
     }
 }
