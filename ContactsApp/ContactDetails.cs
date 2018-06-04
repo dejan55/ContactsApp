@@ -52,6 +52,7 @@ namespace ContactsApp
                         break;
                     }
                 }
+
                 DialogResult = DialogResult.Yes;
             }
         }
@@ -69,9 +70,7 @@ namespace ContactsApp
             if (e.Button != MouseButtons.Left)
                 return;
 
-            try
-            {
-                var textBox = (TextBox) sender;
+            if (sender is TextBox textBox) { 
                 var button = GetButton(textBox.Name);
 
                 if (button == null)
@@ -84,35 +83,29 @@ namespace ContactsApp
                 button.Click += this.btnSave_Click;
                 textBox.ReadOnly = false;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}");
-            }
         }
 
         private void txt_Leave(object sender, EventArgs e)
         {
-            try
+            if (sender is TextBox textBox)
             {
-                var textBox = (TextBox) sender;
                 var button = GetButton(textBox.Name);
 
                 if (button == null)
                     return;
 
+                var sb = new StringBuilder();
+                sb.Append(char.ToUpper(textBox.Text[0])).Append(textBox.Text.Substring(1));
+                textBox.Text = sb.ToString();
+
                 textBox.ReadOnly = true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}");
             }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            try
+            if (sender is Button button)
             {
-                var button = (Button) sender;
                 var textbox = GetTextBox(button.Name[button.Name.Length - 1]);
 
                 if (textbox == null)
@@ -135,10 +128,6 @@ namespace ContactsApp
 
                 button.Visible = false;
                 textbox.ReadOnly = true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}");
             }
         }
 
