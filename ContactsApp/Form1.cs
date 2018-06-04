@@ -50,24 +50,13 @@ namespace ContactsApp
 
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
-
-            button1.Text = "Add contact";
-            button1.BackColor = BlackColor;
-            button1.ForeColor = BlueColor;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-
-            button2.Text = "Delete contact";
-            button2.BackColor = BlackColor;
-            button2.ForeColor = BlueColor;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-
-            button3.Text = "Send message";
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.BackColor = BlackColor;
-            button3.ForeColor = BlueColor;
+           
+            Add_button.BackColor = BlackColor;
+            Add_button.ForeColor = BlueColor;
+            Add_button.FlatAppearance.BorderSize = 0;
+            Add_button.FlatStyle = FlatStyle.Flat;
+            
+            
         }
 
         private void Generate()
@@ -219,9 +208,7 @@ namespace ContactsApp
             }
         }
 
-        private void delete_event(object sender, EventArgs e)
-        {
-        }
+        
 
         private void add_event(object sender, EventArgs e)
         {
