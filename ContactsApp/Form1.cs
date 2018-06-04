@@ -26,49 +26,53 @@ namespace ContactsApp
         {
             InitializeComponent();
             Contacts = new SortedDictionary<char, ISet<ContactEntry>>();
+            this.DoubleBuffered = true;
             Generate();
-            Display();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             listView1.View = View.Tile;
-            listView2.View = View.Tile;
-            listView2.Visible = false;
-
-            textBox1.BackColor = BlackColor;
-            textBox1.ForeColor = Color.Gray;
-            textBox1.BorderStyle = BorderStyle.None;
-
+            listView1.Visible = true;
             listView1.BackColor = BlackColor;
             listView1.ForeColor = BlueColor;
             listView1.BorderStyle = BorderStyle.None;
 
+            listView2.View = View.Tile;
+            listView2.Visible = false;
             listView2.BackColor = BlackColor;
             listView2.ForeColor = BlueColor;
             listView2.BorderStyle = BorderStyle.None;
 
+            txtSearch.BackColor = BlackColor;
+            txtSearch.ForeColor = Color.Gray;
+            txtSearch.BorderStyle = BorderStyle.FixedSingle;
+
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
-           
+
             Add_button.BackColor = BlackColor;
             Add_button.ForeColor = BlueColor;
             Add_button.FlatAppearance.BorderSize = 0;
             Add_button.FlatStyle = FlatStyle.Flat;
-            
-            
+
+            btnCancel.BackColor = BlueColor;
+            btnCancel.ForeColor = WhiteColor;
+            btnCancel.FlatAppearance.BorderSize = 0;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            Display();
         }
 
         private void Generate()
         {
             var contact = new ContactEntry()
             {
-                Surname = "Krstev",
-                Name = "Kostadin",
+                LastName = "Krstev",
+                FirstName = "Kostadin",
                 TelephoneNumber = "072 256 652"
             };
 
-            char key = contact.Name[0];
+            char key = contact.FirstName[0];
 
             if (Contacts.ContainsKey(key))
             {
@@ -82,12 +86,12 @@ namespace ContactsApp
 
             contact = new ContactEntry()
             {
-                Surname = "Krstev",
-                Name = "Andrej",
+                LastName = "Krstev",
+                FirstName = "Andrej",
                 TelephoneNumber = "073 354 852"
             };
 
-            key = contact.Name[0];
+            key = contact.FirstName[0];
 
             if (Contacts.ContainsKey(key))
             {
@@ -101,12 +105,12 @@ namespace ContactsApp
 
             contact = new ContactEntry()
             {
-                Surname = "Kompirov",
-                Name = "Kompir",
+                LastName = "Kompirov",
+                FirstName = "Kompir",
                 TelephoneNumber = "072 354 852"
             };
 
-            key = contact.Name[0];
+            key = contact.FirstName[0];
 
             if (Contacts.ContainsKey(key))
             {
@@ -120,12 +124,12 @@ namespace ContactsApp
 
             contact = new ContactEntry()
             {
-                Surname = "Kompirov",
-                Name = "Balon",
+                LastName = "Kompirov",
+                FirstName = "Balon",
                 TelephoneNumber = "071 354 852"
             };
 
-            key = contact.Name[0];
+            key = contact.FirstName[0];
 
             if (Contacts.ContainsKey(key))
             {
@@ -149,13 +153,14 @@ namespace ContactsApp
 
             foreach (var contact in Contacts)
             {
-                var sortedSet = contact.Value.OrderBy(c => c.Name).ThenBy(c => c.Surname);
+                var sortedSet = contact.Value.OrderBy(c => c.FirstName).ThenBy(c => c.LastName);
                 foreach (var contactEntry in sortedSet)
                 {
                     var listViewItem = new ListViewItem()
                     {
                         Text = $"{contactEntry}",
-                        Group = listView1.Groups[contact.Key - 'A']
+                        Group = listView1.Groups[contact.Key - 'A'],
+                        ToolTipText = $"{contactEntry.TelephoneNumber}"
                     };
                     listView1.Items.Add(listViewItem);
                 }
@@ -164,36 +169,38 @@ namespace ContactsApp
 
         private void textbox1_Enter(object sender, EventArgs e)
         {
-            textBox1.Text = "";
+            txtSearch.Text = "";
+            txtSearch.BorderStyle = BorderStyle.Fixed3D;
         }
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
-            textBox1.Text = "Search";
+            txtSearch.BorderStyle = BorderStyle.FixedSingle;
         }
 
-        private void textBox1_KeyUp(object sender, KeyEventArgs e)
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
         {
-            string search = textBox1.Text.ToLower();
+            string search = txtSearch.Text.ToLower();
 
             if (!search.Equals(""))
             {
                 listView1.Visible = false;
-                listView2.Visible = true;
+                listView2.Visible = btnCancel.Visible = true;
                 listView2.Items.Clear();
 
                 foreach (var contact in Contacts)
                 {
-                    var sortedSet = contact.Value.OrderBy(c => c.Name).ThenBy(c => c.Surname);
+                    var sortedSet = contact.Value.OrderBy(c => c.FirstName).ThenBy(c => c.LastName);
                     foreach (var contactEntry in sortedSet)
                     {
-                        var fullname = $"{contactEntry.Name} {contactEntry.Surname}".ToLower();
+                        var fullname = $"{contactEntry.FirstName} {contactEntry.LastName}".ToLower();
 
                         if (fullname.Contains(search))
                         {
                             var listViewItem = new ListViewItem()
                             {
-                                Text = $"{contactEntry}"
+                                Text = $"{contactEntry}",
+                                ToolTipText = $"{contactEntry.TelephoneNumber}"
                             };
                             listView2.Items.Add(listViewItem);
                         }
@@ -203,12 +210,11 @@ namespace ContactsApp
             else
             {
                 listView1.Visible = true;
-                listView2.Visible = false;
+                listView2.Visible = btnCancel.Visible = false;
                 listView2.Items.Clear();
             }
         }
 
-        
 
         private void add_event(object sender, EventArgs e)
         {
@@ -217,12 +223,12 @@ namespace ContactsApp
             {
                 ContactEntry contact = new ContactEntry()
                 {
-                    Name = f.FirstName,
-                    Surname = f.LastName,
+                    FirstName = f.FirstName,
+                    LastName = f.LastName,
                     TelephoneNumber = f.TelephoneNumber
                 };
 
-                char key = char.ToUpper(contact.Name[0]);
+                char key = char.ToUpper(contact.FirstName[0]);
 
                 if (Contacts.ContainsKey(key))
                 {
@@ -248,6 +254,59 @@ namespace ContactsApp
         {
             this.Cursor = Cursors.Default;
             base.OnMouseLeave(e);
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void listViews_MouseDown(object sender, MouseEventArgs e)
+        {
+            ListViewHitTestInfo test;
+            if (listView1.Visible)
+                test = listView1.HitTest(e.Location);
+            else
+                test = listView2.HitTest(e.Location);
+
+            if (test.Location != ListViewHitTestLocations.Label)
+                return;
+            // debugging purposes
+            Console.WriteLine($"{test.Item}");
+            var form = new ContactDetails(GetContact(test.Item), Contacts);
+            var result = form.ShowDialog();
+
+            if (result == DialogResult.Yes) // update the ListView
+            {
+                Contacts = form.Contacts;
+                Display();
+                btnCancel_Click(sender, e);
+            }
+        }
+
+        private ContactEntry GetContact(ListViewItem selectedItem)
+        {
+            foreach (var contact in Contacts.Values)
+            {
+                var result = contact.FirstOrDefault(c => c.TelephoneNumber == selectedItem.ToolTipText);
+                if (result != null)
+                    return result;
+            }
+
+            return null;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            btnCancel.Visible = listView2.Visible = false;
+            listView1.Visible = true;
+            txtSearch.Text = "Search...";
+        }
+
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to quit the application", "Quit the application",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                this.Close();
         }
     }
 }
