@@ -83,6 +83,7 @@
             this.btnSave3.Text = "Save";
             this.btnSave3.UseVisualStyleBackColor = true;
             this.btnSave3.Visible = false;
+            this.btnSave3.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnSave2
             // 
@@ -93,6 +94,7 @@
             this.btnSave2.Text = "Save";
             this.btnSave2.UseVisualStyleBackColor = true;
             this.btnSave2.Visible = false;
+            this.btnSave2.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnSave1
             // 
