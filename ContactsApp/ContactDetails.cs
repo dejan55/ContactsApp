@@ -16,6 +16,7 @@ namespace ContactsApp
         public IDictionary<char, ISet<ContactEntry>> Contacts { get; set; }
 
         private bool isEdited;
+        private bool isDeleted;
 
         public ContactDetails(ContactEntry selectedContact,
             IDictionary<char, ISet<ContactEntry>> contacts)
@@ -24,7 +25,7 @@ namespace ContactsApp
             SelectedContact = selectedContact;
             Contacts = contacts;
             this.Text = $"Details for {SelectedContact}";
-            isEdited = false;
+            isEdited = isDeleted = false;
         }
 
         private void ContactDetails_Load(object sender, EventArgs e)
@@ -47,10 +48,10 @@ namespace ContactsApp
                     if (contact != null)
                     {
                         contactSet.Remove(contact);
+                        isDeleted = true;
                         break;
                     }
                 }
-
                 DialogResult = DialogResult.Yes;
             }
         }
@@ -169,7 +170,7 @@ namespace ContactsApp
 
         private void ContactDetails_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (isEdited)
+            if (isEdited || isDeleted)
                 DialogResult = DialogResult.Yes;
             else
                 DialogResult = DialogResult.Cancel;
