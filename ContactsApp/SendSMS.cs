@@ -176,5 +176,14 @@ namespace ContactsApp
                 txtBoxSender.Text = "Enter your name here..";
             }
         }
+        
+
+        private void txtBoxSender_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (txtBoxSender.Text.Equals("Enter your name here.."))
+            {
+                txtBoxSender.Text = "";
+            }
+        }
     }
 }

@@ -40,7 +40,7 @@
             this.txtMessage.AcceptsReturn = true;
             this.txtMessage.AcceptsTab = true;
             this.txtMessage.Location = new System.Drawing.Point(9, 28);
-            this.txtMessage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtMessage.Margin = new System.Windows.Forms.Padding(2);
             this.txtMessage.MaxLength = 765;
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
@@ -56,7 +56,7 @@
             // btnSend
             // 
             this.btnSend.Location = new System.Drawing.Point(9, 161);
-            this.btnSend.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(2);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(58, 27);
             this.btnSend.TabIndex = 0;
@@ -69,7 +69,7 @@
             this.btnCancel.CausesValidation = false;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(252, 161);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(58, 27);
             this.btnCancel.TabIndex = 1;
@@ -95,6 +95,7 @@
             this.txtBoxSender.TabIndex = 4;
             this.txtBoxSender.Text = "Enter your name here..";
             this.txtBoxSender.Click += new System.EventHandler(this.txtBoxSender_Click);
+            this.txtBoxSender.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBoxSender_KeyDown);
             this.txtBoxSender.MouseLeave += new System.EventHandler(this.txtBoxSender_MouseLeave);
             // 
             // SendSMS
@@ -110,7 +111,7 @@
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.txtMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "SendSMS";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
