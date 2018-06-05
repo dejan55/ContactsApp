@@ -45,11 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Add_Form.cs">
+    <Compile Include="AddForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Add_Form.Designer.cs">
-      <DependentUpon>Add_Form.cs</DependentUpon>
+    <Compile Include="AddForm.Designer.cs">
+      <DependentUpon>AddForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ContactDetails.cs">
       <SubType>Form</SubType>
@@ -66,8 +66,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Add_Form.resx">
-      <DependentUpon>Add_Form.cs</DependentUpon>
+    <Compile Include="SendSMS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SendSMS.Designer.cs">
+      <DependentUpon>SendSMS.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AddForm.resx">
+      <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ContactDetails.resx">
       <DependentUpon>ContactDetails.cs</DependentUpon>
@@ -84,6 +90,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SendSMS.resx">
+      <DependentUpon>SendSMS.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
