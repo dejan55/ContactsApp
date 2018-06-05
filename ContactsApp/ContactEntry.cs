@@ -8,8 +8,8 @@ namespace ContactsApp
 {
     public class ContactEntry : IEquatable<ContactEntry>
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string TelephoneNumber { get; set; }
 
         public static IEqualityComparer<ContactEntry>
@@ -20,22 +20,22 @@ namespace ContactsApp
             Name = Surname = TelephoneNumber = string.Empty;
         }
 
-        public ContactEntry(string surname, string telephoneNumber)
+        public ContactEntry(string lastName, string telephoneNumber)
         {
-            Surname = surname;
+            LastName = lastName;
             TelephoneNumber = telephoneNumber;
         }
 
-        public ContactEntry(string name, string surname, string telephoneNumber)
+        public ContactEntry(string name, string lastName, string telephoneNumber)
         {
-            Name = name;
-            Surname = surname;
+            FirstName = name;
+            LastName = lastName;
             TelephoneNumber = telephoneNumber;
         }
 
         public override string ToString()
         {
-            return $"{Surname} {Name} {TelephoneNumber}";
+            return $"{FirstName} {LastName}";
         }
 
         public bool Equals(ContactEntry other)
