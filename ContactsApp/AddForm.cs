@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -88,12 +89,16 @@ namespace ContactsApp
 
         private void txtNumber_Validating(object sender, CancelEventArgs e)
         {
+            
+
+            Match match = Regex.Match(txtNumber.Text, @"^[0-9]\d{3} \d{3} \d{3}$");
+            
             if (txtNumber.Text.Equals(""))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtNumber, "You must enter a telephone number!");
             }
-            else
+            else 
             {
                 e.Cancel = false;
                 errorProvider1.Clear();

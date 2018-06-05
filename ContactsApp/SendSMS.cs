@@ -14,6 +14,10 @@ namespace ContactsApp
 {
     public partial class SendSMS : Form
     {
+        private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
+        private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
+        private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
+
         public ContactEntry SelectedContact { get; set; }
         private const string ApiKey = "jNutD8o0fsQ-gLQQLhMp4a7it6H1uKHCleEkiIPna0";
 
@@ -29,6 +33,19 @@ namespace ContactsApp
             txtMessage.ForeColor = Color.Gray;
 
             btnSend.Enabled = false;
+
+
+            this.BackColor = BlackColor;
+            this.ForeColor = WhiteColor;
+
+            btnCancel.BackColor = BlackColor;
+            btnCancel.ForeColor = BlueColor;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+
+            btnSend.BackColor = BlackColor;
+            btnSend.ForeColor = BlueColor;
+            btnSend.FlatStyle = FlatStyle.Flat;
+
         }
 
         private void btnSend_Click(object sender, EventArgs e)

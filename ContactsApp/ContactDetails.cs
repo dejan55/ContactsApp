@@ -12,6 +12,11 @@ namespace ContactsApp
 {
     public partial class ContactDetails : Form
     {
+        private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
+        private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
+        private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
+
+
         public ContactEntry SelectedContact { get; set; }
         public IDictionary<char, ISet<ContactEntry>> Contacts { get; set; }
 
@@ -33,6 +38,24 @@ namespace ContactsApp
             txtFirstName.Text = $"{SelectedContact.FirstName}";
             txtLastName.Text = $"{SelectedContact.LastName}";
             txtNumber.Text = $"{SelectedContact.TelephoneNumber}";
+
+            groupBox1.ForeColor = WhiteColor;
+
+
+            label1.ForeColor = BlueColor;
+            label2.ForeColor = BlueColor;
+            label3.ForeColor = BlueColor;
+            label4.ForeColor = BlueColor;
+
+
+            this.BackColor = BlackColor;
+            this.ForeColor = BlueColor;
+
+            btnDelete.BackColor = BlackColor;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+
+            btnSendSMS.BackColor = BlackColor;
+            btnSendSMS.FlatStyle = FlatStyle.Flat;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
