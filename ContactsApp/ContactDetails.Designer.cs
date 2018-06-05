@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnSave3 = new System.Windows.Forms.Button();
@@ -42,7 +43,9 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSendSMS = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtFirstName
@@ -52,8 +55,10 @@
             this.txtFirstName.ReadOnly = true;
             this.txtFirstName.Size = new System.Drawing.Size(177, 22);
             this.txtFirstName.TabIndex = 0;
+            this.txtFirstName.Click += new System.EventHandler(this.txt_Click);
             this.txtFirstName.Leave += new System.EventHandler(this.txt_Leave);
             this.txtFirstName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt_MouseDoubleClick);
+            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.txtFirstName_Validating);
             // 
             // groupBox1
             // 
@@ -76,7 +81,8 @@
             // 
             // btnSave3
             // 
-            this.btnSave3.Location = new System.Drawing.Point(346, 126);
+            this.btnSave3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSave3.Location = new System.Drawing.Point(377, 125);
             this.btnSave3.Name = "btnSave3";
             this.btnSave3.Size = new System.Drawing.Size(75, 23);
             this.btnSave3.TabIndex = 9;
@@ -87,7 +93,8 @@
             // 
             // btnSave2
             // 
-            this.btnSave2.Location = new System.Drawing.Point(346, 84);
+            this.btnSave2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSave2.Location = new System.Drawing.Point(377, 84);
             this.btnSave2.Name = "btnSave2";
             this.btnSave2.Size = new System.Drawing.Size(75, 23);
             this.btnSave2.TabIndex = 8;
@@ -98,7 +105,8 @@
             // 
             // btnSave1
             // 
-            this.btnSave1.Location = new System.Drawing.Point(346, 42);
+            this.btnSave1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSave1.Location = new System.Drawing.Point(377, 41);
             this.btnSave1.Name = "btnSave1";
             this.btnSave1.Size = new System.Drawing.Size(75, 23);
             this.btnSave1.TabIndex = 7;
@@ -133,8 +141,10 @@
             this.txtNumber.ReadOnly = true;
             this.txtNumber.Size = new System.Drawing.Size(177, 22);
             this.txtNumber.TabIndex = 4;
+            this.txtNumber.Click += new System.EventHandler(this.txt_Click);
             this.txtNumber.Leave += new System.EventHandler(this.txt_Leave);
             this.txtNumber.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt_MouseDoubleClick);
+            this.txtNumber.Validating += new System.ComponentModel.CancelEventHandler(this.txtNumber_Validating);
             // 
             // label2
             // 
@@ -152,8 +162,10 @@
             this.txtLastName.ReadOnly = true;
             this.txtLastName.Size = new System.Drawing.Size(177, 22);
             this.txtLastName.TabIndex = 2;
+            this.txtLastName.Click += new System.EventHandler(this.txt_Click);
             this.txtLastName.Leave += new System.EventHandler(this.txt_Leave);
             this.txtLastName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt_MouseDoubleClick);
+            this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.txtLastName_Validating);
             // 
             // label1
             // 
@@ -194,6 +206,10 @@
             this.btnQuit.UseVisualStyleBackColor = true;
             this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // ContactDetails
             // 
             this.AcceptButton = this.btnSendSMS;
@@ -214,6 +230,7 @@
             this.Load += new System.EventHandler(this.ContactDetails_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -234,5 +251,6 @@
         private System.Windows.Forms.Button btnSave3;
         private System.Windows.Forms.Button btnSave2;
         private System.Windows.Forms.Button btnSave1;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

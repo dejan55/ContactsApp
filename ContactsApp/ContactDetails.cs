@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -41,12 +42,10 @@ namespace ContactsApp
 
             groupBox1.ForeColor = WhiteColor;
 
-
             label1.ForeColor = BlueColor;
             label2.ForeColor = BlueColor;
             label3.ForeColor = BlueColor;
             label4.ForeColor = BlueColor;
-
 
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
@@ -76,12 +75,18 @@ namespace ContactsApp
                     }
                 }
 
+                btnSave1.Visible = btnSave2.Visible = btnSave3.Visible = false;
+
                 DialogResult = DialogResult.Yes;
             }
+
+            btnSave1.Visible = btnSave2.Visible = btnSave3.Visible = false;
         }
 
         private void btnSendSMS_Click(object sender, EventArgs e)
         {
+            btnSave1.Visible = btnSave2.Visible = btnSave3.Visible = false;
+
             var form = new SendSMS(SelectedContact);
 
             form.ShowDialog();
@@ -97,6 +102,7 @@ namespace ContactsApp
 
         private void txt_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            btnSave1.Visible = btnSave2.Visible = btnSave3.Visible = false;
             if (e.Button != MouseButtons.Left)
                 return;
 
@@ -111,19 +117,28 @@ namespace ContactsApp
                 }
 
                 button.Visible = true;
+                button.BackColor = BlackColor;
+                button.ForeColor = BlueColor;
+                button.FlatStyle = FlatStyle.Flat;
+                button.Font = new Font("Microsoft Sans Serif", 6F, FontStyle.Regular, GraphicsUnit.Point);
                 button.Click += this.btnSave_Click;
+
                 textBox.ReadOnly = false;
             }
         }
+
 
         private void txt_Leave(object sender, EventArgs e)
         {
             if (sender is TextBox textBox)
             {
-                var button = GetButton(textBox.Name);
-
-                if (button == null)
+                if (textBox.Text.Trim().Equals(""))
+                {
+                    errorProvider1.SetError(textBox, "First name cannot be empty!");
                     return;
+                }
+
+                errorProvider1.Clear();
 
                 var sb = new StringBuilder();
                 sb.Append(char.ToUpper(textBox.Text[0])).Append(textBox.Text.Substring(1));
@@ -149,11 +164,30 @@ namespace ContactsApp
 
                     if (contact != null)
                     {
-                        contact.FirstName = txtFirstName.Text;
-                        contact.LastName = txtLastName.Text;
-                        contact.TelephoneNumber = txtNumber.Text;
+                        contactSet.Remove(contact);
                         isEdited = true;
                         break;
+                    }
+                }
+
+                if (isEdited)
+                {
+                    var contact = new ContactEntry()
+                    {
+                        FirstName = txtFirstName.Text.Trim(),
+                        LastName = txtLastName.Text.Trim(),
+                        TelephoneNumber = txtNumber.Text.Trim()
+                    };
+                    var key = contact.FirstName[0];
+
+                    if (Contacts.ContainsKey(key))
+                    {
+                        Contacts[key].Add(contact);
+                    }
+                    else
+                    {
+                        Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
+                        Contacts[key].Add(contact);
                     }
                 }
 
@@ -194,6 +228,82 @@ namespace ContactsApp
                 DialogResult = DialogResult.Yes;
             else
                 DialogResult = DialogResult.Cancel;
+        }
+
+        private void txtNumber_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtNumber.Text.Trim().Equals(""))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtNumber, "Telephone number cannot be empty!");
+            }
+            else if (!Regex.IsMatch(txtNumber.Text.Trim(),
+                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtNumber, "Invalid format! (07X YYY ZZZ)");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.Clear();
+            }
+        }
+
+        private void txtFirstName_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtFirstName.Text.Trim().Equals(""))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtFirstName, "First name cannot be empty!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.Clear();
+            }
+        }
+
+        private void txtLastName_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtLastName.Text.Trim().Equals(""))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtLastName, "Last name cannot be empty!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.Clear();
+            }
+        }
+
+        private void txt_Click(object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                var button = GetButton(textBox.Name);
+
+                if (button == null)
+                {
+                    Console.WriteLine("Button not found!");
+                    return;
+                }
+
+                if (button.Visible)
+                {
+                    if (button.Name == btnSave1.Name)
+                        btnSave2.Visible = btnSave3.Visible = false;
+                    else if (button.Name == btnSave2.Name)
+                        btnSave1.Visible = btnSave3.Visible = false;
+                    else if (button.Name == btnSave3.Name)
+                        btnSave1.Visible = btnSave2.Visible = false;
+                }
+                else
+                {
+                    btnSave1.Visible = btnSave2.Visible = btnSave3.Visible = false;
+                }
+            }
         }
     }
 }
