@@ -57,6 +57,13 @@ namespace ContactsApp
             }
         }
 
+        private void btnSendSMS_Click(object sender, EventArgs e)
+        {
+            var form = new SendSMS(SelectedContact);
+
+            form.ShowDialog();
+        }
+
         private void btnQuit_Click(object sender, EventArgs e)
         {
             if (isEdited)
@@ -70,7 +77,8 @@ namespace ContactsApp
             if (e.Button != MouseButtons.Left)
                 return;
 
-            if (sender is TextBox textBox) { 
+            if (sender is TextBox textBox)
+            {
                 var button = GetButton(textBox.Name);
 
                 if (button == null)

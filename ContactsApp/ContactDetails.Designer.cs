@@ -182,6 +182,7 @@
             this.btnSendSMS.TabIndex = 0;
             this.btnSendSMS.Text = "Send a message";
             this.btnSendSMS.UseVisualStyleBackColor = true;
+            this.btnSendSMS.Click += new System.EventHandler(this.btnSendSMS_Click);
             // 
             // btnQuit
             // 
