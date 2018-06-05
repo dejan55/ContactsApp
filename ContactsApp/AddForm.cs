@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ContactsApp
 {
-    public partial class Add_Form : Form
+    public partial class AddForm : Form
     {
         private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
         private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
@@ -20,7 +20,7 @@ namespace ContactsApp
         public string LastName { get; set; }
         public string TelephoneNumber { get; set; }
 
-        public Add_Form()
+        public AddForm()
         {
             InitializeComponent();
         }

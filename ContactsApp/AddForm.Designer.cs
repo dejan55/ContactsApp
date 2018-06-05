@@ -1,6 +1,6 @@
 ﻿namespace ContactsApp
 {
-    partial class Add_Form
+    partial class AddForm
     {
         /// <summary>
         /// Required designer variable.
