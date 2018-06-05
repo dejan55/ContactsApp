@@ -140,6 +140,25 @@ namespace ContactsApp
                 Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
                 Contacts[key].Add(contact);
             }
+
+            contact = new ContactEntry()
+            {
+                LastName = "Nakov",
+                FirstName = "Jovan",
+                TelephoneNumber = "078 736 391"
+            };
+
+            key = contact.FirstName[0];
+
+            if (Contacts.ContainsKey(key))
+            {
+                Contacts[key].Add(contact);
+            }
+            else
+            {
+                Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
+                Contacts[key].Add(contact);
+            }
         }
 
         private void Display()
@@ -180,7 +199,7 @@ namespace ContactsApp
 
         private void txtSearch_KeyUp(object sender, KeyEventArgs e)
         {
-            string search = txtSearch.Text.ToLower();
+            string search = txtSearch.Text.Trim().ToLower();
 
             if (!search.Equals(""))
             {
@@ -218,7 +237,7 @@ namespace ContactsApp
 
         private void add_event(object sender, EventArgs e)
         {
-            Add_Form f = new Add_Form();
+            AddForm f = new AddForm();
             if (f.ShowDialog() == DialogResult.OK)
             {
                 ContactEntry contact = new ContactEntry()
