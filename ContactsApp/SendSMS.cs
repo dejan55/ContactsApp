@@ -93,6 +93,16 @@ namespace ContactsApp
                 btnSend.Enabled = false;
             else
                 btnSend.Enabled = true;
+
+
+            if (txtBoxSender.Text.Equals("") || txtBoxSender.Text.Equals("Enter your name here.."))
+            {
+                btnSend.Enabled = false;
+            }
+            else
+            {
+                btnSend.Enabled = true;
+            }
         }
 
         public string SendSms()
@@ -100,7 +110,7 @@ namespace ContactsApp
             string result;
             var number = $"00389 {SelectedContact.TelephoneNumber.Substring(1)}";
             var message = txtMessage.Text;
-            var sender = "Kostadin";
+            var sender = txtBoxSender.Text;
 
             var url =
                 "https://api.txtlocal.com/send/?" +
@@ -152,6 +162,19 @@ namespace ContactsApp
             if (numMessages > 1)
                 lblChars.Text = $"{numChars} ({numMessages})";
             else lblChars.Text = $"{numChars}";
+        }
+
+        private void txtBoxSender_Click(object sender, EventArgs e)
+        {
+            txtBoxSender.Text = "";
+        }
+
+        private void txtBoxSender_MouseLeave(object sender, EventArgs e)
+        {
+            if (txtBoxSender.Text.Equals(""))
+            {
+                txtBoxSender.Text = "Enter your name here..";
+            }
         }
     }
 }
