@@ -31,9 +31,9 @@ namespace ContactsApp
         private void SendSMS_Load(object sender, EventArgs e)
         {
             txtMessage.ForeColor = Color.Gray;
+            txtBoxSender.ForeColor = Color.Gray;
 
             btnSend.Enabled = false;
-
 
             this.BackColor = BlackColor;
             this.ForeColor = WhiteColor;
@@ -45,7 +45,6 @@ namespace ContactsApp
             btnSend.BackColor = BlackColor;
             btnSend.ForeColor = BlueColor;
             btnSend.FlatStyle = FlatStyle.Flat;
-
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -74,18 +73,6 @@ namespace ContactsApp
                 DialogResult = DialogResult.None;
         }
 
-        private void txtMessage_Enter(object sender, EventArgs e)
-        {
-            txtMessage.Text = string.Empty;
-            txtMessage.ForeColor = Color.Black;
-            txtMessage.BorderStyle = BorderStyle.Fixed3D;
-        }
-
-        private void txtMessage_Leave(object sender, EventArgs e)
-        {
-            txtMessage.BorderStyle = BorderStyle.FixedSingle;
-        }
-
         private void txtMessage_KeyUp(object sender, KeyEventArgs e)
         {
             //                     [space][tab] [new line]
@@ -94,8 +81,98 @@ namespace ContactsApp
             else
                 btnSend.Enabled = true;
 
+            if (txtBoxSender.Text.Trim().Equals("") ||
+                txtBoxSender.Text.Trim().Equals("Enter your name here...") ||
+                txtMessage.Text.Trim(' ', '\t', '\r', '\n').Equals("") ||
+                txtMessage.Text.Trim().Equals("Enter your message here..."))
+            {
+                btnSend.Enabled = false;
+            }
+            else
+            {
+                btnSend.Enabled = true;
+            }
+        }
 
-            if (txtBoxSender.Text.Equals("") || txtBoxSender.Text.Equals("Enter your name here.."))
+        private void txtMessage_TextChanged(object sender, EventArgs e)
+        {
+            // do not count the placeholder chars
+            if (txtMessage.Text.Trim().Equals("Enter your message here..."))
+            {
+                lblChars.Text = "0";
+                return;
+            }
+
+            var numChars = txtMessage.Text.Trim(' ', '\t', '\r', '\n').Length;
+            int numMessages = 1;
+            if (numChars > 160)
+                numMessages += (numChars + 7) / 160;
+
+            if (numMessages > 1)
+                lblChars.Text = $"{numChars} ({numMessages})";
+            else lblChars.Text = $"{numChars}";
+        }
+
+        private void txtMessage_Click(object sender, EventArgs e)
+        {
+            if (txtMessage.Text.Trim().Equals("Enter your message here..."))
+            {
+                txtMessage.Text = "";
+                txtMessage.ForeColor = BlackColor;
+            }
+        }
+
+        private void txtMessage_MouseLeave(object sender, EventArgs e)
+        {
+            if (txtMessage.Text.Trim().Equals(""))
+            {
+                txtMessage.Text = "Enter your message here...";
+                txtMessage.ForeColor = Color.Gray;
+            }
+        }
+
+        private void txtMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (txtMessage.Text.Trim().Equals("Enter your message here..."))
+            {
+                txtMessage.Text = string.Empty;
+                txtMessage.ForeColor = BlackColor;
+            }
+        }
+
+        private void txtBoxSender_Click(object sender, EventArgs e)
+        {
+            if (txtBoxSender.Text.Trim().Equals("Enter your name here..."))
+            {
+                txtBoxSender.Text = "";
+                txtBoxSender.ForeColor = BlackColor;
+            }
+        }
+
+        private void txtBoxSender_MouseLeave(object sender, EventArgs e)
+        {
+            if (txtBoxSender.Text.Trim().Equals(""))
+            {
+                txtBoxSender.Text = "Enter your name here...";
+                txtBoxSender.ForeColor = Color.Gray;
+            }
+        }
+
+        private void txtBoxSender_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (txtBoxSender.Text.Trim().Equals("Enter your name here..."))
+            {
+                txtBoxSender.Text = "";
+                txtBoxSender.ForeColor = BlackColor;
+            }
+        }
+
+        private void txtBoxSender_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (txtBoxSender.Text.Trim().Equals("") ||
+                txtBoxSender.Text.Trim().Equals("Enter your name here...") ||
+                txtMessage.Text.Trim(' ', '\t', '\r', '\n').Equals("") ||
+                txtMessage.Text.Trim().Equals("Enter your message here..."))
             {
                 btnSend.Enabled = false;
             }
@@ -150,40 +227,6 @@ namespace ContactsApp
 
             Console.WriteLine($"RESULT: {result}");
             return result;
-        }
-
-        private void txtMessage_TextChanged(object sender, EventArgs e)
-        {
-            var numChars = txtMessage.Text.Length;
-            int numMessages = 1;
-            if (numChars > 160)
-                numMessages += (numChars + 7) / 160;
-
-            if (numMessages > 1)
-                lblChars.Text = $"{numChars} ({numMessages})";
-            else lblChars.Text = $"{numChars}";
-        }
-
-        private void txtBoxSender_Click(object sender, EventArgs e)
-        {
-            txtBoxSender.Text = "";
-        }
-
-        private void txtBoxSender_MouseLeave(object sender, EventArgs e)
-        {
-            if (txtBoxSender.Text.Equals(""))
-            {
-                txtBoxSender.Text = "Enter your name here..";
-            }
-        }
-        
-
-        private void txtBoxSender_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (txtBoxSender.Text.Equals("Enter your name here.."))
-            {
-                txtBoxSender.Text = "";
-            }
         }
     }
 }
