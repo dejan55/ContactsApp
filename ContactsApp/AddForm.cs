@@ -61,7 +61,7 @@ namespace ContactsApp
 
         private void txtName_Validating(object sender, CancelEventArgs e)
         {
-            if (txtFirstName.Text.Equals(""))
+            if (txtFirstName.Text.Trim().Equals(""))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtFirstName, "You must enter a first name!");
@@ -75,7 +75,7 @@ namespace ContactsApp
 
         private void txtLastName_Validating(object sender, CancelEventArgs e)
         {
-            if (txtLastName.Text.Equals(""))
+            if (txtLastName.Text.Trim().Equals(""))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtLastName, "You must enter a last name!");
@@ -89,16 +89,18 @@ namespace ContactsApp
 
         private void txtNumber_Validating(object sender, CancelEventArgs e)
         {
-            
-
-            Match match = Regex.Match(txtNumber.Text, @"^[0-9]\d{3} \d{3} \d{3}$");
-            
-            if (txtNumber.Text.Equals(""))
+            if (txtNumber.Text.Trim().Equals(""))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtNumber, "You must enter a telephone number!");
             }
-            else 
+            else if (!Regex.IsMatch(txtNumber.Text.Trim(),
+                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtNumber, "Invalid Format (07X YYY ZZZ)");
+            }
+            else
             {
                 e.Cancel = false;
                 errorProvider1.Clear();
@@ -107,9 +109,11 @@ namespace ContactsApp
 
         private void txt_KeyUp(object sender, KeyEventArgs e)
         {
-            if (!txtFirstName.Text.Equals("") &&
-                !txtLastName.Text.Equals("") &&
-                !txtNumber.Text.Equals(""))
+            if (!txtFirstName.Text.Trim().Equals("") &&
+                !txtLastName.Text.Trim().Equals("") &&
+                !txtNumber.Text.Trim().Equals("") &&
+                Regex.IsMatch(txtNumber.Text.Trim(),
+                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
             {
                 btnAdd.Enabled = true;
                 errorProvider1.Clear();
