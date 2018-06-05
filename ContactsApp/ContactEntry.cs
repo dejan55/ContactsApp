@@ -17,7 +17,7 @@ namespace ContactsApp
 
         public ContactEntry()
         {
-            Name = Surname = TelephoneNumber = string.Empty;
+            FirstName = LastName = TelephoneNumber = string.Empty;
         }
 
         public ContactEntry(string lastName, string telephoneNumber)
