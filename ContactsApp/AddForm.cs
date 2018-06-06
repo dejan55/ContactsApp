@@ -42,24 +42,42 @@ namespace ContactsApp
             groupBox1.ForeColor = BlueColor;
         }
 
+        private void btn_MouseEnter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+            base.OnMouseEnter(e);
+        }
+
+        private void btn_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+            base.OnMouseLeave(e);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FirstName = txtFirstName.Text.Trim();
+            LastName = txtLastName.Text.Trim();
+            TelephoneNumber = txtNumber.Text.Trim();
+            DialogResult = DialogResult.OK;
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void txtFirstName_Leave(object sender, EventArgs e)
         {
-            var sb = new StringBuilder();
-            FirstName = (txtFirstName.Text = sb.Append(char.ToUpper(txtFirstName.Text[0]))
-                .Append(txtFirstName.Text.Substring(1)).ToString());
-            sb.Clear();
-            LastName = (txtLastName.Text = sb.Append(char.ToUpper(txtLastName.Text[0]))
-                .Append(txtLastName.Text.Substring(1)).ToString());
-            TelephoneNumber = txtNumber.Text;
-            DialogResult = DialogResult.OK;
+            if (!txtFirstName.Text.Trim().Equals(""))
+            {
+                var sb = new StringBuilder();
+                txtFirstName.Text = sb.Append(char.ToUpper(txtFirstName.Text[0]))
+                    .Append(txtFirstName.Text.Substring(1)).ToString();
+            }
         }
 
-        private void txtName_Validating(object sender, CancelEventArgs e)
+        private void txtFirstName_Validating(object sender, CancelEventArgs e)
         {
             if (txtFirstName.Text.Trim().Equals(""))
             {
@@ -70,6 +88,16 @@ namespace ContactsApp
             {
                 e.Cancel = false;
                 errorProvider1.Clear();
+            }
+        }
+
+        private void txtLastName_Leave(object sender, EventArgs e)
+        {
+            if (!txtLastName.Text.Trim().Equals(""))
+            {
+                var sb = new StringBuilder();
+                txtLastName.Text = sb.Append(char.ToUpper(txtLastName.Text[0]))
+                    .Append(txtLastName.Text.Substring(1)).ToString();
             }
         }
 
@@ -122,6 +150,16 @@ namespace ContactsApp
             {
                 btnAdd.Enabled = false;
             }
+        }
+
+        private void AddForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to discard the new contact?",
+                    "Discard the contact",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                e.Cancel = false;
+            else
+                e.Cancel = true;
         }
     }
 }
