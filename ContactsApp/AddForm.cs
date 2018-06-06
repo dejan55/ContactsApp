@@ -154,7 +154,9 @@ namespace ContactsApp
 
         private void AddForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to discard the new contact?",
+            if (DialogResult == DialogResult.OK)
+                e.Cancel = false;
+            else if (MessageBox.Show("Are you sure you want to discard the new contact?",
                     "Discard the contact",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 e.Cancel = false;
