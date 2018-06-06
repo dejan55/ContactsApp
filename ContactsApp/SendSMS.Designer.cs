@@ -46,7 +46,7 @@
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtMessage.Size = new System.Drawing.Size(401, 139);
-            this.txtMessage.TabIndex = 2;
+            this.txtMessage.TabIndex = 3;
             this.txtMessage.Text = "Enter your message here...";
             this.txtMessage.Click += new System.EventHandler(this.txtMessage_Click);
             this.txtMessage.TextChanged += new System.EventHandler(this.txtMessage_TextChanged);
@@ -64,6 +64,8 @@
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            this.btnSend.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
+            this.btnSend.MouseLeave += new System.EventHandler(this.btn_MouseLeave);
             // 
             // btnCancel
             // 
@@ -77,6 +79,8 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.btn_MouseLeave);
             // 
             // lblChars
             // 
@@ -84,16 +88,16 @@
             this.lblChars.Location = new System.Drawing.Point(195, 177);
             this.lblChars.Name = "lblChars";
             this.lblChars.Size = new System.Drawing.Size(16, 17);
-            this.lblChars.TabIndex = 3;
+            this.lblChars.TabIndex = 4;
             this.lblChars.Text = "0";
             // 
             // txtBoxSender
             // 
             this.txtBoxSender.Location = new System.Drawing.Point(12, 4);
-            this.txtBoxSender.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxSender.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxSender.Name = "txtBoxSender";
             this.txtBoxSender.Size = new System.Drawing.Size(401, 22);
-            this.txtBoxSender.TabIndex = 4;
+            this.txtBoxSender.TabIndex = 2;
             this.txtBoxSender.Text = "Enter your name here...";
             this.txtBoxSender.Click += new System.EventHandler(this.txtBoxSender_Click);
             this.txtBoxSender.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBoxSender_KeyDown);
@@ -102,7 +106,6 @@
             // 
             // SendSMS
             // 
-            this.AcceptButton = this.btnSend;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
