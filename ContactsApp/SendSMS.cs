@@ -47,6 +47,18 @@ namespace ContactsApp
             btnSend.FlatStyle = FlatStyle.Flat;
         }
 
+        private void btn_MouseEnter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+            base.OnMouseEnter(e);
+        }
+
+        private void btn_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+            base.OnMouseLeave(e);
+        }
+
         private void btnSend_Click(object sender, EventArgs e)
         {
             var status = SendSms();
