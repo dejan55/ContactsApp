@@ -23,7 +23,6 @@ namespace ContactsApp
 
         private bool isEdited;
         private bool isDeleted;
-        private bool foundDuplicate;
 
         public ContactDetails(ContactEntry selectedContact,
             IDictionary<char, ISet<ContactEntry>> contacts)
@@ -32,7 +31,7 @@ namespace ContactsApp
             SelectedContact = selectedContact;
             Contacts = contacts;
             this.Text = $"Details for {SelectedContact}";
-            isEdited = isDeleted = foundDuplicate = false;
+            isEdited = isDeleted = false;
         }
 
         private void ContactDetails_Load(object sender, EventArgs e)
@@ -56,6 +55,18 @@ namespace ContactsApp
 
             btnSendSMS.BackColor = BlackColor;
             btnSendSMS.FlatStyle = FlatStyle.Flat;
+        }
+
+        private void btn_MouseEnter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+            base.OnMouseEnter(e);
+        }
+
+        private void btn_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+            base.OnMouseLeave(e);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -93,62 +104,6 @@ namespace ContactsApp
             form.ShowDialog();
         }
 
-        private void btnQuit_Click(object sender, EventArgs e)
-        {
-            if (isEdited)
-                DialogResult = DialogResult.Yes;
-            else
-                DialogResult = DialogResult.Cancel;
-        }
-
-        private void txt_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            btnSave1.Visible = btnSave2.Visible = btnSave3.Visible = false;
-            if (e.Button != MouseButtons.Left)
-                return;
-
-            if (sender is TextBox textBox)
-            {
-                var button = GetButton(textBox.Name);
-
-                if (button == null)
-                {
-                    Console.WriteLine("Button not found!");
-                    return;
-                }
-
-                button.Visible = true;
-                button.BackColor = BlackColor;
-                button.ForeColor = BlueColor;
-                button.FlatStyle = FlatStyle.Flat;
-                button.Font = new Font("Microsoft Sans Serif", 6F, FontStyle.Regular, GraphicsUnit.Point);
-                button.Click += this.btnSave_Click;
-
-                textBox.ReadOnly = false;
-            }
-        }
-
-
-        private void txt_Leave(object sender, EventArgs e)
-        {
-            if (sender is TextBox textBox)
-            {
-                if (textBox.Text.Trim().Equals(""))
-                {
-                    errorProvider1.SetError(textBox, "First name cannot be empty!");
-                    return;
-                }
-
-                errorProvider1.Clear();
-
-                var sb = new StringBuilder();
-                sb.Append(char.ToUpper(textBox.Text[0])).Append(textBox.Text.Substring(1));
-                textBox.Text = sb.ToString();
-
-                textBox.ReadOnly = true;
-            }
-        }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (sender is Button button)
@@ -157,6 +112,14 @@ namespace ContactsApp
 
                 if (textbox == null)
                     return;
+
+                // check for unique number
+                if (textbox.Name.Equals("txtNumber") && IsDuplicate(txtNumber.Text))
+                {
+                    button.Visible = true;
+                    textbox.ReadOnly = false;
+                    return;
+                }
 
                 foreach (var contactSet in Contacts.Values)
                 {
@@ -181,21 +144,175 @@ namespace ContactsApp
                     };
 
                     var key = contact.FirstName[0];
-                    
-                        if (Contacts.ContainsKey(key))
-                        {
-                            Contacts[key].Add(contact);
-                        }
-                        else
-                        {
-                            Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                            Contacts[key].Add(contact);
-                        }
-                     
+
+                    if (Contacts.ContainsKey(key))
+                    {
+                        Contacts[key].Add(contact);
+                    }
+                    else
+                    {
+                        Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
+                        Contacts[key].Add(contact);
+                    }
                 }
-                    button.Visible = false;
-                    textbox.ReadOnly = true;
+
+                button.Visible = false;
+                textbox.ReadOnly = true;
+
+                btnSendSMS.Enabled = true;
+                btnDelete.Enabled = true;
             }
+        }
+
+        private void txt_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left || btnSave1.Visible || btnSave2.Visible || btnSave3.Visible)
+            {
+                if (sender is TextBox tb)
+                {
+                    var button = GetButton(tb.Name);
+                    if (button.Visible)
+                        tb.ReadOnly = false;
+                }
+
+                return;
+            }
+
+            btnSave1.Visible = btnSave2.Visible = btnSave3.Visible = false;
+
+            if (sender is TextBox textBox)
+            {
+                var button = GetButton(textBox.Name);
+
+                if (button == null)
+                {
+                    Console.WriteLine("Button not found!");
+                    return;
+                }
+
+                button.Visible = true;
+                button.BackColor = BlackColor;
+                button.ForeColor = BlueColor;
+                button.FlatStyle = FlatStyle.Flat;
+                button.Font = new Font("Microsoft Sans Serif", 6F, FontStyle.Regular, GraphicsUnit.Point);
+
+                btnSendSMS.Enabled = false;
+                btnDelete.Enabled = false;
+
+                textBox.ReadOnly = false;
+            }
+        }
+
+
+        private void txt_Leave(object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                if (textBox.Text.Trim().Equals(""))
+                {
+                    errorProvider1.SetError(textBox, "First name cannot be empty!");
+                    return;
+                }
+
+                errorProvider1.Clear();
+
+                var sb = new StringBuilder();
+                sb.Append(char.ToUpper(textBox.Text[0])).Append(textBox.Text.Substring(1));
+                textBox.Text = sb.ToString();
+            }
+        }
+
+        private void txt_Click(object sender, EventArgs e)
+        {
+            if (btnSave1.Visible || btnSave2.Visible || btnSave3.Visible)
+            {
+                if (sender is TextBox textBox)
+                {
+                    var button = GetButton(textBox.Name);
+                    if (button.Visible)
+                        textBox.ReadOnly = false;
+                }
+                return;
+            }
+        }
+
+        private void txtNumber_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtNumber.Text.Trim().Equals(""))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtNumber, "Telephone number cannot be empty!");
+                txtNumber.ReadOnly = false;
+            }
+            else if (!Regex.IsMatch(txtNumber.Text.Trim(),
+                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtNumber, "Invalid format! (07X YYY ZZZ)");
+                txtNumber.ReadOnly = false;
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.Clear();
+                txtNumber.ReadOnly = true;
+            }
+        }
+
+        private void txtFirstName_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtFirstName.Text.Trim().Equals(""))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtFirstName, "First name cannot be empty!");
+                txtFirstName.ReadOnly = false;
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.Clear();
+                txtFirstName.ReadOnly = true;
+            }
+        }
+
+        private void txtLastName_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtLastName.Text.Trim().Equals(""))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtLastName, "Last name cannot be empty!");
+                txtLastName.ReadOnly = false;
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.Clear();
+                txtLastName.ReadOnly = true;
+            }
+        }
+
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            if (isEdited)
+                DialogResult = DialogResult.Yes;
+            else
+                DialogResult = DialogResult.Cancel;
+        }
+
+        private void ContactDetails_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (btnSave1.Visible || btnSave2.Visible || btnSave3.Visible)
+                e.Cancel = true;
+            else
+                e.Cancel = false;
+        }
+
+        private void ContactDetails_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (isEdited || isDeleted)
+                DialogResult = DialogResult.Yes;
+            else
+                DialogResult = DialogResult.Cancel;
         }
 
         private Button GetButton(string textBoxName)
@@ -224,97 +341,30 @@ namespace ContactsApp
             return null;
         }
 
-        private void ContactDetails_FormClosed(object sender, FormClosedEventArgs e)
+        private bool IsDuplicate(string number)
         {
-            
-
-            if (isEdited || isDeleted)
-                DialogResult = DialogResult.Yes;
-            else
-                DialogResult = DialogResult.Cancel;
-        }
-
-        private void txtNumber_Validating(object sender, CancelEventArgs e)
-        {
-            if (txtNumber.Text.Trim().Equals(""))
+            foreach (var contactsSet in Contacts.Values)
             {
-                e.Cancel = true;
-                errorProvider1.SetError(txtNumber, "Telephone number cannot be empty!");
-            }
-            else if (!Regex.IsMatch(txtNumber.Text.Trim(),
-                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtNumber, "Invalid format! (07X YYY ZZZ)");
-            }
-            else
-            {
-                e.Cancel = false;
-                errorProvider1.Clear();
-            }
-        }
-
-        private void txtFirstName_Validating(object sender, CancelEventArgs e)
-        {
-            if (txtFirstName.Text.Trim().Equals(""))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtFirstName, "First name cannot be empty!");
-            }
-            else
-            {
-                e.Cancel = false;
-                errorProvider1.Clear();
-            }
-        }
-
-        private void txtLastName_Validating(object sender, CancelEventArgs e)
-        {
-            if (txtLastName.Text.Trim().Equals(""))
-            {
-                e.Cancel = true;
-                errorProvider1.SetError(txtLastName, "Last name cannot be empty!");
-            }
-            else
-            {
-                e.Cancel = false;
-                errorProvider1.Clear();
-            }
-        }
-
-        private void txt_Click(object sender, EventArgs e)
-        {
-            if (sender is TextBox textBox)
-            {
-                var button = GetButton(textBox.Name);
-
-                if (button == null)
+                foreach (var contact in contactsSet)
                 {
-                    Console.WriteLine("Button not found!");
-                    return;
-                }
+                    if (contact.TelephoneNumber.Equals(number))
+                    {
+                        if (contact.FirstName.Equals(SelectedContact.FirstName) &&
+                            contact.LastName.Equals(SelectedContact.LastName) &&
+                            SelectedContact.TelephoneNumber.Equals(number))
+                            return false;
 
-                if (button.Visible)
-                {
-                    if (button.Name == btnSave1.Name)
-                        btnSave2.Visible = btnSave3.Visible = false;
-                    else if (button.Name == btnSave2.Name)
-                        btnSave1.Visible = btnSave3.Visible = false;
-                    else if (button.Name == btnSave3.Name)
-                        btnSave1.Visible = btnSave2.Visible = false;
-                }
-                else
-                {
-                    btnSave1.Visible = btnSave2.Visible = btnSave3.Visible = false;
+                        MessageBox.Show(
+                            "You have this number saved with different name.\n" +
+                            $"Here are the informations: {contact} {contact.TelephoneNumber}",
+                            "Found duplicate",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return true;
+                    }
                 }
             }
-        }
 
-        private void ContactDetails_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (foundDuplicate)
-            {
-            }
+            return false;
         }
     }
 }
