@@ -191,13 +191,32 @@ namespace ContactsApp
 
         private void txtSearch_Enter(object sender, EventArgs e)
         {
-            txtSearch.Text = "";
+            if (txtSearch.Text.Trim().Equals("Search..."))
+                txtSearch.Text = "";
             txtSearch.BorderStyle = BorderStyle.Fixed3D;
         }
 
         private void txtSearch_Leave(object sender, EventArgs e)
         {
             txtSearch.BorderStyle = BorderStyle.FixedSingle;
+        }
+
+        private void txtSearch_MouseEnter(object sender, EventArgs e)
+        {
+            if (txtSearch.Focused && txtSearch.Text.Trim().Equals("Search..."))
+                txtSearch.Text = string.Empty;
+        }
+
+        private void txtSearch_MouseLeave(object sender, EventArgs e)
+        {
+            if (txtSearch.Text.Trim().Equals(""))
+                txtSearch.Text = "Search...";
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (txtSearch.Text.Trim().Equals("Search..."))
+                txtSearch.Text = "";
         }
 
         private void txtSearch_KeyUp(object sender, KeyEventArgs e)
@@ -237,8 +256,14 @@ namespace ContactsApp
             }
         }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            btnCancel.Visible = listView2.Visible = false;
+            listView1.Visible = true;
+            txtSearch.Text = "Search...";
+        }
 
-        private void add_event(object sender, EventArgs e)
+        private void Add_button_Click(object sender, EventArgs e)
         {
             AddForm f = new AddForm();
             if (f.ShowDialog() == DialogResult.OK)
@@ -252,32 +277,30 @@ namespace ContactsApp
 
                 char key = char.ToUpper(contact.FirstName[0]);
 
-                var flag = true;
-
-
                 foreach (var entry in Contacts)
                 {
-                    foreach(var usr in entry.Value)
+                    foreach (var usr in entry.Value)
                     {
                         if (usr.TelephoneNumber.Equals(contact.TelephoneNumber))
                         {
-                            MessageBox.Show("You have this number saved with different name, these are the informations: " + usr.ToString());
-                            flag = false;
+                            MessageBox.Show(
+                                "You have this number saved with different name.\n" +
+                                $"Here are the informations: {usr} {usr.TelephoneNumber}",
+                                "Found duplicate",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
                         }
                     }
                 }
 
-                if (flag)
+                if (Contacts.ContainsKey(key))
                 {
-                    if (Contacts.ContainsKey(key))
-                    {
-                        Contacts[key].Add(contact);
-                    }
-                    else
-                    {
-                        Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                        Contacts[key].Add(contact);
-                    }
+                    Contacts[key].Add(contact);
+                }
+                else
+                {
+                    Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
+                    Contacts[key].Add(contact);
                 }
 
                 Display();
@@ -298,7 +321,6 @@ namespace ContactsApp
 
         private void listViews_MouseDown(object sender, MouseEventArgs e)
         {
-
             ListViewHitTestInfo test;
 
             if (listView1.Visible)
@@ -321,6 +343,13 @@ namespace ContactsApp
             }
         }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to quit the application", "Quit the application",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                e.Cancel = true;
+        }
+
         private ContactEntry GetContact(ListViewItem selectedItem)
         {
             foreach (var contact in Contacts.Values)
@@ -331,36 +360,6 @@ namespace ContactsApp
             }
 
             return null;
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            btnCancel.Visible = listView2.Visible = false;
-            listView1.Visible = true;
-            txtSearch.Text = "Search...";
-        }
-
-        private void btnQuit_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Are you sure you want to quit the application", "Quit the application",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                this.Close();
-        }
-
-        private void txtSearch_MouseLeave(object sender, EventArgs e)
-        {
-            if (txtSearch.Text.Equals(""))
-            {
-                txtSearch.Text = "Search...";
-            }
-        }
-
-        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (txtSearch.Text.Equals("Search..."))
-            {
-                txtSearch.Text = "";
-            }
         }
     }
 }
