@@ -78,7 +78,6 @@
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             this.btnCancel.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
             this.btnCancel.MouseLeave += new System.EventHandler(this.btn_MouseLeave);
             // 
@@ -121,6 +120,7 @@
             this.Name = "SendSMS";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Send SMS";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SendSMS_FormClosing);
             this.Load += new System.EventHandler(this.SendSMS_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
