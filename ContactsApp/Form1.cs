@@ -10,6 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ContactsApp.Properties;
+using MixERP.Net.VCards;
+using MixERP.Net.VCards.Models;
+using MixERP.Net.VCards.Serializer;
+using MixERP.Net.VCards.Types;
 
 namespace ContactsApp
 {
@@ -148,7 +152,7 @@ namespace ContactsApp
                 Contacts[key].Add(contact);
             }
 
-            contact = new ContactEntry()
+            /*contact = new ContactEntry()
             {
                 LastName = "Kompirov",
                 FirstName = "Balon",
@@ -165,7 +169,7 @@ namespace ContactsApp
             {
                 Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
                 Contacts[key].Add(contact);
-            }
+            }*/
 
             contact = new ContactEntry()
             {
@@ -391,6 +395,162 @@ namespace ContactsApp
             }
 
             return false;
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            Console.WriteLine($"Desktop path: [{desktop}]");
+
+            var path = Path.Combine(desktop, "Vcards");
+            Console.WriteLine($"Vcards folder path: [{path}]");
+
+            var vcardPath = Path.Combine(path, "vcard.vcf");
+            Console.WriteLine($"Vcard file path [{vcardPath}]");
+
+            Console.WriteLine("Export is starting...");
+
+            try
+            {
+                Console.WriteLine($"Attempting to create [{path}]...");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                    Console.WriteLine($"Directory [{path}] created.");
+                }
+                else
+                    Console.WriteLine($"Directory [{path}] already exists.");
+
+                if (File.Exists(vcardPath))
+                {
+                    Console.WriteLine($"Deleting [{vcardPath}]");
+                    File.Delete(vcardPath);
+                    Console.WriteLine($"Deleted [{vcardPath}]");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"EXCEPTION: {ex.Message}");
+                MessageBox.Show($"Export was not successful.\n{ex.Message}", "Error while exporting");
+            }
+
+            foreach (var contactsSet in Contacts.Values)
+            {
+                foreach (var contact in contactsSet)
+                {
+                    var vcard = new VCard()
+                    {
+                        Version = VCardVersion.V2_1,
+                        FirstName = contact.FirstName,
+                        LastName = contact.LastName,
+                        Telephones = new List<Telephone>()
+                        {
+                            new Telephone()
+                            {
+                                Number = contact.TelephoneNumber,
+                                Type = TelephoneType.Cell
+                            }
+                        }
+                    };
+
+                    try
+                    {
+                        Console.WriteLine($"Attempting to serialize [{contact} " +
+                                          $"{contact.TelephoneNumber}]...");
+                        File.AppendAllText(vcardPath, vcard.Serialize());
+                        Console.WriteLine($"Successfully serialized [{contact} " +
+                                          $"{contact.TelephoneNumber}] to [{vcardPath}]");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"EXCEPTION: {ex.Message}");
+                        MessageBox.Show($"Export was not successful.\n{ex.Message}",
+                            "Error while exporting");
+                    }
+                }
+            }
+
+            Console.WriteLine("Exporting completed");
+            MessageBox.Show($"Contacts have been exported to [{vcardPath}]", "Exported successfully",
+                MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string vcardPath = string.Empty;
+
+            var dialog = new OpenFileDialog();
+            dialog.Filter = "VCard files (*.vcf) | *.vcf";
+            dialog.Title = "Choose a VCard file to import";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                vcardPath = dialog.FileName;
+                Console.WriteLine($"[{vcardPath}] was picked.");
+            }
+            else
+            {
+                Console.WriteLine("File choosing was canceled!");
+                return;
+            }
+
+            IEnumerable<VCard> vcards = null;
+            try
+            {
+                Console.WriteLine($"Attempting to deserialize [{vcardPath}]...");
+                vcards = Deserializer.Deserialize(vcardPath);
+                Console.WriteLine("Deserialization successful!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"EXCEPTION: {ex.Message}");
+                MessageBox.Show($"Import was not successful.\n{ex.Message}",
+                    "Error while importing");
+            }
+
+            if (vcards == null)
+                return;
+
+            foreach (var vcard in vcards)
+            {
+                Console.WriteLine("Creating a contact from the vcard...");
+                var contact = new ContactEntry()
+                {
+                    FirstName = vcard.FirstName,
+                    LastName = vcard.LastName,
+                    TelephoneNumber = vcard.Telephones.ElementAt(0).Number
+                };
+
+                Console.WriteLine("Checking for duplicated contact...");
+                if (IsDuplicate(contact.TelephoneNumber))
+                {
+                    Console.WriteLine($"Duplicate found! [{contact}]");
+                    continue;
+                }
+
+                Console.WriteLine($"Adding [{contact} {contact.TelephoneNumber}] to the contacts");
+                var key = contact.FirstName[0];
+
+                if (Contacts.ContainsKey(key))
+                {
+                    Contacts[key].Add(contact);
+                }
+                else
+                {
+                    Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
+                    Contacts[key].Add(contact);
+                }
+            }
+
+            Console.WriteLine("Importing completed");
+            Display();
+            MessageBox.Show($"Contacts have been imported from [{vcardPath}]", "Imported successfully",
+                MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
