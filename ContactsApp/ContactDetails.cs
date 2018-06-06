@@ -23,6 +23,7 @@ namespace ContactsApp
 
         private bool isEdited;
         private bool isDeleted;
+        private bool foundDuplicate;
 
         public ContactDetails(ContactEntry selectedContact,
             IDictionary<char, ISet<ContactEntry>> contacts)
@@ -31,7 +32,7 @@ namespace ContactsApp
             SelectedContact = selectedContact;
             Contacts = contacts;
             this.Text = $"Details for {SelectedContact}";
-            isEdited = isDeleted = false;
+            isEdited = isDeleted = foundDuplicate = false;
         }
 
         private void ContactDetails_Load(object sender, EventArgs e)
@@ -178,21 +179,22 @@ namespace ContactsApp
                         LastName = txtLastName.Text.Trim(),
                         TelephoneNumber = txtNumber.Text.Trim()
                     };
+
                     var key = contact.FirstName[0];
-
-                    if (Contacts.ContainsKey(key))
-                    {
-                        Contacts[key].Add(contact);
-                    }
-                    else
-                    {
-                        Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                        Contacts[key].Add(contact);
-                    }
+                    
+                        if (Contacts.ContainsKey(key))
+                        {
+                            Contacts[key].Add(contact);
+                        }
+                        else
+                        {
+                            Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
+                            Contacts[key].Add(contact);
+                        }
+                     
                 }
-
-                button.Visible = false;
-                textbox.ReadOnly = true;
+                    button.Visible = false;
+                    textbox.ReadOnly = true;
             }
         }
 
@@ -224,6 +226,8 @@ namespace ContactsApp
 
         private void ContactDetails_FormClosed(object sender, FormClosedEventArgs e)
         {
+            
+
             if (isEdited || isDeleted)
                 DialogResult = DialogResult.Yes;
             else
@@ -303,6 +307,13 @@ namespace ContactsApp
                 {
                     btnSave1.Visible = btnSave2.Visible = btnSave3.Visible = false;
                 }
+            }
+        }
+
+        private void ContactDetails_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (foundDuplicate)
+            {
             }
         }
     }

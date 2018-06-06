@@ -252,14 +252,32 @@ namespace ContactsApp
 
                 char key = char.ToUpper(contact.FirstName[0]);
 
-                if (Contacts.ContainsKey(key))
+                var flag = true;
+
+
+                foreach (var entry in Contacts)
                 {
-                    Contacts[key].Add(contact);
+                    foreach(var usr in entry.Value)
+                    {
+                        if (usr.TelephoneNumber.Equals(contact.TelephoneNumber))
+                        {
+                            MessageBox.Show("You have this number saved with different name, these are the informations: " + usr.ToString());
+                            flag = false;
+                        }
+                    }
                 }
-                else
+
+                if (flag)
                 {
-                    Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                    Contacts[key].Add(contact);
+                    if (Contacts.ContainsKey(key))
+                    {
+                        Contacts[key].Add(contact);
+                    }
+                    else
+                    {
+                        Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
+                        Contacts[key].Add(contact);
+                    }
                 }
 
                 Display();
@@ -280,7 +298,9 @@ namespace ContactsApp
 
         private void listViews_MouseDown(object sender, MouseEventArgs e)
         {
+
             ListViewHitTestInfo test;
+
             if (listView1.Visible)
                 test = listView1.HitTest(e.Location);
             else
