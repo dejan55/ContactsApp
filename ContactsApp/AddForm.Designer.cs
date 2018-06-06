@@ -74,6 +74,8 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.button2_Click);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.btn_MouseLeave);
             // 
             // btnAdd
             // 
@@ -85,6 +87,8 @@
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.button1_Click);
+            this.btnAdd.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
+            this.btnAdd.MouseLeave += new System.EventHandler(this.btn_MouseLeave);
             // 
             // label3
             // 
@@ -128,6 +132,7 @@
             this.txtLastName.Size = new System.Drawing.Size(141, 22);
             this.txtLastName.TabIndex = 2;
             this.txtLastName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_KeyUp);
+            this.txtLastName.Leave += new System.EventHandler(this.txtLastName_Leave);
             this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.txtLastName_Validating);
             // 
             // txtFirstName
@@ -138,7 +143,8 @@
             this.txtFirstName.Size = new System.Drawing.Size(141, 22);
             this.txtFirstName.TabIndex = 1;
             this.txtFirstName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_KeyUp);
-            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
+            this.txtFirstName.Leave += new System.EventHandler(this.txtFirstName_Leave);
+            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.txtFirstName_Validating);
             // 
             // label1
             // 
@@ -156,7 +162,7 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // Add_Form
+            // AddForm
             // 
             this.AcceptButton = this.btnAdd;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -167,9 +173,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.Name = "Add_Form";
+            this.Name = "AddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add new contact";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddForm_FormClosing);
             this.Load += new System.EventHandler(this.Add_Form_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
