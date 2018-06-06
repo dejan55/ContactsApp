@@ -63,6 +63,29 @@ namespace ContactsApp
             btnCancel.ForeColor = WhiteColor;
             btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.FlatStyle = FlatStyle.Flat;
+
+            menuStrip1.BackColor = BlackColor;
+            menuStrip1.ForeColor = BlueColor;
+
+            foreach (ToolStripItem item in menuStrip1.Items)
+            {
+                item.ForeColor = BlueColor;
+                item.BackColor = BlackColor;
+
+                if (item is ToolStripMenuItem menuItem)
+                {
+                    foreach (var dropDownItem in menuItem.DropDownItems)
+                    {
+                        if (dropDownItem is ToolStripDropDownItem ddItem)
+                        {
+                            ddItem.ForeColor = BlueColor;
+                            ddItem.BackColor = BlackColor;
+                        }
+                    }
+                }
+            }
+
+
             Display();
         }
 
