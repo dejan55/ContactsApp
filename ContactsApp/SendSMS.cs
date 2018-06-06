@@ -76,15 +76,6 @@ namespace ContactsApp
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Are you sure you want to discard the message?", "Discard the message",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                DialogResult = DialogResult.Cancel;
-            else
-                DialogResult = DialogResult.None;
-        }
-
         private void txtMessage_KeyUp(object sender, KeyEventArgs e)
         {
             //                     [space][tab] [new line]
@@ -192,6 +183,17 @@ namespace ContactsApp
             {
                 btnSend.Enabled = true;
             }
+        }
+
+        private void SendSMS_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult == DialogResult.None || DialogResult == DialogResult.OK)
+                e.Cancel = false;
+            else if (MessageBox.Show("Are you sure you want to discard the message?", "Discard the message",
+                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                e.Cancel = true;
+            else
+                e.Cancel = false;
         }
 
         public string SendSms()
