@@ -277,21 +277,8 @@ namespace ContactsApp
 
                 char key = char.ToUpper(contact.FirstName[0]);
 
-                foreach (var entry in Contacts)
-                {
-                    foreach (var usr in entry.Value)
-                    {
-                        if (usr.TelephoneNumber.Equals(contact.TelephoneNumber))
-                        {
-                            MessageBox.Show(
-                                "You have this number saved with different name.\n" +
-                                $"Here are the informations: {usr} {usr.TelephoneNumber}",
-                                "Found duplicate",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
-                        }
-                    }
-                }
+                if (IsDuplicate(contact.TelephoneNumber))
+                    return;
 
                 if (Contacts.ContainsKey(key))
                 {
@@ -360,6 +347,27 @@ namespace ContactsApp
             }
 
             return null;
+        }
+
+        private bool IsDuplicate(string number)
+        {
+            foreach (var entry in Contacts)
+            {
+                foreach (var usr in entry.Value)
+                {
+                    if (usr.TelephoneNumber.Equals(number))
+                    {
+                        MessageBox.Show(
+                            "You have this number saved with different name.\n" +
+                            $"Here are the informations: {usr} {usr.TelephoneNumber}",
+                            "Found duplicate",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
