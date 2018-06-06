@@ -326,5 +326,21 @@ namespace ContactsApp
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 this.Close();
         }
+
+        private void txtSearch_MouseLeave(object sender, EventArgs e)
+        {
+            if (txtSearch.Text.Equals(""))
+            {
+                txtSearch.Text = "Search...";
+            }
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (txtSearch.Text.Equals("Search..."))
+            {
+                txtSearch.Text = "";
+            }
+        }
     }
 }
