@@ -57,6 +57,7 @@ namespace ContactsApp
 
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
+           // this.Font = new Font("Verdana", 16F, FontStyle.Regular);
 
             Add_button.BackColor = BlackColor;
             Add_button.ForeColor = BlueColor;
@@ -67,6 +68,7 @@ namespace ContactsApp
             btnCancel.ForeColor = WhiteColor;
             btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.FlatStyle = FlatStyle.Flat;
+           
 
             menuStrip1.BackColor = BlackColor;
             menuStrip1.ForeColor = BlueColor;
@@ -151,25 +153,6 @@ namespace ContactsApp
                 Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
                 Contacts[key].Add(contact);
             }
-
-            /*contact = new ContactEntry()
-            {
-                LastName = "Kompirov",
-                FirstName = "Balon",
-                TelephoneNumber = "071 354 852"
-            };
-
-            key = contact.FirstName[0];
-
-            if (Contacts.ContainsKey(key))
-            {
-                Contacts[key].Add(contact);
-            }
-            else
-            {
-                Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                Contacts[key].Add(contact);
-            }*/
 
             contact = new ContactEntry()
             {
@@ -299,7 +282,8 @@ namespace ContactsApp
                 {
                     FirstName = f.FirstName,
                     LastName = f.LastName,
-                    TelephoneNumber = f.TelephoneNumber
+                    TelephoneNumber = f.TelephoneNumber,
+                    Email = f.Mail
                 };
 
                 char key = char.ToUpper(contact.FirstName[0]);

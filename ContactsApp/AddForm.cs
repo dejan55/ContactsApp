@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace ContactsApp
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string TelephoneNumber { get; set; }
+        public string Mail { get; set; }
+
 
         public AddForm()
         {
@@ -59,6 +62,7 @@ namespace ContactsApp
             FirstName = txtFirstName.Text.Trim();
             LastName = txtLastName.Text.Trim();
             TelephoneNumber = txtNumber.Text.Trim();
+            Mail = MailTxtBox.Text.Trim();
             DialogResult = DialogResult.OK;
         }
 
@@ -141,7 +145,10 @@ namespace ContactsApp
                 !txtLastName.Text.Trim().Equals("") &&
                 !txtNumber.Text.Trim().Equals("") &&
                 Regex.IsMatch(txtNumber.Text.Trim(),
-                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase) &&
+                    (MailTxtBox.Text.Equals("") ||
+                     Regex.IsMatch(MailTxtBox.Text.Trim(),
+                      @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$")))
             {
                 btnAdd.Enabled = true;
                 errorProvider1.Clear();
@@ -162,6 +169,24 @@ namespace ContactsApp
                 e.Cancel = false;
             else
                 e.Cancel = true;
+        }
+
+        private void MailTxtBox_Validating(object sender, CancelEventArgs e)
+        {
+            string email = MailTxtBox.Text.Trim();
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+
+            if (match.Success || MailTxtBox.Text.Equals(""))
+            {
+                errorProvider1.Clear();
+                btnAdd.Enabled = true;
+            }
+            else
+            {
+                btnAdd.Enabled = false;
+                errorProvider1.SetError(MailTxtBox, "You must enter a valid mail address!");
+            }
         }
     }
 }
