@@ -158,7 +158,7 @@ namespace ContactsApp
                 Contacts[key].Add(contact);
             }
 
-            /*contact = new ContactEntry()
+            contact = new ContactEntry()
             {
                 LastName = "Kompirov",
                 FirstName = "Balon",
@@ -175,7 +175,7 @@ namespace ContactsApp
             {
                 Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
                 Contacts[key].Add(contact);
-            }*/
+            }
 
             contact = new ContactEntry()
             {
@@ -201,6 +201,8 @@ namespace ContactsApp
         {
             listView1.Items.Clear();
 
+            listView1.Groups.Add(new ListViewGroup("#"));
+
             for (int i = 'A'; i <= 'Z'; i++)
             {
                 listView1.Groups.Add(new ListViewGroup($"{(char) i}"));
@@ -211,10 +213,25 @@ namespace ContactsApp
                 var sortedSet = contact.Value.OrderBy(c => c.FirstName).ThenBy(c => c.LastName);
                 foreach (var contactEntry in sortedSet)
                 {
+                    Console.WriteLine($"Key: {contact.Key}\n" +
+                                      $"Contact: {contactEntry} {contactEntry.TelephoneNumber}");
+
+                    ListViewGroup group;
+                    if (char.IsLetter(contact.Key))
+                        group = listView1.Groups[(contact.Key - 'A') + 1];
+                    else
+                        group = listView1.Groups[0];
+
+                    string text;
+                    if (char.IsLetter(contact.Key))
+                        text = $"{contactEntry}";
+                    else
+                        text = $"{contactEntry.TelephoneNumber}";
+
                     var listViewItem = new ListViewItem()
                     {
-                        Text = $"{contactEntry}",
-                        Group = listView1.Groups[contact.Key - 'A'],
+                        Text = text,
+                        Group = group,
                         ToolTipText = $"{contactEntry.TelephoneNumber}"
                     };
                     listView1.Items.Add(listViewItem);
@@ -258,7 +275,7 @@ namespace ContactsApp
         {
             string search = txtSearch.Text.Trim().ToLower();
 
-            if (!search.Equals(""))
+            if (!search.Equals("") && !search.Equals("Search..."))
             {
                 listView1.Visible = false;
                 listView2.Visible = btnCancel.Visible = true;
@@ -287,6 +304,7 @@ namespace ContactsApp
             {
                 listView1.Visible = true;
                 listView2.Visible = btnCancel.Visible = false;
+                txtSearch.Text = "Search...";
                 listView2.Items.Clear();
             }
         }
@@ -442,8 +460,10 @@ namespace ContactsApp
             {
                 Console.WriteLine($"EXCEPTION: {ex.Message}");
                 MessageBox.Show($"Export was not successful.\n{ex.Message}", "Error while exporting");
+                return;
             }
 
+            var counter = 0;
             foreach (var contactsSet in Contacts.Values)
             {
                 foreach (var contact in contactsSet)
@@ -470,6 +490,7 @@ namespace ContactsApp
                         File.AppendAllText(vcardPath, vcard.Serialize());
                         Console.WriteLine($"Successfully serialized [{contact} " +
                                           $"{contact.TelephoneNumber}] to [{vcardPath}]");
+                        counter++;
                     }
                     catch (Exception ex)
                     {
@@ -481,13 +502,14 @@ namespace ContactsApp
             }
 
             Console.WriteLine("Exporting completed");
-            MessageBox.Show($"Contacts have been exported to [{vcardPath}]", "Exported successfully",
+            MessageBox.Show($"{counter} contacts have been exported to [{vcardPath}]", "Exported successfully",
                 MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string vcardPath = string.Empty;
+            var vcardPath = string.Empty;
+            var counterUnsuccessful = 0;
 
             var dialog = new OpenFileDialog();
             dialog.Filter = "VCard files (*.vcf) | *.vcf";
@@ -524,22 +546,51 @@ namespace ContactsApp
             foreach (var vcard in vcards)
             {
                 Console.WriteLine("Creating a contact from the vcard...");
-                var contact = new ContactEntry()
+
+                ContactEntry contact = null;
+                try
                 {
-                    FirstName = vcard.FirstName,
-                    LastName = vcard.LastName,
-                    TelephoneNumber = vcard.Telephones.ElementAt(0).Number
-                };
+                    contact = new ContactEntry()
+                    {
+                        FirstName = vcard.FirstName.Trim(),
+                        LastName = vcard.LastName.Trim(),
+                        TelephoneNumber = vcard.Telephones.ElementAt(0).Number.Trim()
+                    };
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"EXCEPTION: {ex.Message}");
+                }
+
+                if (contact == null)
+                {
+                    counterUnsuccessful++;
+                    continue;
+                }
 
                 Console.WriteLine("Checking for duplicated contact...");
                 if (IsDuplicate(contact.TelephoneNumber, importing: true))
                 {
                     Console.WriteLine($"Duplicate found! [{contact}]");
+                    counterUnsuccessful++;
                     continue;
                 }
 
                 Console.WriteLine($"Adding [{contact} {contact.TelephoneNumber}] to the contacts");
-                var key = contact.FirstName[0];
+
+                char key;
+                if (!string.IsNullOrEmpty(contact.FirstName))
+                    key = char.ToUpper(contact.FirstName[0]);
+                else
+                {
+                    if (!string.IsNullOrEmpty(contact.LastName))
+                        key = char.ToUpper(contact.LastName[0]);
+                    else
+                        key = '#';
+                }
+
+                if (!char.IsLetter(key) && key != '#')
+                    key = '#';
 
                 if (Contacts.ContainsKey(key))
                 {
@@ -550,11 +601,14 @@ namespace ContactsApp
                     Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
                     Contacts[key].Add(contact);
                 }
+
+                Console.WriteLine($"Added [{contact}] to the contacts");
             }
 
             Console.WriteLine("Importing completed");
             Display();
-            MessageBox.Show($"Contacts have been imported from [{vcardPath}]", "Imported successfully",
+            MessageBox.Show($"{vcards.Count() - counterUnsuccessful}/{vcards.Count()} contacts have been " +
+                            $"imported from [{vcardPath}]", "Imported successfully",
                 MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
