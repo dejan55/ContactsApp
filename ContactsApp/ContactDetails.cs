@@ -39,6 +39,7 @@ namespace ContactsApp
             txtFirstName.Text = $"{SelectedContact.FirstName}";
             txtLastName.Text = $"{SelectedContact.LastName}";
             txtNumber.Text = $"{SelectedContact.TelephoneNumber}";
+            txtEmail.Text = $"{SelectedContact.Email}";
 
             groupBox1.ForeColor = WhiteColor;
 
@@ -46,6 +47,7 @@ namespace ContactsApp
             label2.ForeColor = BlueColor;
             label3.ForeColor = BlueColor;
             label4.ForeColor = BlueColor;
+            label5.ForeColor = BlueColor;
 
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
@@ -140,7 +142,8 @@ namespace ContactsApp
                     {
                         FirstName = txtFirstName.Text.Trim(),
                         LastName = txtLastName.Text.Trim(),
-                        TelephoneNumber = txtNumber.Text.Trim()
+                        TelephoneNumber = txtNumber.Text.Trim(),
+                        Email = txtEmail.Text.Trim()
                     };
 
                     var key = contact.FirstName[0];
@@ -166,7 +169,8 @@ namespace ContactsApp
 
         private void txt_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left || btnSave1.Visible || btnSave2.Visible || btnSave3.Visible)
+            if (e.Button != MouseButtons.Left || btnSave1.Visible || btnSave2.Visible ||
+                btnSave3.Visible || btnSave4.Visible)
             {
                 if (sender is TextBox tb)
                 {
@@ -208,13 +212,16 @@ namespace ContactsApp
         {
             if (sender is TextBox textBox)
             {
-                if (textBox.Text.Trim().Equals(""))
+                if (textBox.Name != "txtEmail" && textBox.Text.Trim().Equals(""))
                 {
                     errorProvider1.SetError(textBox, "First name cannot be empty!");
                     return;
                 }
 
                 errorProvider1.Clear();
+
+                if (textBox.Name == "txtEmail" || textBox.Name == "txtNumber")
+                    return;
 
                 var sb = new StringBuilder();
                 sb.Append(char.ToUpper(textBox.Text[0])).Append(textBox.Text.Substring(1));
@@ -224,7 +231,7 @@ namespace ContactsApp
 
         private void txt_Click(object sender, EventArgs e)
         {
-            if (btnSave1.Visible || btnSave2.Visible || btnSave3.Visible)
+            if (btnSave1.Visible || btnSave2.Visible || btnSave3.Visible || btnSave4.Visible)
             {
                 if (sender is TextBox textBox)
                 {
@@ -232,6 +239,7 @@ namespace ContactsApp
                     if (button.Visible)
                         textBox.ReadOnly = false;
                 }
+
                 return;
             }
         }
@@ -291,6 +299,21 @@ namespace ContactsApp
             }
         }
 
+        private void txtEmail_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtEmail.Text.Trim().Equals("") ||
+                Regex.IsMatch(txtEmail.Text.Trim(), @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
+            {
+                e.Cancel = false;
+                errorProvider1.Clear();
+            }
+            else
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtEmail, "Invalid format!");
+            }
+        }
+
         private void btnQuit_Click(object sender, EventArgs e)
         {
             if (isEdited)
@@ -301,7 +324,7 @@ namespace ContactsApp
 
         private void ContactDetails_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (btnSave1.Visible || btnSave2.Visible || btnSave3.Visible)
+            if (btnSave1.Visible || btnSave2.Visible || btnSave3.Visible || btnSave4.Visible)
                 e.Cancel = true;
             else
                 e.Cancel = false;
@@ -323,6 +346,9 @@ namespace ContactsApp
                 return btnSave2;
             if (textBoxName == "txtNumber")
                 return btnSave3;
+            if (textBoxName == "txtEmail")
+                return btnSave4;
+
             return null;
         }
 
@@ -336,6 +362,8 @@ namespace ContactsApp
                     return txtLastName;
                 if (num == 3)
                     return txtNumber;
+                if (num == 4)
+                    return txtEmail;
             }
 
             return null;
