@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ContactsApp.Properties;
 using MixERP.Net.VCards;
 using MixERP.Net.VCards.Models;
 using MixERP.Net.VCards.Serializer;
@@ -80,12 +79,17 @@ namespace ContactsApp
 
                 if (item is ToolStripMenuItem menuItem)
                 {
+                    menuItem.MouseEnter += this.ToolStripMenuItem_MouseEnter;
+                    menuItem.MouseLeave += this.ToolStripMenuItem_MouseLeave;
+
                     foreach (var dropDownItem in menuItem.DropDownItems)
                     {
                         if (dropDownItem is ToolStripDropDownItem ddItem)
                         {
                             ddItem.ForeColor = BlueColor;
                             ddItem.BackColor = BlackColor;
+                            ddItem.MouseEnter += this.ToolStripMenuItem_MouseEnter;
+                            ddItem.MouseLeave += this.ToolStripMenuItem_MouseLeave;
                         }
                     }
                 }
@@ -535,6 +539,18 @@ namespace ContactsApp
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+            base.OnMouseEnter(e);
+        }
+
+        private void ToolStripMenuItem_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+            base.OnMouseLeave(e);
         }
     }
 }
