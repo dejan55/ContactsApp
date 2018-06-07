@@ -158,6 +158,25 @@ namespace ContactsApp
                 Contacts[key].Add(contact);
             }
 
+            /*contact = new ContactEntry()
+            {
+                LastName = "Kompirov",
+                FirstName = "Balon",
+                TelephoneNumber = "073 654 555"
+            };
+
+            key = contact.FirstName[0];
+
+            if (Contacts.ContainsKey(key))
+            {
+                Contacts[key].Add(contact);
+            }
+            else
+            {
+                Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
+                Contacts[key].Add(contact);
+            }*/
+
             contact = new ContactEntry()
             {
                 LastName = "Nakov",
@@ -366,7 +385,7 @@ namespace ContactsApp
             return null;
         }
 
-        private bool IsDuplicate(string number)
+        private bool IsDuplicate(string number, bool importing = false)
         {
             foreach (var entry in Contacts)
             {
@@ -374,11 +393,12 @@ namespace ContactsApp
                 {
                     if (usr.TelephoneNumber.Equals(number))
                     {
-                        MessageBox.Show(
-                            "You have this number saved with different name.\n" +
-                            $"Here are the informations: {usr} {usr.TelephoneNumber}",
-                            "Found duplicate",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (!importing)
+                            MessageBox.Show(
+                                "You have this number saved with different name.\n" +
+                                $"Here are the informations: {usr} {usr.TelephoneNumber}",
+                                "Found duplicate",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return true;
                     }
                 }
@@ -512,7 +532,7 @@ namespace ContactsApp
                 };
 
                 Console.WriteLine("Checking for duplicated contact...");
-                if (IsDuplicate(contact.TelephoneNumber))
+                if (IsDuplicate(contact.TelephoneNumber, importing: true))
                 {
                     Console.WriteLine($"Duplicate found! [{contact}]");
                     continue;
