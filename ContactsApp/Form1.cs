@@ -57,7 +57,7 @@ namespace ContactsApp
 
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
-            // this.Font = new Font("Verdana", 16F, FontStyle.Regular);
+//            this.Font = new Font("Verdana", 16F, FontStyle.Regular);
 
             Add_button.BackColor = BlackColor;
             Add_button.ForeColor = BlueColor;
@@ -95,7 +95,6 @@ namespace ContactsApp
                     }
                 }
             }
-
 
             Display();
         }
@@ -205,9 +204,7 @@ namespace ContactsApp
             listView1.Groups.Add(new ListViewGroup("#"));
 
             for (int i = 'A'; i <= 'Z'; i++)
-            {
                 listView1.Groups.Add(new ListViewGroup($"{(char) i}"));
-            }
 
             foreach (var contact in Contacts)
             {
@@ -404,28 +401,6 @@ namespace ContactsApp
             return null;
         }
 
-        private bool IsDuplicate(string number, bool importing = false)
-        {
-            foreach (var entry in Contacts)
-            {
-                foreach (var usr in entry.Value)
-                {
-                    if (usr.TelephoneNumber.Equals(number))
-                    {
-                        if (!importing)
-                            MessageBox.Show(
-                                "You have this number saved with different name.\n" +
-                                $"Here are the informations: {usr} {usr.TelephoneNumber}",
-                                "Found duplicate",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -511,44 +486,8 @@ namespace ContactsApp
             }
 
             Console.WriteLine("Exporting completed");
-            MessageBox.Show($"{counter} contacts have been exported to [{vcardPath}]", "Exported successfully",
-                MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-        }
-
-
-
-        private string NormalizeNumber(string number)
-        {
-            if(! Regex.IsMatch(number,
-                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
-            {
-                if (number.StartsWith("+389"))
-                {
-                    number = "0" + number.Substring(3);
-                }
-
-                if(number.Split(' ').Length < 2)
-                {
-                    string tmp = "";
-                    for(int i = 0, j = 0; i < number.Length; i++, j++)
-                    {
-                        if(i == 3 || i == 6)
-                        {
-                            tmp += " ";
-                        }
-                        tmp += number[i];
-                    }
-                    number = tmp;
-                }
-            }
-
-            if(! Regex.IsMatch(number,
-                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
-            {
-                return "Exception";
-            }
-            
-            return number;
+            MessageBox.Show($"{counter} contacts have been exported to [{vcardPath}]",
+                "Exported successfully", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
@@ -598,7 +537,7 @@ namespace ContactsApp
                     Email email;
                     var emails = vcard.Emails;
                     if (emails == null)
-                        email = new Email() { EmailAddress = string.Empty };
+                        email = new Email() {EmailAddress = string.Empty};
                     else
                     {
                         email = vcard.Emails.ElementAtOrDefault(0);
@@ -611,6 +550,7 @@ namespace ContactsApp
                     if (number.Equals("Exception"))
                     {
                         Console.WriteLine("This application supports only mobile phone numbers!");
+                        counterUnsuccessful++;
                         continue;
                     }
 
@@ -618,7 +558,7 @@ namespace ContactsApp
                     {
                         FirstName = vcard.FirstName.Trim(),
                         LastName = vcard.LastName.Trim(),
-                        TelephoneNumber = number,
+                        TelephoneNumber = number.Trim(),
                         Email = email.EmailAddress.Trim()
                     };
                 }
@@ -692,6 +632,63 @@ namespace ContactsApp
         {
             this.Cursor = Cursors.Default;
             base.OnMouseLeave(e);
+        }
+
+        private bool IsDuplicate(string number, bool importing = false)
+        {
+            foreach (var entry in Contacts)
+            {
+                foreach (var usr in entry.Value)
+                {
+                    if (usr.TelephoneNumber.Equals(number))
+                    {
+                        if (!importing)
+                            MessageBox.Show(
+                                "You have this number saved with different name.\n" +
+                                $"Here are the informations: {usr} {usr.TelephoneNumber}",
+                                "Found duplicate",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private static string NormalizeNumber(string number)
+        {
+            if (Regex.IsMatch(number,
+                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+                return number; // 07X YYY ZZZ
+
+            var sb = new StringBuilder();
+
+            if (number.StartsWith("+389 ")) // +389 7X YYY ZZZ
+                sb.Append(number.Replace("+389 ", "0"));
+            else if (number.StartsWith("+389")) // +3897X YYY ZZZ
+                sb.Append(number.Replace("+389", "0"));
+            else if (number.StartsWith("00389 ")) // 00389 7X YYY ZZZ
+                sb.Append(number.Replace("00389 ", "0"));
+            else if (number.StartsWith("00389")) // 003897X YYY ZZZ
+                sb.Append(number.Replace("00389", "0"));
+            else // 07X YYY ZZZ or 07XYYYZZZ
+                sb.Append(number);
+
+            if (!Regex.IsMatch(sb.ToString(),
+                @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase))
+                return "Exception"; // 07X YY YZZ or 07X YYYZ ZZ or similar
+
+            if (sb.ToString().Split(' ').Length < 3)
+                for (int i = 0, j = 0; i < sb.Length; i++, j++)
+                    if ((i == 3 && sb[i] != ' ') || (i == 7 && sb[i] != ' '))
+                        sb.Insert(i, ' ');
+
+            if (!Regex.IsMatch(sb.ToString(),
+                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+                return "Exception"; // if not 07X YYY ZZZ
+
+            return sb.ToString();
         }
     }
 }
