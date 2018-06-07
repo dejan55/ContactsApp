@@ -139,38 +139,6 @@ namespace ContactsApp
             }
         }
 
-        private void txt_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (!txtFirstName.Text.Trim().Equals("") &&
-                !txtLastName.Text.Trim().Equals("") &&
-                !txtNumber.Text.Trim().Equals("") &&
-                Regex.IsMatch(txtNumber.Text.Trim(),
-                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase) &&
-                    (MailTxtBox.Text.Equals("") ||
-                     Regex.IsMatch(MailTxtBox.Text.Trim(),
-                      @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$")))
-            {
-                btnAdd.Enabled = true;
-                errorProvider1.Clear();
-            }
-            else
-            {
-                btnAdd.Enabled = false;
-            }
-        }
-
-        private void AddForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (DialogResult == DialogResult.OK)
-                e.Cancel = false;
-            else if (MessageBox.Show("Are you sure you want to discard the new contact?",
-                    "Discard the contact",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                e.Cancel = false;
-            else
-                e.Cancel = true;
-        }
-
         private void MailTxtBox_Validating(object sender, CancelEventArgs e)
         {
             string email = MailTxtBox.Text.Trim();
@@ -187,6 +155,39 @@ namespace ContactsApp
                 btnAdd.Enabled = false;
                 errorProvider1.SetError(MailTxtBox, "You must enter a valid mail address!");
             }
+        }
+
+        private void txt_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (!txtFirstName.Text.Trim().Equals("") &&
+                !txtLastName.Text.Trim().Equals("") &&
+                !txtNumber.Text.Trim().Equals("") &&
+                Regex.IsMatch(txtNumber.Text.Trim(),
+                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase) &&
+                (MailTxtBox.Text.Equals("") ||
+                 Regex.IsMatch(MailTxtBox.Text.Trim(),
+                     @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$")
+                ))
+            {
+                btnAdd.Enabled = true;
+                errorProvider1.Clear();
+            }
+            else
+            {
+                btnAdd.Enabled = false;
+            }
+        }
+
+        private void AddForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult == DialogResult.OK)
+                e.Cancel = false;
+            else if (MessageBox.Show("Are you sure you want to discard the new contact?",
+                         "Discard the contact",
+                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                e.Cancel = false;
+            else
+                e.Cancel = true;
         }
     }
 }
