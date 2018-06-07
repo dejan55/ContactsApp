@@ -18,20 +18,7 @@ namespace ContactsApp
 
         public ContactEntry()
         {
-            FirstName = LastName = TelephoneNumber = string.Empty;
-        }
-
-        public ContactEntry(string lastName, string telephoneNumber)
-        {
-            LastName = lastName;
-            TelephoneNumber = telephoneNumber;
-        }
-
-        public ContactEntry(string name, string lastName, string telephoneNumber)
-        {
-            FirstName = name;
-            LastName = lastName;
-            TelephoneNumber = telephoneNumber;
+            FirstName = LastName = TelephoneNumber = Email = string.Empty;
         }
 
         public override string ToString()
