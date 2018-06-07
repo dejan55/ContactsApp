@@ -480,6 +480,14 @@ namespace ContactsApp
                                 Number = contact.TelephoneNumber,
                                 Type = TelephoneType.Cell
                             }
+                        },
+                        Emails = new List<Email>()
+                        {
+                            new Email()
+                            {
+                                EmailAddress = contact.Email,
+                                Type = EmailType.Smtp
+                            }
                         }
                     };
 
@@ -550,11 +558,23 @@ namespace ContactsApp
                 ContactEntry contact = null;
                 try
                 {
+                    Email email;
+                    var emails = vcard.Emails;
+                    if (emails == null)
+                        email = new Email() { EmailAddress = string.Empty };
+                    else
+                    {
+                        email = vcard.Emails.ElementAtOrDefault(0);
+                        if (email == null)
+                            email = new Email() {EmailAddress = string.Empty};
+                    }
+
                     contact = new ContactEntry()
                     {
                         FirstName = vcard.FirstName.Trim(),
                         LastName = vcard.LastName.Trim(),
-                        TelephoneNumber = vcard.Telephones.ElementAt(0).Number.Trim()
+                        TelephoneNumber = vcard.Telephones.ElementAt(0).Number.Trim(),
+                        Email = email.EmailAddress.Trim()
                     };
                 }
                 catch (Exception ex)
