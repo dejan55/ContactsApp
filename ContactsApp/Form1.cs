@@ -541,6 +541,13 @@ namespace ContactsApp
                     number = tmp;
                 }
             }
+
+            if(! Regex.IsMatch(number,
+                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+            {
+                return "Exception";
+            }
+            
             return number;
         }
 
@@ -599,11 +606,19 @@ namespace ContactsApp
                             email = new Email() {EmailAddress = string.Empty};
                     }
 
+                    string number = NormalizeNumber(vcard.Telephones.ElementAt(0).Number.Trim());
+
+                    if (number.Equals("Exception"))
+                    {
+                        Console.WriteLine("This application supports only mobile phone numbers!");
+                        continue;
+                    }
+
                     contact = new ContactEntry()
                     {
                         FirstName = vcard.FirstName.Trim(),
                         LastName = vcard.LastName.Trim(),
-                        TelephoneNumber = NormalizeNumber(vcard.Telephones.ElementAt(0).Number.Trim()),
+                        TelephoneNumber = number,
                         Email = email.EmailAddress.Trim()
                     };
                 }
