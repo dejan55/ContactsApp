@@ -7,6 +7,7 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MixERP.Net.VCards;
@@ -514,6 +515,35 @@ namespace ContactsApp
                 MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
+
+
+        private string NormalizeNumber(string number)
+        {
+            if(! Regex.IsMatch(number,
+                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+            {
+                if (number.StartsWith("+389"))
+                {
+                    number = "0" + number.Substring(3);
+                }
+
+                if(number.Split(' ').Length < 2)
+                {
+                    string tmp = "";
+                    for(int i = 0, j = 0; i < number.Length; i++, j++)
+                    {
+                        if(i == 3 || i == 6)
+                        {
+                            tmp += " ";
+                        }
+                        tmp += number[i];
+                    }
+                    number = tmp;
+                }
+            }
+            return number;
+        }
+
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var vcardPath = string.Empty;
@@ -573,7 +603,7 @@ namespace ContactsApp
                     {
                         FirstName = vcard.FirstName.Trim(),
                         LastName = vcard.LastName.Trim(),
-                        TelephoneNumber = vcard.Telephones.ElementAt(0).Number.Trim(),
+                        TelephoneNumber = NormalizeNumber(vcard.Telephones.ElementAt(0).Number.Trim()),
                         Email = email.EmailAddress.Trim()
                     };
                 }
