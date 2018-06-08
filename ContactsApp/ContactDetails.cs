@@ -220,8 +220,14 @@ namespace ContactsApp
 
                 errorProvider1.Clear();
 
-                if (textBox.Name == "txtEmail" || textBox.Name == "txtNumber")
+                if (textBox.Name == "txtEmail")
                     return;
+
+                if (textBox.Name == "txtNumber")
+                {
+                    textBox.Text = NormalizeNumber(textBox.Text.Trim());
+                    return;
+                }
 
                 var sb = new StringBuilder();
                 sb.Append(char.ToUpper(textBox.Text[0])).Append(textBox.Text.Substring(1));
@@ -253,7 +259,7 @@ namespace ContactsApp
                 txtNumber.ReadOnly = false;
             }
             else if (!Regex.IsMatch(txtNumber.Text.Trim(),
-                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+                @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtNumber, "Invalid format! (07X YYY ZZZ)");
@@ -393,6 +399,37 @@ namespace ContactsApp
             }
 
             return false;
+        }
+
+        private static string NormalizeNumber(string number)
+        {
+            if (Regex.IsMatch(number,
+                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+                return number; // 07X YYY ZZZ
+
+            var sb = new StringBuilder();
+
+            if (number.StartsWith("+389 ")) // +389 7X YYY ZZZ
+                sb.Append(number.Replace("+389 ", "0"));
+            else if (number.StartsWith("+389")) // +3897X YYY ZZZ
+                sb.Append(number.Replace("+389", "0"));
+            else if (number.StartsWith("00389 ")) // 00389 7X YYY ZZZ
+                sb.Append(number.Replace("00389 ", "0"));
+            else if (number.StartsWith("00389")) // 003897X YYY ZZZ
+                sb.Append(number.Replace("00389", "0"));
+            else // 07X YYY ZZZ or 07XYYYZZZ
+                sb.Append(number);
+
+            if (!Regex.IsMatch(sb.ToString(),
+                @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase))
+                return sb.ToString(); // 07X YY YZZ or 07X YYYZ ZZ or similar
+
+            if (sb.ToString().Split(' ').Length < 3)
+                for (int i = 0, j = 0; i < sb.Length; i++, j++)
+                    if ((i == 3 && sb[i] != ' ') || (i == 7 && sb[i] != ' '))
+                        sb.Insert(i, ' ');
+
+            return sb.ToString();
         }
     }
 }
