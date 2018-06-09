@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -19,6 +20,10 @@ namespace ContactsApp
 {
     public partial class Form1 : Form
     {
+        public IDictionary<char, ISet<ContactEntry>> Contacts { get; set; }
+        public string SerializationPath { get; set; }
+        public string FolderPath { get; set; }
+
         private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
         private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
@@ -27,14 +32,31 @@ namespace ContactsApp
         private static readonly Font CustomFont = new Font("Verdana", 22F, FontStyle.Regular,
             GraphicsUnit.Point, ((byte) (0)));
 
-        public IDictionary<char, ISet<ContactEntry>> Contacts { get; set; }
-
         public Form1()
         {
             InitializeComponent();
             Contacts = new SortedDictionary<char, ISet<ContactEntry>>();
             this.DoubleBuffered = true;
-            Generate();
+
+            FolderPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "ContactsApp");
+            Console.WriteLine($"Folder Path: [{FolderPath}]");
+            var filePath = Path.Combine(FolderPath, "contacts.bin");
+            if (Directory.Exists(FolderPath))
+            {
+                if (File.Exists(filePath))
+                {
+                    SerializationPath = filePath;
+                    Console.WriteLine($"File path: [{SerializationPath}]");
+                }
+                else
+                    SerializationPath = string.Empty;
+            }
+            else
+                SerializationPath = string.Empty;
+
+//            Generate();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -50,6 +72,10 @@ namespace ContactsApp
             listView2.BackColor = BlackColor;
             listView2.ForeColor = BlueColor;
             listView2.BorderStyle = BorderStyle.None;
+
+            lblEmpty.Visible = false;
+            lblEmpty.BackColor = BlackColor;
+            lblEmpty.ForeColor = BlueColor;
 
             txtSearch.BackColor = BlackColor;
             txtSearch.ForeColor = Color.Gray;
@@ -68,7 +94,6 @@ namespace ContactsApp
             btnCancel.ForeColor = WhiteColor;
             btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.FlatStyle = FlatStyle.Flat;
-
 
             menuStrip1.BackColor = BlackColor;
             menuStrip1.ForeColor = BlueColor;
@@ -95,6 +120,28 @@ namespace ContactsApp
                     }
                 }
             }
+
+            if (SerializationPath != string.Empty)
+            {
+                try
+                {
+                    using (var stream = new FileStream(SerializationPath, FileMode.Open,
+                        FileAccess.Read))
+                    {
+                        var formatter = new BinaryFormatter();
+                        Contacts = (SortedDictionary<char, ISet<ContactEntry>>) formatter.Deserialize(stream);
+                    }
+
+                    Console.WriteLine($"Contacts have been successfully deserialized from " +
+                                      $"[{SerializationPath}]");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"ERROR: Contacts cannot be deserialized\n {ex.Message}");
+                }
+            }
+            else
+                Console.WriteLine($"Contacts cannot be deserialized, path is empty");
 
             Display();
         }
@@ -235,10 +282,27 @@ namespace ContactsApp
                     listView1.Items.Add(listViewItem);
                 }
             }
+
+            if (Contacts.Count == 0)
+            {
+                lblEmpty.Text = "       No contacts available.\nPlease add or import contacts.";
+                lblEmpty.Visible = true;
+                listView1.Visible = listView2.Visible = false;
+                txtSearch.ReadOnly = true;
+            }
+            else
+            {
+                lblEmpty.Visible = false;
+                listView1.Visible = true;
+                listView2.Visible = false;
+                txtSearch.ReadOnly = false;
+            }
         }
 
         private void txtSearch_Enter(object sender, EventArgs e)
         {
+            if (lblEmpty.Visible)
+                return;
             if (txtSearch.Text.Trim().Equals("Search..."))
                 txtSearch.Text = "";
             txtSearch.BorderStyle = BorderStyle.Fixed3D;
@@ -246,11 +310,15 @@ namespace ContactsApp
 
         private void txtSearch_Leave(object sender, EventArgs e)
         {
+            if (lblEmpty.Visible)
+                return;
             txtSearch.BorderStyle = BorderStyle.FixedSingle;
         }
 
         private void txtSearch_MouseEnter(object sender, EventArgs e)
         {
+            if (lblEmpty.Visible)
+                return;
             if (txtSearch.Text.Trim().Equals("Search..."))
                 txtSearch.Text = string.Empty;
             txtSearch.BorderStyle = BorderStyle.Fixed3D;
@@ -259,18 +327,24 @@ namespace ContactsApp
 
         private void txtSearch_MouseLeave(object sender, EventArgs e)
         {
+            if (lblEmpty.Visible)
+                return;
             if (txtSearch.Text.Trim().Equals(""))
                 txtSearch.Text = "Search...";
         }
 
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
+            if (lblEmpty.Visible)
+                return;
             if (txtSearch.Text.Trim().Equals("Search..."))
                 txtSearch.Text = "";
         }
 
         private void txtSearch_KeyUp(object sender, KeyEventArgs e)
         {
+            if (lblEmpty.Visible)
+                return;
             string search = txtSearch.Text.Trim().ToLower();
 
             if (!search.Equals("") && !search.Equals("Search..."))
@@ -387,6 +461,42 @@ namespace ContactsApp
             if (MessageBox.Show("Are you sure you want to quit the application", "Quit the application",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 e.Cancel = true;
+
+            if (!Directory.Exists(FolderPath))
+            {
+                try
+                {
+                    Directory.CreateDirectory(FolderPath);
+                    Console.WriteLine($"Successfully created [{FolderPath}] directory");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"ERROR: Directory on path [{FolderPath}] cannot be created!\n" +
+                                      $"{ex.Message}");
+                    return;
+                }
+            }
+
+            if (SerializationPath == string.Empty)
+            {
+                SerializationPath = Path.Combine(FolderPath, "contacts.bin");
+                Console.WriteLine($"File path: [{SerializationPath}]");
+            }
+
+            try
+            {
+                using (var stream = new FileStream(SerializationPath, FileMode.Create, FileAccess.Write))
+                {
+                    var formatter = new BinaryFormatter();
+                    formatter.Serialize(stream, Contacts);
+                }
+
+                Console.WriteLine($"Contacts have been successfully serialized to [{SerializationPath}]");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: Cannot serialize contacts!\n{ex.Message}");
+            }
         }
 
         private ContactEntry GetContact(ListViewItem selectedItem)
