@@ -84,6 +84,8 @@ namespace ContactsApp
                     if (contact != null)
                     {
                         contactSet.Remove(contact);
+                        if (contactSet.Count == 0)
+                            Contacts.Remove(contact.FirstName[0]);
                         isDeleted = true;
                         break;
                     }
