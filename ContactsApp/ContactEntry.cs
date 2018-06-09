@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContactsApp
 {
+    [Serializable]
     public class ContactEntry : IEquatable<ContactEntry>
     {
         public string FirstName { get; set; }
