@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using ContactsApp.Exceptions;
 using MixERP.Net.VCards;
 using MixERP.Net.VCards.Models;
 using MixERP.Net.VCards.Serializer;
@@ -631,11 +632,16 @@ namespace ContactsApp
                             email = new Email() {EmailAddress = string.Empty};
                     }
 
-                    string number = NormalizeNumber(vcard.Telephones.ElementAt(0).Number.Trim());
+                    string number;
 
-                    if (number.Equals("Exception"))
+                    try
                     {
-                        Console.WriteLine("This application supports only mobile phone numbers!");
+                        number = NormalizeNumber(vcard.Telephones.ElementAt(0).Number.Trim());
+                    }
+                    catch (InvalidNumberFormatException ex)
+                    {
+                        Console.WriteLine($"This application supports only mobile phone numbers!\n" +
+                                          $"{ex.Message}");
                         counterUnsuccessful++;
                         continue;
                     }
@@ -787,8 +793,9 @@ namespace ContactsApp
                 sb.Append(number);
 
             if (!Regex.IsMatch(sb.ToString(),
-                @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase))
-                return "Exception"; // 07X YY YZZ or 07X YYYZ ZZ or similar
+                    @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase))
+                // 07X YY YZZ or 07X YYYZ ZZ or similar
+                throw new InvalidNumberFormatException($"Number {sb} is not a valid telephone number");
 
             if (sb.ToString().Split(' ').Length < 3)
                 for (int i = 0, j = 0; i < sb.Length; i++, j++)
@@ -796,8 +803,9 @@ namespace ContactsApp
                         sb.Insert(i, ' ');
 
             if (!Regex.IsMatch(sb.ToString(),
-                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
-                return "Exception"; // if not 07X YYY ZZZ
+                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+                // if not 07X YYY ZZZ
+                throw new InvalidNumberFormatException($"Number {sb} is not a valid telephone number");
 
             return sb.ToString();
         }
