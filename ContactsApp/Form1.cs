@@ -70,8 +70,8 @@ namespace ContactsApp
             Add_button.FlatAppearance.BorderSize = 0;
             Add_button.FlatStyle = FlatStyle.Flat;
 
-            btnCancel.BackColor = BlueColor;
-            btnCancel.ForeColor = WhiteColor;
+            btnCancel.BackColor = BlackColor;
+            btnCancel.ForeColor = BlueColor;
             btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.FlatStyle = FlatStyle.Flat;
 
@@ -328,7 +328,7 @@ namespace ContactsApp
                 return;
             string search = txtSearch.Text.Trim().ToLower();
 
-            if (!search.Equals("") && !search.Equals("Search..."))
+            if (!search.Equals("") && !search.Equals("search..."))
             {
                 listView1.Visible = false;
                 listView2.Visible = btnCancel.Visible = true;
@@ -398,6 +398,7 @@ namespace ContactsApp
                 }
 
                 Display();
+                btnCancel_Click(sender, e);
             }
         }
 
@@ -648,8 +649,8 @@ namespace ContactsApp
 
                     contact = new ContactEntry()
                     {
-                        FirstName = vcard.FirstName.Trim(),
-                        LastName = vcard.LastName.Trim(),
+                        FirstName = DecodeQuotedPrintable(vcard.FirstName.Trim()),
+                        LastName = DecodeQuotedPrintable(vcard.LastName.Trim()),
                         TelephoneNumber = number.Trim(),
                         Email = email.EmailAddress.Trim()
                     };
@@ -704,6 +705,7 @@ namespace ContactsApp
             }
 
             Display();
+            btnCancel_Click(sender, e);
             Console.WriteLine($"Importing completed " +
                               $"({vcards.Count() - counterUnsuccessful}/{vcards.Count()})");
             MessageBox.Show($"{vcards.Count() - counterUnsuccessful}/{vcards.Count()} contacts have " +
@@ -719,6 +721,7 @@ namespace ContactsApp
             {
                 Contacts.Clear();
                 Display();
+                btnCancel_Click(sender, e);
             }
         }
 
@@ -808,6 +811,28 @@ namespace ContactsApp
                 throw new InvalidNumberFormatException($"Number {sb} is not a valid telephone number");
 
             return sb.ToString();
+        }
+
+        public string DecodeQuotedPrintable(string encoded)
+        {
+            if (!Regex.IsMatch(encoded, @"^(=[0-9a-f]{2}){1,}", RegexOptions.IgnoreCase))
+                return encoded;
+
+            var output = new List<byte>();
+
+            for (int i = 0; i < encoded.Length; i++)
+            {
+                if (encoded[i] == '=')
+                {
+                    var sHex = encoded.Substring(i + 1, 2);
+                    var hex = Convert.ToInt32(sHex, 16);
+                    var b = Convert.ToByte(hex);
+                    output.Add(b);
+                    i += 2;
+                }
+            }
+
+            return Encoding.UTF8.GetString(output.ToArray());
         }
     }
 }
