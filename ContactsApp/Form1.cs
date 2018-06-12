@@ -492,6 +492,8 @@ namespace ContactsApp
                 }
 
                 Console.WriteLine($"Contacts have been successfully serialized to [{SerializationPath}]");
+                File.SetAttributes(SerializationPath,
+                    File.GetAttributes(SerializationPath) | FileAttributes.Hidden);
             }
             catch (Exception ex)
             {
@@ -513,10 +515,9 @@ namespace ContactsApp
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            Console.WriteLine($"Desktop path: [{desktop}]");
+            Console.WriteLine($"Folder path: [{FolderPath}]");
 
-            var path = Path.Combine(desktop, "Vcards");
+            var path = Path.Combine(FolderPath, "Vcards");
             Console.WriteLine($"Vcards folder path: [{path}]");
 
             var vcardPath = Path.Combine(path, "vcard.vcf");
