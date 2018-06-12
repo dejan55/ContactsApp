@@ -108,7 +108,8 @@ namespace ContactsApp
                         FileAccess.Read))
                     {
                         var formatter = new BinaryFormatter();
-                        Contacts = (SortedDictionary<char, ISet<ContactEntry>>) formatter.Deserialize(stream);
+                        Contacts =
+                            (SortedDictionary<char, ISet<ContactEntry>>) formatter.Deserialize(stream);
                     }
 
                     Console.WriteLine($"Contacts have been successfully deserialized from " +
@@ -692,8 +693,8 @@ namespace ContactsApp
 
             Console.WriteLine("Importing completed");
             Display();
-            MessageBox.Show($"{vcards.Count() - counterUnsuccessful}/{vcards.Count()} contacts have been " +
-                            $"imported from [{vcardPath}]", "Imported successfully",
+            MessageBox.Show($"{vcards.Count() - counterUnsuccessful}/{vcards.Count()} contacts have " +
+                            $"been imported from [{vcardPath}]", "Imported successfully",
                 MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
