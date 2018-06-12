@@ -746,7 +746,7 @@ namespace ContactsApp
                                 "You have this number saved with different name.\n" +
                                 $"Here are the informations: {usr} {usr.TelephoneNumber}",
                                 "Found duplicate",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return true;
                     }
                 }
