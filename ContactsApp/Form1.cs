@@ -501,18 +501,6 @@ namespace ContactsApp
             }
         }
 
-        private ContactEntry GetContact(ListViewItem selectedItem)
-        {
-            foreach (var contact in Contacts.Values)
-            {
-                var result = contact.FirstOrDefault(c => c.TelephoneNumber == selectedItem.ToolTipText);
-                if (result != null)
-                    return result;
-            }
-
-            return null;
-        }
-
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Console.WriteLine($"Folder path: [{FolderPath}]");
@@ -765,6 +753,18 @@ namespace ContactsApp
             }
 
             return false;
+        }
+
+        private ContactEntry GetContact(ListViewItem selectedItem)
+        {
+            foreach (var contact in Contacts.Values)
+            {
+                var result = contact.FirstOrDefault(c => c.TelephoneNumber == selectedItem.ToolTipText);
+                if (result != null)
+                    return result;
+            }
+
+            return null;
         }
 
         private static string NormalizeNumber(string number)
