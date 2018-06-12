@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ContactsApp
@@ -79,6 +74,24 @@ namespace ContactsApp
                 txtFirstName.Text = sb.Append(char.ToUpper(txtFirstName.Text[0]))
                     .Append(txtFirstName.Text.Substring(1)).ToString();
             }
+
+            if (!txtFirstName.Text.Trim().Equals("") &&
+                !txtLastName.Text.Trim().Equals("") &&
+                !txtNumber.Text.Trim().Equals("") &&
+                Regex.IsMatch(txtNumber.Text.Trim(),
+                    @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase) &&
+                (MailTxtBox.Text.Equals("") ||
+                 Regex.IsMatch(MailTxtBox.Text.Trim(),
+                     @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$")
+                ))
+            {
+                btnAdd.Enabled = true;
+                errorProvider1.Clear();
+            }
+            else
+            {
+                btnAdd.Enabled = false;
+            }
         }
 
         private void txtFirstName_Validating(object sender, CancelEventArgs e)
@@ -103,6 +116,24 @@ namespace ContactsApp
                 txtLastName.Text = sb.Append(char.ToUpper(txtLastName.Text[0]))
                     .Append(txtLastName.Text.Substring(1)).ToString();
             }
+
+            if (!txtFirstName.Text.Trim().Equals("") &&
+                !txtLastName.Text.Trim().Equals("") &&
+                !txtNumber.Text.Trim().Equals("") &&
+                Regex.IsMatch(txtNumber.Text.Trim(),
+                    @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase) &&
+                (MailTxtBox.Text.Equals("") ||
+                 Regex.IsMatch(MailTxtBox.Text.Trim(),
+                     @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$")
+                ))
+            {
+                btnAdd.Enabled = true;
+                errorProvider1.Clear();
+            }
+            else
+            {
+                btnAdd.Enabled = false;
+            }
         }
 
         private void txtLastName_Validating(object sender, CancelEventArgs e)
@@ -122,13 +153,31 @@ namespace ContactsApp
         private void txtNumber_Leave(object sender, EventArgs e)
         {
             if (!txtNumber.Text.Trim().Equals(""))
-            {
                 txtNumber.Text = NormalizeNumber(txtNumber.Text.Trim());
+
+            if (!txtFirstName.Text.Trim().Equals("") &&
+                !txtLastName.Text.Trim().Equals("") &&
+                !txtNumber.Text.Trim().Equals("") &&
+                Regex.IsMatch(txtNumber.Text.Trim(),
+                    @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase) &&
+                (MailTxtBox.Text.Equals("") ||
+                 Regex.IsMatch(MailTxtBox.Text.Trim(),
+                     @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$")
+                ))
+            {
+                btnAdd.Enabled = true;
+                errorProvider1.Clear();
+            }
+            else
+            {
+                btnAdd.Enabled = false;
             }
         }
 
         private void txtNumber_Validating(object sender, CancelEventArgs e)
         {
+            txtNumber.Text = NormalizeNumber(txtNumber.Text.Trim());
+
             if (txtNumber.Text.Trim().Equals(""))
             {
                 e.Cancel = true;
