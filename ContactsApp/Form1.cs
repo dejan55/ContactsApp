@@ -460,9 +460,14 @@ namespace ContactsApp
             else
                 Console.WriteLine($"Directory [{FolderPath}] already exists!");
 
+
             Console.WriteLine($"Starting serialization to [{SerializationPath}] ...");
             try
             {
+                var myFile = new FileInfo(SerializationPath);
+                if (myFile.Exists)
+                    myFile.Attributes &= ~FileAttributes.Hidden;
+
                 using (var stream = new FileStream(SerializationPath, FileMode.Create, FileAccess.Write))
                 {
                     var formatter = new BinaryFormatter();
