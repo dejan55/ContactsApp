@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MixERP.Net.VCards;
 using MixERP.Net.VCards.Models;
@@ -27,10 +23,6 @@ namespace ContactsApp
         private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
         private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
-        private static readonly Label[] Labels = new Label[26];
-
-        private static readonly Font CustomFont = new Font("Verdana", 22F, FontStyle.Regular,
-            GraphicsUnit.Point, ((byte) (0)));
 
         public Form1()
         {
@@ -42,21 +34,9 @@ namespace ContactsApp
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 "ContactsApp");
             Console.WriteLine($"Folder Path: [{FolderPath}]");
-            var filePath = Path.Combine(FolderPath, "contacts.bin");
-            if (Directory.Exists(FolderPath))
-            {
-                if (File.Exists(filePath))
-                {
-                    SerializationPath = filePath;
-                    Console.WriteLine($"File path: [{SerializationPath}]");
-                }
-                else
-                    SerializationPath = string.Empty;
-            }
-            else
-                SerializationPath = string.Empty;
 
-//            Generate();
+            SerializationPath = Path.Combine(FolderPath, "contacts.bin");
+            Console.WriteLine($"File path: [{SerializationPath}]");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -83,7 +63,6 @@ namespace ContactsApp
 
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
-//            this.Font = new Font("Verdana", 16F, FontStyle.Regular);
 
             Add_button.BackColor = BlackColor;
             Add_button.ForeColor = BlueColor;
@@ -121,7 +100,7 @@ namespace ContactsApp
                 }
             }
 
-            if (SerializationPath != string.Empty)
+            if (File.Exists(SerializationPath))
             {
                 try
                 {
@@ -141,7 +120,7 @@ namespace ContactsApp
                 }
             }
             else
-                Console.WriteLine($"Contacts cannot be deserialized, path is empty");
+                Console.WriteLine($"Contacts cannot be deserialized, file does not exists!");
 
             Display();
         }
@@ -462,6 +441,7 @@ namespace ContactsApp
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 e.Cancel = true;
 
+            Console.WriteLine($"Attempting to create directory [{FolderPath}]...");
             if (!Directory.Exists(FolderPath))
             {
                 try
@@ -476,13 +456,10 @@ namespace ContactsApp
                     return;
                 }
             }
+            else
+                Console.WriteLine($"Directory [{FolderPath}] already exists!");
 
-            if (SerializationPath == string.Empty)
-            {
-                SerializationPath = Path.Combine(FolderPath, "contacts.bin");
-                Console.WriteLine($"File path: [{SerializationPath}]");
-            }
-
+            Console.WriteLine($"Starting serialization to [{SerializationPath}] ...");
             try
             {
                 using (var stream = new FileStream(SerializationPath, FileMode.Create, FileAccess.Write))
@@ -522,11 +499,11 @@ namespace ContactsApp
                     Console.WriteLine($"Directory [{path}] created.");
                 }
                 else
-                    Console.WriteLine($"Directory [{path}] already exists.");
+                    Console.WriteLine($"Directory [{path}] already exists!");
 
                 if (File.Exists(vcardPath))
                 {
-                    Console.WriteLine($"Deleting [{vcardPath}]");
+                    Console.WriteLine($"Deleting [{vcardPath}]...");
                     File.Delete(vcardPath);
                     Console.WriteLine($"Deleted [{vcardPath}]");
                 }
@@ -585,8 +562,12 @@ namespace ContactsApp
             }
 
             Console.WriteLine("Exporting completed");
-            MessageBox.Show($"{counter} contacts have been exported to [{vcardPath}]",
-                "Exported successfully", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            if (counter != 0)
+                MessageBox.Show($"{counter} contacts have been exported to [{vcardPath}]",
+                    "Exported successfully", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            else
+                MessageBox.Show("No contacts were exported",
+                    "Export was not performed", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
