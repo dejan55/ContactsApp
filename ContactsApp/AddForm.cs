@@ -119,6 +119,14 @@ namespace ContactsApp
             }
         }
 
+        private void txtNumber_Leave(object sender, EventArgs e)
+        {
+            if (!txtNumber.Text.Trim().Equals(""))
+            {
+                txtNumber.Text = NormalizeNumber(txtNumber.Text.Trim());
+            }
+        }
+
         private void txtNumber_Validating(object sender, CancelEventArgs e)
         {
             if (txtNumber.Text.Trim().Equals(""))
@@ -127,7 +135,7 @@ namespace ContactsApp
                 errorProvider1.SetError(txtNumber, "You must enter a telephone number!");
             }
             else if (!Regex.IsMatch(txtNumber.Text.Trim(),
-                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+                @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtNumber, "Invalid Format (07X YYY ZZZ)");
@@ -163,7 +171,7 @@ namespace ContactsApp
                 !txtLastName.Text.Trim().Equals("") &&
                 !txtNumber.Text.Trim().Equals("") &&
                 Regex.IsMatch(txtNumber.Text.Trim(),
-                    @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase) &&
+                    @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase) &&
                 (MailTxtBox.Text.Equals("") ||
                  Regex.IsMatch(MailTxtBox.Text.Trim(),
                      @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$")
@@ -188,6 +196,37 @@ namespace ContactsApp
                 e.Cancel = false;
             else
                 e.Cancel = true;
+        }
+
+        private static string NormalizeNumber(string number)
+        {
+            if (Regex.IsMatch(number,
+                @"^07[0-35-9]\s[0-9]{3}\s[0-9]{3}$", RegexOptions.IgnoreCase))
+                return number; // 07X YYY ZZZ
+
+            var sb = new StringBuilder();
+
+            if (number.StartsWith("+389 ")) // +389 7X YYY ZZZ
+                sb.Append(number.Replace("+389 ", "0"));
+            else if (number.StartsWith("+389")) // +3897X YYY ZZZ
+                sb.Append(number.Replace("+389", "0"));
+            else if (number.StartsWith("00389 ")) // 00389 7X YYY ZZZ
+                sb.Append(number.Replace("00389 ", "0"));
+            else if (number.StartsWith("00389")) // 003897X YYY ZZZ
+                sb.Append(number.Replace("00389", "0"));
+            else // 07X YYY ZZZ or 07XYYYZZZ
+                sb.Append(number);
+
+            if (!Regex.IsMatch(sb.ToString(),
+                @"^07[0-35-9]\s?[0-9]{3}\s?[0-9]{3}$", RegexOptions.IgnoreCase))
+                return sb.ToString(); // 07X YY YZZ or 07X YYYZ ZZ or similar
+
+            if (sb.ToString().Split(' ').Length < 3)
+                for (int i = 0, j = 0; i < sb.Length; i++, j++)
+                    if ((i == 3 && sb[i] != ' ') || (i == 7 && sb[i] != ' '))
+                        sb.Insert(i, ' ');
+
+            return sb.ToString();
         }
     }
 }
