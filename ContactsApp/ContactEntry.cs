@@ -24,7 +24,13 @@ namespace ContactsApp
 
         public override string ToString()
         {
-            return $"{FirstName} {LastName}";
+            if (!string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName))
+                return $"{FirstName} {LastName}";
+            if (string.IsNullOrEmpty(FirstName))
+                return $"{LastName}";
+            if (string.IsNullOrEmpty(LastName))
+                return $"{FirstName}";
+            return $"{TelephoneNumber}";
         }
 
         public bool Equals(ContactEntry other)
