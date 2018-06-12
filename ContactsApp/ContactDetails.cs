@@ -47,7 +47,6 @@ namespace ContactsApp
                 try
                 {
                     string path;
-                    textBox1.Text = $"{SelectedContact.ImageBase64}";
                     using (var ms = new MemoryStream(Convert.FromBase64String(SelectedContact.ImageBase64)))
                     {
                         using (var bitmap = new Bitmap(ms))
