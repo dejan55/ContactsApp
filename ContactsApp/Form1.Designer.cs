@@ -108,7 +108,7 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCancel.Location = new System.Drawing.Point(533, 53);
+            this.btnCancel.Location = new System.Drawing.Point(402, 42);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(24, 20);
@@ -117,6 +117,7 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Visible = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.Add_button_MouseEnter);
             // 
             // menuStrip1
             // 
@@ -149,7 +150,7 @@
             this.newToolStripMenuItem.Image = global::ContactsApp.Properties.Resources._new;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.newToolStripMenuItem.Text = "&New";
             // 
             // exportToolStripMenuItem
@@ -157,7 +158,7 @@
             this.exportToolStripMenuItem.Image = global::ContactsApp.Properties.Resources.export;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             this.exportToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.exportToolStripMenuItem.Text = "&Export";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
@@ -166,7 +167,7 @@
             this.importToolStripMenuItem.Image = global::ContactsApp.Properties.Resources.import;
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
             this.importToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.importToolStripMenuItem.Text = "&Import";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -176,7 +177,7 @@
             this.exitToolStripMenuItem.Image = global::ContactsApp.Properties.Resources.shutdown;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -209,13 +210,13 @@
             // customizeToolStripMenuItem
             // 
             this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.customizeToolStripMenuItem.Text = "&Customize";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // helpToolStripMenuItem
@@ -232,26 +233,26 @@
             // contentsToolStripMenuItem
             // 
             this.contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
-            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(142, 26);
             this.contentsToolStripMenuItem.Text = "&Contents";
             // 
             // indexToolStripMenuItem
             // 
             this.indexToolStripMenuItem.Name = "indexToolStripMenuItem";
-            this.indexToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.indexToolStripMenuItem.Size = new System.Drawing.Size(142, 26);
             this.indexToolStripMenuItem.Text = "&Index";
             // 
             // searchToolStripMenuItem
             // 
             this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.searchToolStripMenuItem.Size = new System.Drawing.Size(142, 26);
             this.searchToolStripMenuItem.Text = "&Search";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Image = global::ContactsApp.Properties.Resources.about;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(142, 26);
             this.aboutToolStripMenuItem.Text = "&About...";
             // 
             // lblEmpty
