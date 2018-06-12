@@ -484,6 +484,22 @@ namespace ContactsApp
             {
                 Console.WriteLine($"ERROR: Cannot serialize contacts!\n{ex.Message}");
             }
+
+            try
+            {
+                Console.WriteLine("Attempting to remove Images directory...");
+                if (Directory.Exists("Images"))
+                {
+                    Directory.Delete("Images", recursive: true);
+                    Console.WriteLine("Images directory removed!");
+                }
+                else
+                    Console.WriteLine("Images directory does not exists!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+            }
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -548,7 +564,8 @@ namespace ContactsApp
                                 EmailAddress = contact.Email,
                                 Type = EmailType.Smtp
                             }
-                        }
+                        },
+                        Photo = new Photo(true, "PNG", contact.ImageBase64)
                     };
 
                     try
@@ -647,12 +664,18 @@ namespace ContactsApp
                         continue;
                     }
 
+                    var photo = vcard.Photo;
+                    var photoString = string.Empty;
+                    if (photo != null)
+                        photoString = photo.Contents;
+
                     contact = new ContactEntry()
                     {
                         FirstName = DecodeQuotedPrintable(vcard.FirstName.Trim()),
                         LastName = DecodeQuotedPrintable(vcard.LastName.Trim()),
                         TelephoneNumber = number.Trim(),
-                        Email = email.EmailAddress.Trim()
+                        Email = email.EmailAddress.Trim(),
+                        ImageBase64 = photoString
                     };
                 }
                 catch (Exception ex)
