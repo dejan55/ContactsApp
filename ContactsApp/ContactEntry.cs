@@ -13,13 +13,14 @@ namespace ContactsApp
         public string LastName { get; set; }
         public string TelephoneNumber { get; set; }
         public string Email { get; set; }
+        public string ImageBase64 { get; set; }
 
         public static IEqualityComparer<ContactEntry>
             TelephoneComparer = EqualityComparer<ContactEntry>.Default;
 
         public ContactEntry()
         {
-            FirstName = LastName = TelephoneNumber = Email = string.Empty;
+            FirstName = LastName = TelephoneNumber = Email = ImageBase64 = string.Empty;
         }
 
         public override string ToString()
