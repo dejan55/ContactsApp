@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.MailTxtBox = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -39,8 +41,6 @@
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.label4 = new System.Windows.Forms.Label();
-            this.MailTxtBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -57,20 +57,44 @@
             this.groupBox1.Controls.Add(this.txtLastName);
             this.groupBox1.Controls.Add(this.txtFirstName);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(13, 13);
+            this.groupBox1.Location = new System.Drawing.Point(17, 16);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(268, 202);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(357, 249);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Informations about the contact";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(9, 166);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label4.Size = new System.Drawing.Size(63, 24);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "E-mail";
+            // 
+            // MailTxtBox
+            // 
+            this.MailTxtBox.Location = new System.Drawing.Point(188, 166);
+            this.MailTxtBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MailTxtBox.Name = "MailTxtBox";
+            this.MailTxtBox.Size = new System.Drawing.Size(141, 22);
+            this.MailTxtBox.TabIndex = 8;
+            this.MailTxtBox.Validating += new System.ComponentModel.CancelEventHandler(this.MailTxtBox_Validating);
             // 
             // btnCancel
             // 
             this.btnCancel.CausesValidation = false;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(138, 171);
+            this.btnCancel.Location = new System.Drawing.Point(184, 210);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(124, 23);
+            this.btnCancel.Size = new System.Drawing.Size(165, 28);
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -80,9 +104,10 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(7, 171);
+            this.btnAdd.Location = new System.Drawing.Point(9, 210);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(124, 23);
+            this.btnAdd.Size = new System.Drawing.Size(165, 28);
             this.btnAdd.TabIndex = 6;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -94,10 +119,11 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 98);
+            this.label3.Location = new System.Drawing.Point(8, 121);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label3.Size = new System.Drawing.Size(131, 18);
+            this.label3.Size = new System.Drawing.Size(174, 24);
             this.label3.TabIndex = 5;
             this.label3.Text = "Telephone number";
             // 
@@ -105,27 +131,31 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 64);
+            this.label2.Location = new System.Drawing.Point(8, 79);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label2.Size = new System.Drawing.Size(80, 18);
+            this.label2.Size = new System.Drawing.Size(99, 24);
             this.label2.TabIndex = 4;
             this.label2.Text = "Last Name";
             // 
             // txtNumber
             // 
-            this.txtNumber.Location = new System.Drawing.Point(140, 98);
+            this.txtNumber.Location = new System.Drawing.Point(187, 121);
+            this.txtNumber.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtNumber.Name = "txtNumber";
-            this.txtNumber.Size = new System.Drawing.Size(107, 20);
+            this.txtNumber.Size = new System.Drawing.Size(141, 22);
             this.txtNumber.TabIndex = 3;
             this.txtNumber.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_KeyUp);
+            this.txtNumber.Leave += new System.EventHandler(this.txtNumber_Leave);
             this.txtNumber.Validating += new System.ComponentModel.CancelEventHandler(this.txtNumber_Validating);
             // 
             // txtLastName
             // 
-            this.txtLastName.Location = new System.Drawing.Point(140, 64);
+            this.txtLastName.Location = new System.Drawing.Point(187, 79);
+            this.txtLastName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(107, 20);
+            this.txtLastName.Size = new System.Drawing.Size(141, 22);
             this.txtLastName.TabIndex = 2;
             this.txtLastName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_KeyUp);
             this.txtLastName.Leave += new System.EventHandler(this.txtLastName_Leave);
@@ -133,9 +163,10 @@
             // 
             // txtFirstName
             // 
-            this.txtFirstName.Location = new System.Drawing.Point(140, 31);
+            this.txtFirstName.Location = new System.Drawing.Point(187, 38);
+            this.txtFirstName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.Size = new System.Drawing.Size(107, 20);
+            this.txtFirstName.Size = new System.Drawing.Size(141, 22);
             this.txtFirstName.TabIndex = 1;
             this.txtFirstName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_KeyUp);
             this.txtFirstName.Leave += new System.EventHandler(this.txtFirstName_Leave);
@@ -145,10 +176,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 31);
+            this.label1.Location = new System.Drawing.Point(8, 38);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label1.Size = new System.Drawing.Size(81, 18);
+            this.label1.Size = new System.Drawing.Size(101, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "First Name";
             // 
@@ -156,34 +188,16 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(7, 135);
-            this.label4.Name = "label4";
-            this.label4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label4.Size = new System.Drawing.Size(50, 18);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "E-mail";
-            // 
-            // MailTxtBox
-            // 
-            this.MailTxtBox.Location = new System.Drawing.Point(141, 135);
-            this.MailTxtBox.Name = "MailTxtBox";
-            this.MailTxtBox.Size = new System.Drawing.Size(107, 20);
-            this.MailTxtBox.TabIndex = 8;
-            this.MailTxtBox.Validating += new System.ComponentModel.CancelEventHandler(this.MailTxtBox_Validating);
-            // 
             // AddForm
             // 
             this.AcceptButton = this.btnAdd;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(293, 227);
+            this.ClientSize = new System.Drawing.Size(391, 279);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "AddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
