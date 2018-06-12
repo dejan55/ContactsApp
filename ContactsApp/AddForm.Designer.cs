@@ -41,12 +41,19 @@
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnPick = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.panel1);
+            this.groupBox1.Controls.Add(this.btnPick);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.MailTxtBox);
             this.groupBox1.Controls.Add(this.btnCancel);
@@ -58,10 +65,10 @@
             this.groupBox1.Controls.Add(this.txtFirstName);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(17, 16);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(357, 249);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(357, 312);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Informations about the contact";
@@ -80,8 +87,8 @@
             // 
             // MailTxtBox
             // 
-            this.MailTxtBox.Location = new System.Drawing.Point(188, 166);
-            this.MailTxtBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MailTxtBox.Location = new System.Drawing.Point(187, 166);
+            this.MailTxtBox.Margin = new System.Windows.Forms.Padding(4);
             this.MailTxtBox.Name = "MailTxtBox";
             this.MailTxtBox.Size = new System.Drawing.Size(141, 22);
             this.MailTxtBox.TabIndex = 8;
@@ -91,8 +98,8 @@
             // 
             this.btnCancel.CausesValidation = false;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(184, 210);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Location = new System.Drawing.Point(182, 271);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(165, 28);
             this.btnCancel.TabIndex = 7;
@@ -104,8 +111,8 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(9, 210);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAdd.Location = new System.Drawing.Point(9, 271);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(165, 28);
             this.btnAdd.TabIndex = 6;
@@ -142,7 +149,7 @@
             // txtNumber
             // 
             this.txtNumber.Location = new System.Drawing.Point(187, 121);
-            this.txtNumber.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtNumber.Margin = new System.Windows.Forms.Padding(4);
             this.txtNumber.Name = "txtNumber";
             this.txtNumber.Size = new System.Drawing.Size(141, 22);
             this.txtNumber.TabIndex = 3;
@@ -153,7 +160,7 @@
             // txtLastName
             // 
             this.txtLastName.Location = new System.Drawing.Point(187, 79);
-            this.txtLastName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtLastName.Margin = new System.Windows.Forms.Padding(4);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(141, 22);
             this.txtLastName.TabIndex = 2;
@@ -164,7 +171,7 @@
             // txtFirstName
             // 
             this.txtFirstName.Location = new System.Drawing.Point(187, 38);
-            this.txtFirstName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFirstName.Margin = new System.Windows.Forms.Padding(4);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(141, 22);
             this.txtFirstName.TabIndex = 1;
@@ -188,16 +195,47 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // btnPick
+            // 
+            this.btnPick.CausesValidation = false;
+            this.btnPick.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnPick.Location = new System.Drawing.Point(187, 207);
+            this.btnPick.Margin = new System.Windows.Forms.Padding(4);
+            this.btnPick.Name = "btnPick";
+            this.btnPick.Size = new System.Drawing.Size(141, 40);
+            this.btnPick.TabIndex = 11;
+            this.btnPick.Text = "Pick an image ";
+            this.btnPick.UseVisualStyleBackColor = true;
+            this.btnPick.Click += new System.EventHandler(this.btnPick_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(9, 193);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(165, 71);
+            this.panel1.TabIndex = 12;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // AddForm
             // 
             this.AcceptButton = this.btnAdd;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(391, 279);
+            this.ClientSize = new System.Drawing.Size(391, 341);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "AddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -207,6 +245,9 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -225,5 +266,8 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox MailTxtBox;
+        private System.Windows.Forms.Button btnPick;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

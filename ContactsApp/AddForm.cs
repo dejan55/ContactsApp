@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -17,6 +19,7 @@ namespace ContactsApp
         public string LastName { get; set; }
         public string TelephoneNumber { get; set; }
         public string Mail { get; set; }
+        public string ImageBase64 { get; set; }
 
 
         public AddForm()
@@ -34,6 +37,10 @@ namespace ContactsApp
             btnCancel.BackColor = BlackColor;
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.FlatAppearance.BorderSize = 0;
+
+            btnPick.BackColor = BlackColor;
+            btnPick.FlatStyle = FlatStyle.Flat;
+            btnPick.FlatAppearance.BorderSize = 0;
 
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
@@ -237,7 +244,7 @@ namespace ContactsApp
 
         private void AddForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (DialogResult == DialogResult.OK)
+            if (DialogResult == DialogResult.OK || DialogResult == DialogResult.None)
                 e.Cancel = false;
             else if (MessageBox.Show("Are you sure you want to discard the new contact?",
                          "Discard the contact",
@@ -245,6 +252,9 @@ namespace ContactsApp
                 e.Cancel = false;
             else
                 e.Cancel = true;
+
+            if (pictureBox1.Image != null)
+                pictureBox1.Image.Dispose();
         }
 
         private static string NormalizeNumber(string number)
@@ -276,6 +286,108 @@ namespace ContactsApp
                         sb.Insert(i, ' ');
 
             return sb.ToString();
+        }
+
+        private void btnPick_Click(object sender, EventArgs e)
+        {
+            Directory.CreateDirectory("Images");
+            var dialog = new OpenFileDialog();
+            dialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG";
+            dialog.Title = "Pick an image";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string format;
+                    using (var ms = new MemoryStream())
+                    {
+                        using (var bitmap = new Bitmap(dialog.FileName))
+                        {
+                            format = dialog.FileName.Substring(dialog.FileName.LastIndexOf(".") + 1);
+
+                            if (format == "bmp")
+                                bitmap.Save(ms, ImageFormat.Bmp);
+                            else if (format == "jpg")
+                                bitmap.Save(ms, ImageFormat.Jpeg);
+                            else if (format == "png")
+                                bitmap.Save(ms, ImageFormat.Png);
+                            else if (format == "gif")
+                                bitmap.Save(ms, ImageFormat.Gif);
+                            else if (format == "tiff")
+                                bitmap.Save(ms, ImageFormat.Tiff);
+
+                            ImageBase64 = Convert.ToBase64String(ms.GetBuffer());
+                        }
+                    }
+
+                    string path;
+                    using (var ms = new MemoryStream(Convert.FromBase64String(ImageBase64)))
+                    {
+                        using (var bitmap = new Bitmap(ms))
+                        {
+                            path = Path.Combine("Images",
+                                "picture-" +
+                                $"{DateTime.Now.Year}{DateTime.Now.Month}" +
+                                $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}");
+                            if (format == "bmp")
+                                bitmap.Save($"{path}.{format}", ImageFormat.Bmp);
+                            else if (format == "jpg")
+                                bitmap.Save($"{path}.{format}", ImageFormat.Jpeg);
+                            else if (format == "png")
+                                bitmap.Save($"{path}.{format}", ImageFormat.Png);
+                            else if (format == "gif")
+                                bitmap.Save($"{path}.{format}", ImageFormat.Gif);
+                            else if (format == "tiff")
+                                bitmap.Save($"{path}.{format}", ImageFormat.Tiff);
+                        }
+                    }
+
+                    using (var bmpImg = new Bitmap($"{path}.{format}"))
+                    {
+                        using (var resized = new Bitmap(bmpImg, new Size(50, 50)))
+                        {
+                            path = Path.Combine("Images",
+                                "picture-" +
+                                $"{DateTime.Now.Year}{DateTime.Now.Month}" +
+                                $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}");
+                            if (format == "bmp")
+                                resized.Save($"{path}.{format}", ImageFormat.Bmp);
+                            else if (format == "jpg")
+                                resized.Save($"{path}.{format}", ImageFormat.Jpeg);
+                            else if (format == "png")
+                                resized.Save($"{path}.{format}", ImageFormat.Png);
+                            else if (format == "gif")
+                                resized.Save($"{path}.{format}", ImageFormat.Gif);
+                            else if (format == "tiff")
+                                resized.Save($"{path}.{format}", ImageFormat.Tiff);
+                        }
+                    }
+
+                    var oldImg = pictureBox1.Image;
+                    var bmp = new Bitmap($"{path}.{format}");
+
+                    SuspendLayout();
+                    pictureBox1.Size = panel1.Size;
+                    pictureBox1.Image = bmp;
+                    if (oldImg != null && oldImg != bmp)
+                    {
+                        oldImg.Dispose();
+                    }
+
+                    ResumeLayout();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"{ex.Message}");
+                    MessageBox.Show("Something wrong has happened!", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+
+            DialogResult = DialogResult.None;
         }
     }
 }
