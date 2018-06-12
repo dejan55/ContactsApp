@@ -31,6 +31,13 @@
             this.components = new System.ComponentModel.Container();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnPick = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnSave4 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtEmail = new System.Windows.Forms.TextBox();
             this.btnSave3 = new System.Windows.Forms.Button();
             this.btnSave2 = new System.Windows.Forms.Button();
             this.btnSave1 = new System.Windows.Forms.Button();
@@ -44,10 +51,9 @@
             this.btnSendSMS = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnSave4 = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtEmail = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,6 +72,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnPick);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.btnSave4);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.txtEmail);
@@ -83,10 +92,89 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(459, 200);
+            this.groupBox1.Size = new System.Drawing.Size(459, 285);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Details";
+            // 
+            // btnPick
+            // 
+            this.btnPick.CausesValidation = false;
+            this.btnPick.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnPick.Location = new System.Drawing.Point(359, 211);
+            this.btnPick.Margin = new System.Windows.Forms.Padding(4);
+            this.btnPick.Name = "btnPick";
+            this.btnPick.Size = new System.Drawing.Size(93, 36);
+            this.btnPick.TabIndex = 15;
+            this.btnPick.Text = "Pick new";
+            this.btnPick.UseVisualStyleBackColor = true;
+            this.btnPick.Click += new System.EventHandler(this.btnPick_Click);
+            this.btnPick.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
+            this.btnPick.MouseLeave += new System.EventHandler(this.btn_MouseLeave);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(5, 221);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 17);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Image:";
+            // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(163, 188);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(177, 71);
+            this.panel1.TabIndex = 13;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // btnSave4
+            // 
+            this.btnSave4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSave4.Location = new System.Drawing.Point(377, 151);
+            this.btnSave4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSave4.Name = "btnSave4";
+            this.btnSave4.Size = new System.Drawing.Size(75, 23);
+            this.btnSave4.TabIndex = 8;
+            this.btnSave4.Text = "Save";
+            this.btnSave4.UseVisualStyleBackColor = true;
+            this.btnSave4.Visible = false;
+            this.btnSave4.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave4.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
+            this.btnSave4.MouseLeave += new System.EventHandler(this.btn_MouseLeave);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(5, 151);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(102, 17);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Email Address:";
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Location = new System.Drawing.Point(163, 151);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.ReadOnly = true;
+            this.txtEmail.Size = new System.Drawing.Size(177, 22);
+            this.txtEmail.TabIndex = 4;
+            this.txtEmail.Click += new System.EventHandler(this.txt_Click);
+            this.txtEmail.Leave += new System.EventHandler(this.txt_Leave);
+            this.txtEmail.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt_MouseDoubleClick);
+            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating);
             // 
             // btnSave3
             // 
@@ -137,7 +225,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 5.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(291, 181);
+            this.label4.Location = new System.Drawing.Point(291, 262);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(168, 13);
             this.label4.TabIndex = 0;
@@ -198,7 +286,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(36, 227);
+            this.btnDelete.Location = new System.Drawing.Point(36, 315);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(115, 44);
@@ -211,7 +299,7 @@
             // 
             // btnSendSMS
             // 
-            this.btnSendSMS.Location = new System.Drawing.Point(306, 227);
+            this.btnSendSMS.Location = new System.Drawing.Point(306, 315);
             this.btnSendSMS.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSendSMS.Name = "btnSendSMS";
             this.btnSendSMS.Size = new System.Drawing.Size(115, 44);
@@ -237,49 +325,12 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // btnSave4
-            // 
-            this.btnSave4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSave4.Location = new System.Drawing.Point(377, 151);
-            this.btnSave4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnSave4.Name = "btnSave4";
-            this.btnSave4.Size = new System.Drawing.Size(75, 23);
-            this.btnSave4.TabIndex = 8;
-            this.btnSave4.Text = "Save";
-            this.btnSave4.UseVisualStyleBackColor = true;
-            this.btnSave4.Visible = false;
-            this.btnSave4.Click += new System.EventHandler(this.btnSave_Click);
-            this.btnSave4.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
-            this.btnSave4.MouseLeave += new System.EventHandler(this.btn_MouseLeave);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 151);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(102, 17);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Email Address:";
-            // 
-            // txtEmail
-            // 
-            this.txtEmail.Location = new System.Drawing.Point(163, 151);
-            this.txtEmail.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.ReadOnly = true;
-            this.txtEmail.Size = new System.Drawing.Size(177, 22);
-            this.txtEmail.TabIndex = 4;
-            this.txtEmail.Click += new System.EventHandler(this.txt_Click);
-            this.txtEmail.Leave += new System.EventHandler(this.txt_Leave);
-            this.txtEmail.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt_MouseDoubleClick);
-            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating);
-            // 
             // ContactDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnQuit;
-            this.ClientSize = new System.Drawing.Size(483, 290);
+            this.ClientSize = new System.Drawing.Size(483, 381);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnSendSMS);
             this.Controls.Add(this.btnDelete);
@@ -295,6 +346,9 @@
             this.Load += new System.EventHandler(this.ContactDetails_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
@@ -320,5 +374,9 @@
         private System.Windows.Forms.Button btnSave4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btnPick;
     }
 }

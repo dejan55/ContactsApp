@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ContactsApp
@@ -41,6 +41,49 @@ namespace ContactsApp
             txtNumber.Text = $"{SelectedContact.TelephoneNumber}";
             txtEmail.Text = $"{SelectedContact.Email}";
 
+            if (SelectedContact.ImageBase64 != string.Empty)
+            {
+                Directory.CreateDirectory("Images");
+                try
+                {
+                    string path;
+                    textBox1.Text = $"{SelectedContact.ImageBase64}";
+                    using (var ms = new MemoryStream(Convert.FromBase64String(SelectedContact.ImageBase64)))
+                    {
+                        using (var bitmap = new Bitmap(ms))
+                        {
+                            path = Path.Combine("Images",
+                                "picture-" +
+                                $"{DateTime.Now.Year}{DateTime.Now.Month}" +
+                                $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}.png");
+
+                            bitmap.Save(path);
+                        }
+                    }
+
+                    using (var bmpImg = new Bitmap($"{path}"))
+                    {
+                        using (var resized = new Bitmap(bmpImg, new Size(50, 50)))
+                        {
+                            path = Path.Combine("Images",
+                                "picture-" +
+                                $"{DateTime.Now.Year}{DateTime.Now.Month}" +
+                                $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}.png");
+
+                            resized.Save(path);
+                        }
+                    }
+
+                    pictureBox1.Image = new Bitmap(path);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"{ex.Message}");
+                }
+            }
+
             groupBox1.ForeColor = WhiteColor;
 
             label1.ForeColor = BlueColor;
@@ -48,12 +91,17 @@ namespace ContactsApp
             label3.ForeColor = BlueColor;
             label4.ForeColor = BlueColor;
             label5.ForeColor = BlueColor;
+            label6.ForeColor = BlueColor;
 
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
 
             btnDelete.BackColor = BlackColor;
             btnDelete.FlatStyle = FlatStyle.Flat;
+
+            btnPick.BackColor = BlackColor;
+            btnPick.ForeColor = BlueColor;
+            btnPick.FlatStyle = FlatStyle.Flat;
 
             btnSendSMS.BackColor = BlackColor;
             btnSendSMS.FlatStyle = FlatStyle.Flat;
@@ -356,7 +404,8 @@ namespace ContactsApp
 
         private void ContactDetails_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (btnSave1.Visible || btnSave2.Visible || btnSave3.Visible || btnSave4.Visible)
+            if (btnSave1.Visible || btnSave2.Visible || btnSave3.Visible || btnSave4.Visible ||
+                DialogResult == DialogResult.None)
                 e.Cancel = true;
             else
                 e.Cancel = false;
@@ -368,6 +417,9 @@ namespace ContactsApp
                 DialogResult = DialogResult.Yes;
             else
                 DialogResult = DialogResult.Cancel;
+
+            if (pictureBox1.Image != null)
+                pictureBox1.Image.Dispose();
         }
 
         private Button GetButton(string textBoxName)
@@ -456,6 +508,110 @@ namespace ContactsApp
                         sb.Insert(i, ' ');
 
             return sb.ToString();
+        }
+
+        private void btnPick_Click(object sender, EventArgs e)
+        {
+            Directory.CreateDirectory("Images");
+            var dialog = new OpenFileDialog();
+            dialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG";
+            dialog.Title = "Pick an image";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string format;
+                    using (var ms = new MemoryStream())
+                    {
+                        using (var bitmap = new Bitmap(dialog.FileName))
+                        {
+                            format = dialog.FileName.Substring(dialog.FileName.LastIndexOf(".") + 1);
+
+                            if (format == "bmp")
+                                bitmap.Save(ms, ImageFormat.Bmp);
+                            else if (format == "jpg")
+                                bitmap.Save(ms, ImageFormat.Jpeg);
+                            else if (format == "png")
+                                bitmap.Save(ms, ImageFormat.Png);
+                            else if (format == "gif")
+                                bitmap.Save(ms, ImageFormat.Gif);
+                            else if (format == "tiff")
+                                bitmap.Save(ms, ImageFormat.Tiff);
+
+                            SelectedContact.ImageBase64 = Convert.ToBase64String(ms.GetBuffer());
+                            isEdited = true;
+                        }
+                    }
+
+                    string path;
+                    using (var ms = new MemoryStream(
+                        Convert.FromBase64String(SelectedContact.ImageBase64)))
+                    {
+                        using (var bitmap = new Bitmap(ms))
+                        {
+                            path = Path.Combine("Images",
+                                "picture-" +
+                                $"{DateTime.Now.Year}{DateTime.Now.Month}" +
+                                $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}");
+                            if (format == "bmp")
+                                bitmap.Save($"{path}.{format}", ImageFormat.Bmp);
+                            else if (format == "jpg")
+                                bitmap.Save($"{path}.{format}", ImageFormat.Jpeg);
+                            else if (format == "png")
+                                bitmap.Save($"{path}.{format}", ImageFormat.Png);
+                            else if (format == "gif")
+                                bitmap.Save($"{path}.{format}", ImageFormat.Gif);
+                            else if (format == "tiff")
+                                bitmap.Save($"{path}.{format}", ImageFormat.Tiff);
+                        }
+                    }
+
+                    using (var bmpImg = new Bitmap($"{path}.{format}"))
+                    {
+                        using (var resized = new Bitmap(bmpImg, new Size(50, 50)))
+                        {
+                            path = Path.Combine("Images",
+                                "picture-" +
+                                $"{DateTime.Now.Year}{DateTime.Now.Month}" +
+                                $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}");
+                            if (format == "bmp")
+                                resized.Save($"{path}.{format}", ImageFormat.Bmp);
+                            else if (format == "jpg")
+                                resized.Save($"{path}.{format}", ImageFormat.Jpeg);
+                            else if (format == "png")
+                                resized.Save($"{path}.{format}", ImageFormat.Png);
+                            else if (format == "gif")
+                                resized.Save($"{path}.{format}", ImageFormat.Gif);
+                            else if (format == "tiff")
+                                resized.Save($"{path}.{format}", ImageFormat.Tiff);
+                        }
+                    }
+
+                    var oldImg = pictureBox1.Image;
+                    var bmp = new Bitmap($"{path}.{format}");
+
+                    SuspendLayout();
+                    pictureBox1.Size = panel1.Size;
+                    pictureBox1.Image = bmp;
+                    if (oldImg != null && oldImg != bmp)
+                    {
+                        oldImg.Dispose();
+                    }
+
+                    ResumeLayout();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"{ex.Message}");
+                    MessageBox.Show("Something wrong has happened!", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+
+            DialogResult = DialogResult.None;
         }
     }
 }
