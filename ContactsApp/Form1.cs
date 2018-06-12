@@ -562,7 +562,7 @@ namespace ContactsApp
                 }
             }
 
-            Console.WriteLine("Exporting completed");
+            Console.WriteLine($"Exporting completed ({counter} contacts exported)");
             if (counter != 0)
                 MessageBox.Show($"{counter} contacts have been exported to [{vcardPath}]",
                     "Exported successfully", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -650,6 +650,7 @@ namespace ContactsApp
 
                 if (contact == null)
                 {
+                    Console.WriteLine("Skipping null contact.");
                     counterUnsuccessful++;
                     continue;
                 }
@@ -691,11 +692,23 @@ namespace ContactsApp
                 Console.WriteLine($"Added [{contact}] to the contacts");
             }
 
-            Console.WriteLine("Importing completed");
             Display();
+            Console.WriteLine($"Importing completed " +
+                              $"({vcards.Count() - counterUnsuccessful}/{vcards.Count()})");
             MessageBox.Show($"{vcards.Count() - counterUnsuccessful}/{vcards.Count()} contacts have " +
                             $"been imported from [{vcardPath}]", "Imported successfully",
                 MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
+        private void removeAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to remove all of your contacts?",
+                    "Remove all contacts", MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                DialogResult.Yes)
+            {
+                Contacts.Clear();
+                Display();
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
