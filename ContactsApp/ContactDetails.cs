@@ -254,6 +254,12 @@ namespace ContactsApp
 
         private void txtNumber_Validating(object sender, CancelEventArgs e)
         {
+            if (!btnSave3.Visible)
+            {
+                errorProvider1.Clear();
+                return;
+            }
+
             if (txtNumber.Text.Trim().Equals(""))
             {
                 e.Cancel = true;
@@ -277,6 +283,12 @@ namespace ContactsApp
 
         private void txtFirstName_Validating(object sender, CancelEventArgs e)
         {
+            if (!btnSave1.Visible)
+            {
+                errorProvider1.Clear();
+                return;
+            }
+
             if (txtFirstName.Text.Trim().Equals(""))
             {
                 e.Cancel = true;
@@ -293,6 +305,12 @@ namespace ContactsApp
 
         private void txtLastName_Validating(object sender, CancelEventArgs e)
         {
+            if (!btnSave2.Visible)
+            {
+                errorProvider1.Clear();
+                return;
+            }
+
             if (txtLastName.Text.Trim().Equals(""))
             {
                 e.Cancel = true;
@@ -309,6 +327,12 @@ namespace ContactsApp
 
         private void txtEmail_Validating(object sender, CancelEventArgs e)
         {
+            if (!btnSave4.Visible)
+            {
+                errorProvider1.Clear();
+                return;
+            }
+
             if (txtEmail.Text.Trim().Equals("") ||
                 Regex.IsMatch(txtEmail.Text.Trim(), @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
             {
