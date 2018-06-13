@@ -14,6 +14,7 @@ namespace ContactsApp
         public string TelephoneNumber { get; set; }
         public string Email { get; set; }
         public string ImageBase64 { get; set; }
+        public List<Message> messages { get; set; }
 
         public static IEqualityComparer<ContactEntry>
             TelephoneComparer = EqualityComparer<ContactEntry>.Default;
@@ -21,6 +22,7 @@ namespace ContactsApp
         public ContactEntry()
         {
             FirstName = LastName = TelephoneNumber = Email = ImageBase64 = string.Empty;
+            messages = new List<Message>();
         }
 
         public override string ToString()
@@ -52,6 +54,11 @@ namespace ContactsApp
         public override int GetHashCode()
         {
             return (TelephoneNumber != null ? TelephoneNumber.GetHashCode() : 0);
+        }
+
+        public void SendMessage(Message msg)
+        {
+            messages.Add(msg);
         }
     }
 }

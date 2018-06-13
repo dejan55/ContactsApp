@@ -18,6 +18,11 @@ namespace ContactsApp
         private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
 
+
+        public String message { get; set; }
+        public String sender { get; set; }
+
+
         public ContactEntry SelectedContact { get; set; }
         private const string ApiKey = "jNutD8o0fsQ-gLQQLhMp4a7it6H1uKHCleEkiIPna0";
 
@@ -200,8 +205,9 @@ namespace ContactsApp
         {
             string result;
             var number = $"00389 {SelectedContact.TelephoneNumber.Substring(1)}";
-            var message = txtMessage.Text;
-            var sender = txtBoxSender.Text;
+
+            message = txtMessage.Text;
+            sender = txtBoxSender.Text;
 
             var url =
                 "https://api.txtlocal.com/send/?" +

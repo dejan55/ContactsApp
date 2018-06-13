@@ -104,6 +104,9 @@ namespace ContactsApp
 
             btnSendSMS.BackColor = BlackColor;
             btnSendSMS.FlatStyle = FlatStyle.Flat;
+
+            btnSent.FlatStyle = FlatStyle.Flat;
+            btnSent.BackColor = BlackColor;
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)
@@ -152,7 +155,12 @@ namespace ContactsApp
 
             var form = new SendSMS(SelectedContact);
 
-            form.ShowDialog();
+            var result = form.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                Message msg = new Message(form.sender, form.message);
+                SelectedContact.SendMessage(msg);
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -611,6 +619,12 @@ namespace ContactsApp
             }
 
             DialogResult = DialogResult.None;
+        }
+
+        private void btnSent_Click(object sender, EventArgs e)
+        {
+            SentMessages sm = new SentMessages(SelectedContact);
+            var res = sm.ShowDialog();
         }
     }
 }

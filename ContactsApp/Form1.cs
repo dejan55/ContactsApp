@@ -379,7 +379,8 @@ namespace ContactsApp
                     FirstName = f.FirstName,
                     LastName = f.LastName,
                     TelephoneNumber = f.TelephoneNumber,
-                    Email = f.Mail
+                    Email = f.Mail,
+                    messages = new List<Message>()
                 };
 
                 char key = char.ToUpper(contact.FirstName[0]);
