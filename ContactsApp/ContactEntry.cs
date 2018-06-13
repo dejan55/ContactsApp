@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContactsApp
 {
@@ -14,7 +11,7 @@ namespace ContactsApp
         public string TelephoneNumber { get; set; }
         public string Email { get; set; }
         public string ImageBase64 { get; set; }
-        public List<Message> messages { get; set; }
+        public List<Message> Messages { get; set; }
 
         public static IEqualityComparer<ContactEntry>
             TelephoneComparer = EqualityComparer<ContactEntry>.Default;
@@ -22,7 +19,7 @@ namespace ContactsApp
         public ContactEntry()
         {
             FirstName = LastName = TelephoneNumber = Email = ImageBase64 = string.Empty;
-            messages = new List<Message>();
+            Messages = new List<Message>();
         }
 
         public override string ToString()
@@ -58,7 +55,7 @@ namespace ContactsApp
 
         public void SendMessage(Message msg)
         {
-            messages.Add(msg);
+            Messages.Add(msg);
         }
     }
 }

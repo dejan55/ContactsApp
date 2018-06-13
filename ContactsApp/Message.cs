@@ -1,31 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContactsApp
 {
     [Serializable]
     public class Message
     {
-        public String sender { get; set; }
-        public String msg { get; set; }
+        public string Sender { get; set; }
+        public string Msg { get; set; }
 
-        public Message(String sender, String msg)
+        public Message(string sender, string msg)
         {
-            this.sender = sender;
-            this.msg = msg;
-        }
-        
-        public String ToString()
-        {
-            return sender;
+            this.Sender = sender;
+            this.Msg = msg;
         }
 
-        public String MessageToString()
+        public override string ToString()
         {
-            return msg;
+            return Sender;
+        }
+
+        public string MessageToString()
+        {
+            return Msg;
         }
     }
 }
