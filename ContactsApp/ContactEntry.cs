@@ -55,7 +55,14 @@ namespace ContactsApp
 
         public void SendMessage(Message msg)
         {
-            Messages.Add(msg);
+            try
+            {
+                Messages.Add(msg);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

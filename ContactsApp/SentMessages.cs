@@ -38,6 +38,9 @@ namespace ContactsApp
             listBox1.BackColor = BlackColor;
             listBox1.ForeColor = BlueColor;
 
+            listBox2.BackColor = BlackColor;
+            listBox2.ForeColor = BlueColor;
+
             displayMessage.ForeColor = BlueColor;
             displayMessage.BackColor = BlackColor;
             displayMessage.Visible = false;
@@ -59,9 +62,19 @@ namespace ContactsApp
         {
             try
             {
-                foreach (Message m in Contact.Messages)
+                if (Contact.Messages == null || Contact.Messages.Count == 0)
                 {
-                    listBox1.Items.Add(m.ToString());
+                    label1.Visible = true;
+                    label2.Visible = true;
+                }
+                else
+                {
+                    label1.Visible = false;
+                    label2.Visible = false;
+                    foreach (Message m in Contact.Messages)
+                    {
+                        listBox1.Items.Add(m.ToString());
+                    }
                 }
             }
             catch (Exception e)
@@ -79,6 +92,7 @@ namespace ContactsApp
             {
                 var msgs = Contact.Messages;
                 listBox1.Visible = false;
+                listBox2.Visible = false;
                 btnBack.Visible = true;
                 btnDelete.Visible = true;
                 displayMessage.Visible = true;
