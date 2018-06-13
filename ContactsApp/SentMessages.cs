@@ -34,6 +34,8 @@ namespace ContactsApp
         {
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
+            
+            this.MaximizeBox = false;
 
             btnBack.BackColor = BlackColor;
             btnBack.FlatStyle = FlatStyle.Flat;

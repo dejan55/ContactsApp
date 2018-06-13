@@ -24,7 +24,7 @@ namespace ContactsApp
 
 
         public ContactEntry SelectedContact { get; set; }
-        private const string ApiKey = "jNutD8o0fsQ-gLQQLhMp4a7it6H1uKHCleEkiIPna0";
+        private const string ApiKey = "uZimEj7Z5nE-TzrBJilwxswnVASyNztawkXQGWyNRw";
 
         public SendSMS(ContactEntry selectedContact)
         {
