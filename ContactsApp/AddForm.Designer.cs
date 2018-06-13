@@ -29,7 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnPick = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.MailTxtBox = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -41,13 +45,10 @@
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnPick = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -72,6 +73,37 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Informations about the contact";
+            // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(9, 193);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(165, 71);
+            this.panel1.TabIndex = 12;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // btnPick
+            // 
+            this.btnPick.CausesValidation = false;
+            this.btnPick.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnPick.Location = new System.Drawing.Point(187, 207);
+            this.btnPick.Margin = new System.Windows.Forms.Padding(4);
+            this.btnPick.Name = "btnPick";
+            this.btnPick.Size = new System.Drawing.Size(141, 40);
+            this.btnPick.TabIndex = 11;
+            this.btnPick.Text = "Pick an image ";
+            this.btnPick.UseVisualStyleBackColor = true;
+            this.btnPick.Click += new System.EventHandler(this.btnPick_Click);
             // 
             // label4
             // 
@@ -195,37 +227,6 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // btnPick
-            // 
-            this.btnPick.CausesValidation = false;
-            this.btnPick.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnPick.Location = new System.Drawing.Point(187, 207);
-            this.btnPick.Margin = new System.Windows.Forms.Padding(4);
-            this.btnPick.Name = "btnPick";
-            this.btnPick.Size = new System.Drawing.Size(141, 40);
-            this.btnPick.TabIndex = 11;
-            this.btnPick.Text = "Pick an image ";
-            this.btnPick.UseVisualStyleBackColor = true;
-            this.btnPick.Click += new System.EventHandler(this.btnPick_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(9, 193);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(165, 71);
-            this.panel1.TabIndex = 12;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // AddForm
             // 
             this.AcceptButton = this.btnAdd;
@@ -235,6 +236,7 @@
             this.ClientSize = new System.Drawing.Size(391, 341);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "AddForm";
@@ -244,10 +246,10 @@
             this.Load += new System.EventHandler(this.Add_Form_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
