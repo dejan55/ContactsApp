@@ -17,7 +17,6 @@ namespace ContactsApp
         private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
 
-
         public ContactEntry SelectedContact { get; set; }
         public IDictionary<char, ISet<ContactEntry>> Contacts { get; set; }
 
@@ -41,7 +40,7 @@ namespace ContactsApp
             txtNumber.Text = $"{SelectedContact.TelephoneNumber}";
             txtEmail.Text = $"{SelectedContact.Email}";
 
-            if (SelectedContact.ImageBase64 != string.Empty)
+            if (!string.IsNullOrWhiteSpace(SelectedContact.ImageBase64))
             {
                 Directory.CreateDirectory("Images");
                 try
@@ -158,7 +157,7 @@ namespace ContactsApp
             var result = form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Message msg = new Message(form.Sender, form.Message, form.Date);
+                Message msg = new Message(form.Sender, form.Message, $"{form.Date}");
                 SelectedContact.SendMessage(msg);
             }
         }
