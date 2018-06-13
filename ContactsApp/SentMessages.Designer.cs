@@ -33,9 +33,9 @@
             this.displayMessage = new System.Windows.Forms.RichTextBox();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.listBox2 = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBox1
@@ -45,7 +45,7 @@
             this.listBox1.ItemHeight = 20;
             this.listBox1.Location = new System.Drawing.Point(10, 10);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(293, 244);
+            this.listBox1.Size = new System.Drawing.Size(293, 264);
             this.listBox1.TabIndex = 0;
             this.listBox1.Click += new System.EventHandler(this.listBox1_Click);
             this.listBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDown);
@@ -54,7 +54,7 @@
             // displayMessage
             // 
             this.displayMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.displayMessage.Location = new System.Drawing.Point(10, 36);
+            this.displayMessage.Location = new System.Drawing.Point(10, 40);
             this.displayMessage.Name = "displayMessage";
             this.displayMessage.ReadOnly = true;
             this.displayMessage.Size = new System.Drawing.Size(294, 232);
@@ -75,7 +75,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(112, 11);
+            this.btnDelete.Location = new System.Drawing.Point(111, 11);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(97, 23);
             this.btnDelete.TabIndex = 3;
@@ -85,24 +85,11 @@
             this.btnDelete.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
             this.btnDelete.MouseLeave += new System.EventHandler(this.btn_MouseLeave);
             // 
-            // listBox2
-            // 
-            this.listBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 20;
-            this.listBox2.Location = new System.Drawing.Point(12, 10);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(293, 244);
-            this.listBox2.TabIndex = 0;
-            this.listBox2.Click += new System.EventHandler(this.listBox1_Click);
-            this.listBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDown);
-            this.listBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(76, 37);
+            this.label2.Location = new System.Drawing.Point(73, 43);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(160, 22);
             this.label2.TabIndex = 5;
@@ -112,24 +99,34 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(47, 15);
+            this.label1.Location = new System.Drawing.Point(49, 21);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(221, 22);
             this.label1.TabIndex = 4;
             this.label1.Text = "You don\'t have messages ";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(212, 17);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "label3";
+            // 
             // SentMessages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(313, 278);
+            this.ClientSize = new System.Drawing.Size(310, 279);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.displayMessage);
-            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnBack);
-            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.displayMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -149,8 +146,8 @@
         private System.Windows.Forms.RichTextBox displayMessage;
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
     }
 }

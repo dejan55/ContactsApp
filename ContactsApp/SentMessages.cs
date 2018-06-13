@@ -26,6 +26,8 @@ namespace ContactsApp
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
             this.Text = $"Messages sent to {Contact}";
+            
+            label3.Visible = false;
 
             btnBack.BackColor = BlackColor;
             btnBack.FlatStyle = FlatStyle.Flat;
@@ -37,9 +39,7 @@ namespace ContactsApp
 
             listBox1.BackColor = BlackColor;
             listBox1.ForeColor = BlueColor;
-
-            listBox2.BackColor = BlackColor;
-            listBox2.ForeColor = BlueColor;
+            
 
             displayMessage.ForeColor = BlueColor;
             displayMessage.BackColor = BlackColor;
@@ -66,6 +66,7 @@ namespace ContactsApp
                 {
                     label1.Visible = true;
                     label2.Visible = true;
+                    Console.WriteLine("Error messages not found 2018");
                 }
                 else
                 {
@@ -92,13 +93,14 @@ namespace ContactsApp
             {
                 var msgs = Contact.Messages;
                 listBox1.Visible = false;
-                listBox2.Visible = false;
                 btnBack.Visible = true;
                 btnDelete.Visible = true;
+                label3.Visible = true;
                 displayMessage.Visible = true;
                 try
                 {
                     displayMessage.Text = msgs[Selected].MessageToString();
+                    label3.Text = msgs[Selected].DateToString();
                 }
                 catch (Exception ex)
                 {
@@ -118,6 +120,7 @@ namespace ContactsApp
             displayMessage.Visible = false;
             btnBack.Visible = false;
             btnDelete.Visible = false;
+            label3.Visible = false;
             listBox1.Visible = true;
             listBox1.ClearSelected();
         }
@@ -138,6 +141,7 @@ namespace ContactsApp
             displayMessage.Visible = false;
             btnBack.Visible = false;
             btnDelete.Visible = false;
+            label3.Visible = false;
             listBox1.Visible = true;
             listBox1.ClearSelected();
         }
