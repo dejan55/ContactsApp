@@ -569,7 +569,7 @@ namespace ContactsApp
                                 Type = EmailType.Smtp
                             }
                         },
-                        Photo = new Photo(true, "PNG", contact.ImageBase64)
+                        Photo = new Photo(true, "JPEG", contact.ImageBase64)
                     };
 
                     try
