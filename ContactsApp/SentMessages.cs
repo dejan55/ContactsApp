@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ContactsApp
@@ -16,17 +10,14 @@ namespace ContactsApp
         private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
 
-        public ContactEntry contact { get; set; }
+        public ContactEntry Contact { get; set; }
         private int Selected { get; set; }
 
 
         public SentMessages(ContactEntry contact)
         {
             InitializeComponent();
-            btnBack.Visible = false;
-            btnDelete.Visible = false;
-            displayMessage.Visible = false;
-            this.contact = contact;
+            this.Contact = contact;
             Display();
         }
 
@@ -34,20 +25,22 @@ namespace ContactsApp
         {
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
-            
-            this.MaximizeBox = false;
+            this.Text = $"Messages sent to {Contact}";
 
             btnBack.BackColor = BlackColor;
             btnBack.FlatStyle = FlatStyle.Flat;
+            btnBack.Visible = false;
 
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.BackColor = BlackColor;
+            btnDelete.Visible = false;
 
             listBox1.BackColor = BlackColor;
             listBox1.ForeColor = BlueColor;
 
             displayMessage.ForeColor = BlueColor;
             displayMessage.BackColor = BlackColor;
+            displayMessage.Visible = false;
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)
@@ -66,12 +59,12 @@ namespace ContactsApp
         {
             try
             {
-                foreach (Message m in contact.messages)
+                foreach (Message m in Contact.Messages)
                 {
                     listBox1.Items.Add(m.ToString());
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("Exception ", e.Message);
             }
@@ -82,9 +75,9 @@ namespace ContactsApp
             Selected = listBox1.SelectedIndex;
             // debbuging
             Console.WriteLine($"Selected index: {Selected}");
-            if(Selected >= 0)
+            if (Selected >= 0)
             {
-                var msgs = contact.messages;
+                var msgs = Contact.Messages;
                 listBox1.Visible = false;
                 btnBack.Visible = true;
                 btnDelete.Visible = true;
@@ -120,11 +113,13 @@ namespace ContactsApp
             try
             {
                 listBox1.Items.RemoveAt(Selected);
-                contact.messages.RemoveAt(Selected);
-            }catch(Exception ex)
+                Contact.Messages.RemoveAt(Selected);
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+
             displayMessage.Text = "";
             displayMessage.Visible = false;
             btnBack.Visible = false;
@@ -133,13 +128,12 @@ namespace ContactsApp
             listBox1.ClearSelected();
         }
 
-        
 
         private void listBox1_MouseMove(object sender, MouseEventArgs e)
         {
             try
             {
-                var lb = (ListBox)sender;
+                var lb = (ListBox) sender;
                 Point pt = new Point(e.X, e.Y);
 
                 var index = lb.IndexFromPoint(pt);
@@ -154,7 +148,7 @@ namespace ContactsApp
                     base.OnMouseEnter(e);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -164,7 +158,7 @@ namespace ContactsApp
         {
             try
             {
-                var lb = (ListBox)sender;
+                var lb = (ListBox) sender;
                 Point pt = new Point(e.X, e.Y);
 
                 var index = lb.IndexFromPoint(pt);
