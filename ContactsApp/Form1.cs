@@ -380,7 +380,8 @@ namespace ContactsApp
                     LastName = f.LastName,
                     TelephoneNumber = f.TelephoneNumber,
                     Email = f.Mail,
-                    messages = new List<Message>()
+                    ImageBase64 = f.ImageBase64,
+                    Messages = new List<Message>()
                 };
 
                 char key = char.ToUpper(contact.FirstName[0]);
