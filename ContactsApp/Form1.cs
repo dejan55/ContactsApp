@@ -70,7 +70,7 @@ namespace ContactsApp
             Add_button.FlatAppearance.BorderSize = 0;
             Add_button.FlatStyle = FlatStyle.Flat;
 
-            btnCancel.BackColor = BlackColor;
+            btnCancel.BackColor = WhiteColor;
             btnCancel.ForeColor = BlueColor;
             btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.FlatStyle = FlatStyle.Flat;
@@ -270,6 +270,7 @@ namespace ContactsApp
                 lblEmpty.Visible = true;
                 listView1.Visible = listView2.Visible = false;
                 txtSearch.ReadOnly = true;
+                removeAllToolStripMenuItem.Enabled = false;
             }
             else
             {
@@ -277,6 +278,7 @@ namespace ContactsApp
                 listView1.Visible = true;
                 listView2.Visible = false;
                 txtSearch.ReadOnly = false;
+                removeAllToolStripMenuItem.Enabled = true;
             }
         }
 
