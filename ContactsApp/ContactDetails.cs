@@ -55,9 +55,9 @@ namespace ContactsApp
                                 "picture-" +
                                 $"{DateTime.Now.Year}{DateTime.Now.Month}" +
                                 $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
-                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}.png");
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}.jpg");
 
-                            bitmap.Save(path);
+                            bitmap.Save(path, ImageFormat.Jpeg);
                         }
                     }
 
@@ -69,9 +69,9 @@ namespace ContactsApp
                                 "picture-" +
                                 $"{DateTime.Now.Year}{DateTime.Now.Month}" +
                                 $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
-                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}.png");
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}.jpg");
 
-                            resized.Save(path);
+                            resized.Save(path, ImageFormat.Jpeg);
                         }
                     }
 
@@ -156,7 +156,7 @@ namespace ContactsApp
             var form = new SendSMS(SelectedContact);
 
             var result = form.ShowDialog();
-            if(result == DialogResult.OK)
+            if (result == DialogResult.OK)
             {
                 Message msg = new Message(form.sender, form.message);
                 SelectedContact.SendMessage(msg);
@@ -200,7 +200,8 @@ namespace ContactsApp
                         FirstName = txtFirstName.Text.Trim(),
                         LastName = txtLastName.Text.Trim(),
                         TelephoneNumber = txtNumber.Text.Trim(),
-                        Email = txtEmail.Text.Trim()
+                        Email = txtEmail.Text.Trim(),
+                        ImageBase64 = SelectedContact.ImageBase64
                     };
 
                     var key = contact.FirstName[0];
@@ -222,6 +223,12 @@ namespace ContactsApp
                 btnSendSMS.Enabled = true;
                 btnDelete.Enabled = true;
             }
+        }
+
+        private void btnSent_Click(object sender, EventArgs e)
+        {
+            SentMessages sm = new SentMessages(SelectedContact);
+            var res = sm.ShowDialog();
         }
 
         private void txt_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -263,7 +270,6 @@ namespace ContactsApp
                 textBox.ReadOnly = false;
             }
         }
-
 
         private void txt_Leave(object sender, EventArgs e)
         {
@@ -528,24 +534,11 @@ namespace ContactsApp
             {
                 try
                 {
-                    string format;
                     using (var ms = new MemoryStream())
                     {
                         using (var bitmap = new Bitmap(dialog.FileName))
                         {
-                            format = dialog.FileName.Substring(dialog.FileName.LastIndexOf(".") + 1);
-
-                            if (format == "bmp")
-                                bitmap.Save(ms, ImageFormat.Bmp);
-                            else if (format == "jpg")
-                                bitmap.Save(ms, ImageFormat.Jpeg);
-                            else if (format == "png")
-                                bitmap.Save(ms, ImageFormat.Png);
-                            else if (format == "gif")
-                                bitmap.Save(ms, ImageFormat.Gif);
-                            else if (format == "tiff")
-                                bitmap.Save(ms, ImageFormat.Tiff);
-
+                            bitmap.Save(ms, ImageFormat.Jpeg);
                             SelectedContact.ImageBase64 = Convert.ToBase64String(ms.GetBuffer());
                             isEdited = true;
                         }
@@ -561,21 +554,12 @@ namespace ContactsApp
                                 "picture-" +
                                 $"{DateTime.Now.Year}{DateTime.Now.Month}" +
                                 $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
-                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}");
-                            if (format == "bmp")
-                                bitmap.Save($"{path}.{format}", ImageFormat.Bmp);
-                            else if (format == "jpg")
-                                bitmap.Save($"{path}.{format}", ImageFormat.Jpeg);
-                            else if (format == "png")
-                                bitmap.Save($"{path}.{format}", ImageFormat.Png);
-                            else if (format == "gif")
-                                bitmap.Save($"{path}.{format}", ImageFormat.Gif);
-                            else if (format == "tiff")
-                                bitmap.Save($"{path}.{format}", ImageFormat.Tiff);
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}.jpg");
+                            bitmap.Save($"{path}", ImageFormat.Jpeg);
                         }
                     }
 
-                    using (var bmpImg = new Bitmap($"{path}.{format}"))
+                    using (var bmpImg = new Bitmap($"{path}"))
                     {
                         using (var resized = new Bitmap(bmpImg, new Size(50, 50)))
                         {
@@ -583,22 +567,13 @@ namespace ContactsApp
                                 "picture-" +
                                 $"{DateTime.Now.Year}{DateTime.Now.Month}" +
                                 $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
-                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}");
-                            if (format == "bmp")
-                                resized.Save($"{path}.{format}", ImageFormat.Bmp);
-                            else if (format == "jpg")
-                                resized.Save($"{path}.{format}", ImageFormat.Jpeg);
-                            else if (format == "png")
-                                resized.Save($"{path}.{format}", ImageFormat.Png);
-                            else if (format == "gif")
-                                resized.Save($"{path}.{format}", ImageFormat.Gif);
-                            else if (format == "tiff")
-                                resized.Save($"{path}.{format}", ImageFormat.Tiff);
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}.jpg");
+                            resized.Save($"{path}", ImageFormat.Jpeg);
                         }
                     }
 
                     var oldImg = pictureBox1.Image;
-                    var bmp = new Bitmap($"{path}.{format}");
+                    var bmp = new Bitmap($"{path}");
 
                     SuspendLayout();
                     pictureBox1.Size = panel1.Size;
@@ -619,12 +594,6 @@ namespace ContactsApp
             }
 
             DialogResult = DialogResult.None;
-        }
-
-        private void btnSent_Click(object sender, EventArgs e)
-        {
-            SentMessages sm = new SentMessages(SelectedContact);
-            var res = sm.ShowDialog();
         }
     }
 }
