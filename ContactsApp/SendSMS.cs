@@ -21,6 +21,7 @@ namespace ContactsApp
 
         public String message { get; set; }
         public String sender { get; set; }
+        public DateTime date { get; set; }
 
 
         public ContactEntry SelectedContact { get; set; }
@@ -208,6 +209,7 @@ namespace ContactsApp
 
             message = txtMessage.Text;
             sender = txtBoxSender.Text;
+            date = DateTime.Now;
 
             var url =
                 "https://api.txtlocal.com/send/?" +
@@ -244,7 +246,7 @@ namespace ContactsApp
             {
                 result = sr.ReadToEnd();
             }
-
+            Console.WriteLine($"Date now: {date}");
             Console.WriteLine($"RESULT: {result}");
             return result;
         }

@@ -158,7 +158,7 @@ namespace ContactsApp
             var result = form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Message msg = new Message(form.sender, form.message);
+                Message msg = new Message(form.sender, form.message, form.date);
                 SelectedContact.SendMessage(msg);
             }
         }
