@@ -1,31 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ContactsApp
 {
     public partial class SendSMS : Form
     {
-        private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
-        private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
-        private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
-
-
         public string Message { get; set; }
         public string Sender { get; set; }
         public DateTime Date { get; set; }
-
-
         public ContactEntry SelectedContact { get; set; }
+
         private const string ApiKey = "uZimEj7Z5nE-TzrBJilwxswnVASyNztawkXQGWyNRw";
+        private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
+        private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
+        private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
 
         public SendSMS(ContactEntry selectedContact)
         {
