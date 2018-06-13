@@ -19,8 +19,8 @@ namespace ContactsApp
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
 
 
-        public String Message { get; set; }
-        public String Sender { get; set; }
+        public string Message { get; set; }
+        public string Sender { get; set; }
         public DateTime Date { get; set; }
 
 
@@ -209,7 +209,6 @@ namespace ContactsApp
 
             Message = txtMessage.Text;
             Sender = txtBoxSender.Text;
-            Date = DateTime.Now;
 
             var url =
                 "https://api.txtlocal.com/send/?" +
@@ -232,6 +231,7 @@ namespace ContactsApp
                 {
                     myWriter.Write(url);
                 }
+                Date = DateTime.Now;
             }
             catch (Exception e)
             {
