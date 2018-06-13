@@ -81,6 +81,26 @@ namespace ContactsApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon contact {
+            get {
+                object obj = ResourceManager.GetObject("contact", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon contacts {
+            get {
+                object obj = ResourceManager.GetObject("contacts", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap export {
@@ -97,6 +117,16 @@ namespace ContactsApp.Properties {
             get {
                 object obj = ResourceManager.GetObject("import", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon message {
+            get {
+                object obj = ResourceManager.GetObject("message", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
