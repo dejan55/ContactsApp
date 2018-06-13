@@ -33,17 +33,19 @@
             this.displayMessage = new System.Windows.Forms.RichTextBox();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBox1
             // 
             this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 26;
-            this.listBox1.Location = new System.Drawing.Point(13, 12);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.listBox1.ItemHeight = 20;
+            this.listBox1.Location = new System.Drawing.Point(10, 10);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(389, 316);
+            this.listBox1.Size = new System.Drawing.Size(293, 244);
             this.listBox1.TabIndex = 0;
             this.listBox1.Click += new System.EventHandler(this.listBox1_Click);
             this.listBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDown);
@@ -52,20 +54,18 @@
             // displayMessage
             // 
             this.displayMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.displayMessage.Location = new System.Drawing.Point(13, 44);
-            this.displayMessage.Margin = new System.Windows.Forms.Padding(4);
+            this.displayMessage.Location = new System.Drawing.Point(10, 36);
             this.displayMessage.Name = "displayMessage";
             this.displayMessage.ReadOnly = true;
-            this.displayMessage.Size = new System.Drawing.Size(391, 284);
+            this.displayMessage.Size = new System.Drawing.Size(294, 232);
             this.displayMessage.TabIndex = 1;
             this.displayMessage.Text = "";
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(13, 13);
-            this.btnBack.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBack.Location = new System.Drawing.Point(10, 11);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(129, 28);
+            this.btnBack.Size = new System.Drawing.Size(97, 23);
             this.btnBack.TabIndex = 2;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -75,10 +75,9 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(150, 13);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDelete.Location = new System.Drawing.Point(112, 11);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(129, 28);
+            this.btnDelete.Size = new System.Drawing.Size(97, 23);
             this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -86,18 +85,53 @@
             this.btnDelete.MouseEnter += new System.EventHandler(this.btn_MouseEnter);
             this.btnDelete.MouseLeave += new System.EventHandler(this.btn_MouseLeave);
             // 
+            // listBox2
+            // 
+            this.listBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 20;
+            this.listBox2.Location = new System.Drawing.Point(12, 10);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(293, 244);
+            this.listBox2.TabIndex = 0;
+            this.listBox2.Click += new System.EventHandler(this.listBox1_Click);
+            this.listBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDown);
+            this.listBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(76, 37);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(160, 22);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "sent to this contact";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(47, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(221, 22);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "You don\'t have messages ";
+            // 
             // SentMessages
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(417, 342);
+            this.ClientSize = new System.Drawing.Size(313, 278);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.displayMessage);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnBack);
+            this.Controls.Add(this.listBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "SentMessages";
             this.ShowInTaskbar = false;
@@ -105,6 +139,7 @@
             this.Text = "Sent messages";
             this.Load += new System.EventHandler(this.SentMessages_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -114,5 +149,8 @@
         private System.Windows.Forms.RichTextBox displayMessage;
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
