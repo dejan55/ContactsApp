@@ -299,24 +299,11 @@ namespace ContactsApp
             {
                 try
                 {
-                    string format;
                     using (var ms = new MemoryStream())
                     {
                         using (var bitmap = new Bitmap(dialog.FileName))
                         {
-                            format = dialog.FileName.Substring(dialog.FileName.LastIndexOf(".") + 1);
-
-                            if (format == "bmp")
-                                bitmap.Save(ms, ImageFormat.Bmp);
-                            else if (format == "jpg")
-                                bitmap.Save(ms, ImageFormat.Jpeg);
-                            else if (format == "png")
-                                bitmap.Save(ms, ImageFormat.Png);
-                            else if (format == "gif")
-                                bitmap.Save(ms, ImageFormat.Gif);
-                            else if (format == "tiff")
-                                bitmap.Save(ms, ImageFormat.Tiff);
-
+                            bitmap.Save(ms, ImageFormat.Jpeg);
                             ImageBase64 = Convert.ToBase64String(ms.GetBuffer());
                         }
                     }
@@ -330,21 +317,12 @@ namespace ContactsApp
                                 "picture-" +
                                 $"{DateTime.Now.Year}{DateTime.Now.Month}" +
                                 $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
-                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}");
-                            if (format == "bmp")
-                                bitmap.Save($"{path}.{format}", ImageFormat.Bmp);
-                            else if (format == "jpg")
-                                bitmap.Save($"{path}.{format}", ImageFormat.Jpeg);
-                            else if (format == "png")
-                                bitmap.Save($"{path}.{format}", ImageFormat.Png);
-                            else if (format == "gif")
-                                bitmap.Save($"{path}.{format}", ImageFormat.Gif);
-                            else if (format == "tiff")
-                                bitmap.Save($"{path}.{format}", ImageFormat.Tiff);
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}.jpg");
+                                bitmap.Save($"{path}", ImageFormat.Jpeg);
                         }
                     }
 
-                    using (var bmpImg = new Bitmap($"{path}.{format}"))
+                    using (var bmpImg = new Bitmap($"{path}"))
                     {
                         using (var resized = new Bitmap(bmpImg, new Size(50, 50)))
                         {
@@ -352,22 +330,13 @@ namespace ContactsApp
                                 "picture-" +
                                 $"{DateTime.Now.Year}{DateTime.Now.Month}" +
                                 $"{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}" +
-                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}");
-                            if (format == "bmp")
-                                resized.Save($"{path}.{format}", ImageFormat.Bmp);
-                            else if (format == "jpg")
-                                resized.Save($"{path}.{format}", ImageFormat.Jpeg);
-                            else if (format == "png")
-                                resized.Save($"{path}.{format}", ImageFormat.Png);
-                            else if (format == "gif")
-                                resized.Save($"{path}.{format}", ImageFormat.Gif);
-                            else if (format == "tiff")
-                                resized.Save($"{path}.{format}", ImageFormat.Tiff);
+                                $"{DateTime.Now.Second}{DateTime.Now.Millisecond}.jpg");
+                                resized.Save($"{path}", ImageFormat.Jpeg);
                         }
                     }
 
                     var oldImg = pictureBox1.Image;
-                    var bmp = new Bitmap($"{path}.{format}");
+                    var bmp = new Bitmap($"{path}");
 
                     SuspendLayout();
                     pictureBox1.Size = panel1.Size;
