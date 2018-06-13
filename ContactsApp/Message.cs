@@ -7,13 +7,13 @@ namespace ContactsApp
     {
         public string Sender { get; set; }
         public string Msg { get; set; }
-        public DateTime date { get; set; }
+        public DateTime Date { get; set; }
 
         public Message(string sender, string msg, DateTime dt)
         {
             this.Sender = sender;
             this.Msg = msg;
-            date = dt;
+            Date = dt;
         }
 
         public override string ToString()
@@ -28,7 +28,7 @@ namespace ContactsApp
 
         public string DateToString()
         {
-            return date.ToString();
+            return Date.ToString();
         }
     }
 }

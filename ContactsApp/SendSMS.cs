@@ -19,9 +19,9 @@ namespace ContactsApp
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
 
 
-        public String message { get; set; }
-        public String sender { get; set; }
-        public DateTime date { get; set; }
+        public String Message { get; set; }
+        public String Sender { get; set; }
+        public DateTime Date { get; set; }
 
 
         public ContactEntry SelectedContact { get; set; }
@@ -207,16 +207,16 @@ namespace ContactsApp
             string result;
             var number = $"00389 {SelectedContact.TelephoneNumber.Substring(1)}";
 
-            message = txtMessage.Text;
-            sender = txtBoxSender.Text;
-            date = DateTime.Now;
+            Message = txtMessage.Text;
+            Sender = txtBoxSender.Text;
+            Date = DateTime.Now;
 
             var url =
                 "https://api.txtlocal.com/send/?" +
                 "apikey=" + ApiKey +
                 "&numbers=" + number +
-                "&message=" + message +
-                "&sender=" + sender;
+                "&message=" + Message +
+                "&sender=" + Sender;
             Console.WriteLine($"URL: {url}");
 
             var objRequest = WebRequest.Create(url) as HttpWebRequest;
@@ -246,7 +246,7 @@ namespace ContactsApp
             {
                 result = sr.ReadToEnd();
             }
-            Console.WriteLine($"Date now: {date}");
+            Console.WriteLine($"Date now: {Date}");
             Console.WriteLine($"RESULT: {result}");
             return result;
         }
