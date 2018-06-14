@@ -6,13 +6,11 @@ namespace ContactsApp
 {
     public partial class SentMessages : Form
     {
-        private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
-        private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
-        private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
-
         public ContactEntry Contact { get; set; }
         private int Selected { get; set; }
 
+        private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
+        private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
 
         public SentMessages(ContactEntry contact)
         {
@@ -26,7 +24,7 @@ namespace ContactsApp
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
             this.Text = $"Messages sent to {Contact}";
-            
+
             label3.Visible = false;
 
             btnBack.BackColor = BlackColor;
@@ -39,7 +37,7 @@ namespace ContactsApp
 
             listBox1.BackColor = BlackColor;
             listBox1.ForeColor = BlueColor;
-            
+
 
             displayMessage.ForeColor = BlueColor;
             displayMessage.BackColor = BlackColor;
@@ -80,7 +78,7 @@ namespace ContactsApp
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception ", e.Message);
+                Console.WriteLine($"Exception {e.Message}");
             }
         }
 
@@ -100,7 +98,7 @@ namespace ContactsApp
                 try
                 {
                     displayMessage.Text = msgs[Selected].MessageToString();
-                    label3.Text = msgs[Selected].DateToString();
+                    label3.Text = $"  Message sent on:\n{msgs[Selected].DateToString()}";
                 }
                 catch (Exception ex)
                 {
@@ -146,6 +144,10 @@ namespace ContactsApp
             listBox1.ClearSelected();
         }
 
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
 
         private void listBox1_MouseMove(object sender, MouseEventArgs e)
         {
@@ -189,6 +191,14 @@ namespace ContactsApp
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private void SentMessages_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult == DialogResult.Cancel)
+                e.Cancel = false;
+            else
+                e.Cancel = true;
         }
     }
 }
