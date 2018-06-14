@@ -66,13 +66,12 @@ namespace ContactsApp
 
             Add_button.BackColor = BlackColor;
             Add_button.ForeColor = BlueColor;
-            Add_button.FlatAppearance.BorderSize = 0;
             Add_button.FlatStyle = FlatStyle.Flat;
 
-            btnCancel.BackColor = BlackColor;
-            btnCancel.ForeColor = BlueColor;
-            btnCancel.FlatAppearance.BorderSize = 0;
-            btnCancel.FlatStyle = FlatStyle.Flat;
+//            btnCancel.BackColor = BlackColor;
+  //          btnCancel.ForeColor = BlueColor;
+    //        btnCancel.FlatAppearance.BorderSize = 0;
+      //      btnCancel.FlatStyle = FlatStyle.Flat;
 
             menuStrip1.BackColor = BlackColor;
             menuStrip1.ForeColor = BlueColor;
@@ -126,104 +125,7 @@ namespace ContactsApp
             Display();
         }
 
-        private void Generate()
-        {
-            var contact = new ContactEntry()
-            {
-                LastName = "Krstev",
-                FirstName = "Kostadin",
-                TelephoneNumber = "072 256 652"
-            };
-
-            char key = contact.FirstName[0];
-
-            if (Contacts.ContainsKey(key))
-            {
-                Contacts[key].Add(contact);
-            }
-            else
-            {
-                Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                Contacts[key].Add(contact);
-            }
-
-            contact = new ContactEntry()
-            {
-                LastName = "Krstev",
-                FirstName = "Andrej",
-                TelephoneNumber = "073 354 852"
-            };
-
-            key = contact.FirstName[0];
-
-            if (Contacts.ContainsKey(key))
-            {
-                Contacts[key].Add(contact);
-            }
-            else
-            {
-                Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                Contacts[key].Add(contact);
-            }
-
-            contact = new ContactEntry()
-            {
-                LastName = "Kompirov",
-                FirstName = "Kompir",
-                TelephoneNumber = "072 354 852"
-            };
-
-            key = contact.FirstName[0];
-
-            if (Contacts.ContainsKey(key))
-            {
-                Contacts[key].Add(contact);
-            }
-            else
-            {
-                Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                Contacts[key].Add(contact);
-            }
-
-            contact = new ContactEntry()
-            {
-                LastName = "Kompirov",
-                FirstName = "Balon",
-                TelephoneNumber = "073 654 555"
-            };
-
-            key = contact.FirstName[0];
-
-            if (Contacts.ContainsKey(key))
-            {
-                Contacts[key].Add(contact);
-            }
-            else
-            {
-                Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                Contacts[key].Add(contact);
-            }
-
-            contact = new ContactEntry()
-            {
-                LastName = "Nakov",
-                FirstName = "Jovan",
-                TelephoneNumber = "078 736 391"
-            };
-
-            key = contact.FirstName[0];
-
-            if (Contacts.ContainsKey(key))
-            {
-                Contacts[key].Add(contact);
-            }
-            else
-            {
-                Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                Contacts[key].Add(contact);
-            }
-        }
-
+       
         private void Display()
         {
             listView1.Items.Clear();
