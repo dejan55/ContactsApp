@@ -268,11 +268,6 @@ namespace ContactsApp
             txtSearch.Text = "Search...";
         }
 
-        private void btnQuit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void Add_button_Click(object sender, EventArgs e)
         {
             AddForm f = new AddForm();
