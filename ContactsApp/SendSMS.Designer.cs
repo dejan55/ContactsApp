@@ -40,13 +40,14 @@
             // 
             this.txtMessage.AcceptsReturn = true;
             this.txtMessage.AcceptsTab = true;
-            this.txtMessage.Location = new System.Drawing.Point(12, 34);
+            this.txtMessage.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtMessage.Location = new System.Drawing.Point(12, 46);
             this.txtMessage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtMessage.MaxLength = 765;
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMessage.Size = new System.Drawing.Size(401, 139);
+            this.txtMessage.Size = new System.Drawing.Size(509, 216);
             this.txtMessage.TabIndex = 3;
             this.txtMessage.Text = "Enter your message here...";
             this.txtMessage.Click += new System.EventHandler(this.txtMessage_Click);
@@ -57,10 +58,11 @@
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(12, 198);
+            this.btnSend.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSend.Location = new System.Drawing.Point(12, 275);
             this.btnSend.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(77, 33);
+            this.btnSend.Size = new System.Drawing.Size(104, 40);
             this.btnSend.TabIndex = 0;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
@@ -72,10 +74,11 @@
             // 
             this.btnCancel.CausesValidation = false;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(336, 198);
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnCancel.Location = new System.Drawing.Point(417, 275);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(77, 33);
+            this.btnCancel.Size = new System.Drawing.Size(104, 40);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -85,18 +88,20 @@
             // lblChars
             // 
             this.lblChars.AutoSize = true;
-            this.lblChars.Location = new System.Drawing.Point(195, 177);
+            this.lblChars.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblChars.Location = new System.Drawing.Point(254, 275);
             this.lblChars.Name = "lblChars";
-            this.lblChars.Size = new System.Drawing.Size(16, 17);
+            this.lblChars.Size = new System.Drawing.Size(17, 20);
             this.lblChars.TabIndex = 4;
             this.lblChars.Text = "0";
             // 
             // txtBoxSender
             // 
-            this.txtBoxSender.Location = new System.Drawing.Point(12, 4);
+            this.txtBoxSender.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtBoxSender.Location = new System.Drawing.Point(12, 13);
             this.txtBoxSender.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxSender.Name = "txtBoxSender";
-            this.txtBoxSender.Size = new System.Drawing.Size(401, 22);
+            this.txtBoxSender.Size = new System.Drawing.Size(509, 27);
             this.txtBoxSender.TabIndex = 2;
             this.txtBoxSender.Text = "Enter your name here...";
             this.txtBoxSender.Click += new System.EventHandler(this.txtBoxSender_Click);
@@ -109,7 +114,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(427, 249);
+            this.ClientSize = new System.Drawing.Size(533, 326);
             this.Controls.Add(this.txtBoxSender);
             this.Controls.Add(this.lblChars);
             this.Controls.Add(this.btnCancel);

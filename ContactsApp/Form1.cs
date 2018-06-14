@@ -22,7 +22,6 @@ namespace ContactsApp
         public string FolderPath { get; set; }
 
         private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
-        private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
 
         public Form1()
@@ -70,7 +69,7 @@ namespace ContactsApp
             Add_button.FlatAppearance.BorderSize = 0;
             Add_button.FlatStyle = FlatStyle.Flat;
 
-            btnCancel.BackColor = WhiteColor;
+            btnCancel.BackColor = BlackColor;
             btnCancel.ForeColor = BlueColor;
             btnCancel.FlatAppearance.BorderSize = 0;
             btnCancel.FlatStyle = FlatStyle.Flat;
@@ -330,7 +329,7 @@ namespace ContactsApp
                 return;
             string search = txtSearch.Text.Trim().ToLower();
 
-            if (!search.Equals("") && !search.Equals("search..."))
+            if (!search.Equals("") && !search.Equals("search...") && e.KeyCode != Keys.Escape)
             {
                 listView1.Visible = false;
                 listView2.Visible = btnCancel.Visible = true;
@@ -369,6 +368,11 @@ namespace ContactsApp
             btnCancel.Visible = listView2.Visible = false;
             listView1.Visible = true;
             txtSearch.Text = "Search...";
+        }
+
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void Add_button_Click(object sender, EventArgs e)
