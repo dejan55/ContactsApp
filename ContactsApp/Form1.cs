@@ -68,10 +68,6 @@ namespace ContactsApp
             Add_button.ForeColor = BlueColor;
             Add_button.FlatStyle = FlatStyle.Flat;
 
-//            btnCancel.BackColor = BlackColor;
-  //          btnCancel.ForeColor = BlueColor;
-    //        btnCancel.FlatAppearance.BorderSize = 0;
-      //      btnCancel.FlatStyle = FlatStyle.Flat;
 
             menuStrip1.BackColor = BlackColor;
             menuStrip1.ForeColor = BlueColor;
