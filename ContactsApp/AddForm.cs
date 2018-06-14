@@ -35,11 +35,9 @@ namespace ContactsApp
 
             btnCancel.BackColor = BlackColor;
             btnCancel.FlatStyle = FlatStyle.Flat;
-            btnCancel.FlatAppearance.BorderSize = 0;
 
             btnPick.BackColor = BlackColor;
             btnPick.FlatStyle = FlatStyle.Flat;
-            btnPick.FlatAppearance.BorderSize = 0;
 
             this.BackColor = BlackColor;
             this.ForeColor = BlueColor;
