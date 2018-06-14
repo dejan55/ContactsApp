@@ -23,7 +23,6 @@ namespace ContactsApp
         {
             InitializeComponent();
             SelectedContact = selectedContact;
-            this.Text = $"Send a SMS to {SelectedContact.FirstName}";
         }
 
         private void SendSMS_Load(object sender, EventArgs e)
@@ -43,6 +42,8 @@ namespace ContactsApp
             btnSend.BackColor = BlackColor;
             btnSend.ForeColor = BlueColor;
             btnSend.FlatStyle = FlatStyle.Flat;
+
+            this.Text = $"Send a SMS to {SelectedContact}";
         }
 
         private void btn_MouseEnter(object sender, EventArgs e)
