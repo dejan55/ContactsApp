@@ -24,6 +24,9 @@ namespace ContactsApp
         private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
 
+        private List<string> About { get; set; }
+        private string title { get; set; }
+
         public Form1()
         {
             InitializeComponent();
@@ -71,6 +74,12 @@ namespace ContactsApp
 
             menuStrip1.BackColor = BlackColor;
             menuStrip1.ForeColor = BlueColor;
+
+            About = new List<string>();
+            title = "About the ContactsApp team";
+            About.Add("Faculty of computer science and engineering");
+            About.Add("© 2018 Jovan Nakov 161195 and Kostadin Krstev 161169");
+            About.Add("GitHub repository: https://github.com/krstevkoki/ContactsApp/");
 
             foreach (ToolStripItem item in menuStrip1.Items)
             {
@@ -757,6 +766,17 @@ namespace ContactsApp
             }
 
             return Encoding.UTF8.GetString(output.ToArray());
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string text = "";
+            foreach(string s in About)
+            {
+                text += s + "\n\n";
+            }
+
+            MessageBox.Show(text, title);
         }
     }
 }
