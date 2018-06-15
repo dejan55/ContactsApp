@@ -77,9 +77,10 @@ namespace ContactsApp
 
             About = new List<string>();
             Title = "About the ContactsApp team";
-            About.Add("Faculty of computer science and engineering");
-            About.Add("© 2018 Jovan Nakov 161195 and Kostadin Krstev 161169");
+            About.Add("ContactsApp Project");
             About.Add("GitHub repository: https://github.com/krstevkoki/ContactsApp/");
+            About.Add("Faculty of computer science and engineering");
+            About.Add("© 2018 Jovan Nakov 161195 & Kostadin Krstev 161169");
 
             foreach (ToolStripItem item in menuStrip1.Items)
             {
