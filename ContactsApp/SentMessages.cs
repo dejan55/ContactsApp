@@ -70,6 +70,7 @@ namespace ContactsApp
                 {
                     label1.Visible = false;
                     label2.Visible = false;
+                    listBox1.Items.Clear();
                     foreach (Message m in Contact.Messages)
                     {
                         listBox1.Items.Add(m.ToString());
@@ -142,6 +143,7 @@ namespace ContactsApp
             label3.Visible = false;
             listBox1.Visible = true;
             listBox1.ClearSelected();
+            Display();
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
