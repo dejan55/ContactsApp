@@ -130,7 +130,7 @@ namespace ContactsApp
             Display();
         }
 
-       
+
         private void Display()
         {
             listView1.Items.Clear();
@@ -499,12 +499,8 @@ namespace ContactsApp
             }
 
             Console.WriteLine($"Exporting completed ({counter} contacts exported)");
-            if (counter != 0)
-                MessageBox.Show($"{counter} contacts have been exported to [{vcardPath}]",
-                    "Exported successfully", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            else
-                MessageBox.Show("No contacts were exported",
-                    "Export was not performed", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show($"{counter} contacts have been exported to [{vcardPath}]",
+                "Exported successfully", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
@@ -660,6 +656,17 @@ namespace ContactsApp
             }
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string text = "";
+            foreach (string s in About)
+            {
+                text += s + "\n\n";
+            }
+
+            MessageBox.Show(text, Title);
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -768,17 +775,6 @@ namespace ContactsApp
             }
 
             return Encoding.UTF8.GetString(output.ToArray());
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string text = "";
-            foreach(string s in About)
-            {
-                text += s + "\n\n";
-            }
-
-            MessageBox.Show(text, Title);
         }
     }
 }
