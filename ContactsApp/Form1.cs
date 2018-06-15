@@ -156,7 +156,7 @@ namespace ContactsApp
                         group = listView1.Groups[0];
 
                     string text;
-                    if (char.IsLetter(contact.Key))
+                    if (char.IsLetter(contact.Key) || Regex.IsMatch(contact.Key.ToString(), @"[^A-Za-z#]"))
                         text = $"{contactEntry}";
                     else
                         text = $"{contactEntry.TelephoneNumber}";
@@ -296,6 +296,9 @@ namespace ContactsApp
                 };
 
                 char key = char.ToUpper(contact.FirstName[0]);
+
+                if (!Regex.IsMatch(key.ToString(), @"[A-Za-z]"))
+                    key = '~';
 
                 if (IsDuplicate(contact.TelephoneNumber))
                     return;
@@ -611,26 +614,36 @@ namespace ContactsApp
 
                 char key;
                 if (!string.IsNullOrEmpty(contact.FirstName))
-                    key = char.ToUpper(contact.FirstName[0]);
+                {
+                    if (Regex.IsMatch(contact.FirstName[0].ToString(), @"[A-Za-z]"))
+                        key = char.ToUpper(contact.FirstName[0]);
+                    else
+                        key = '~';
+                }
                 else
                 {
                     if (!string.IsNullOrEmpty(contact.LastName))
-                        key = char.ToUpper(contact.LastName[0]);
+                    {
+                        if (Regex.IsMatch(contact.LastName[0].ToString(), @"[A-Za-z]"))
+                            key = char.ToUpper(contact.LastName[0]);
+                        else
+                            key = '~';
+                    }
                     else
                         key = '#';
                 }
 
-                if (!char.IsLetter(key) && key != '#')
+                if (!char.IsLetter(key) && key != '#' && key != '~')
                     key = '#';
 
-                if (Contacts.ContainsKey(key))
+                if (Contacts.ContainsKey(char.ToUpper(key)))
                 {
-                    Contacts[key].Add(contact);
+                    Contacts[char.ToUpper(key)].Add(contact);
                 }
                 else
                 {
-                    Contacts[key] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
-                    Contacts[key].Add(contact);
+                    Contacts[char.ToUpper(key)] = new HashSet<ContactEntry>(ContactEntry.TelephoneComparer);
+                    Contacts[char.ToUpper(key)].Add(contact);
                 }
 
                 Console.WriteLine($"Added [{contact}] to the contacts");
