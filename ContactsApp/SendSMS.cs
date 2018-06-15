@@ -201,7 +201,7 @@ namespace ContactsApp
             var number = $"00389 {SelectedContact.TelephoneNumber.Substring(1)}";
 
             Message = txtMessage.Text;
-            Sender = txtBoxSender.Text;
+            Sender = txtBoxSender.Text.Trim();
 
             var url =
                 "https://api.txtlocal.com/send/?" +
