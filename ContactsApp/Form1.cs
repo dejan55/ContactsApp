@@ -25,7 +25,7 @@ namespace ContactsApp
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
 
         private List<string> About { get; set; }
-        private string title { get; set; }
+        private string Title { get; set; }
 
         public Form1()
         {
@@ -76,7 +76,7 @@ namespace ContactsApp
             menuStrip1.ForeColor = BlueColor;
 
             About = new List<string>();
-            title = "About the ContactsApp team";
+            Title = "About the ContactsApp team";
             About.Add("Faculty of computer science and engineering");
             About.Add("© 2018 Jovan Nakov 161195 and Kostadin Krstev 161169");
             About.Add("GitHub repository: https://github.com/krstevkoki/ContactsApp/");
@@ -177,6 +177,7 @@ namespace ContactsApp
                 listView1.Visible = listView2.Visible = false;
                 txtSearch.ReadOnly = true;
                 removeAllToolStripMenuItem.Enabled = false;
+                exportToolStripMenuItem.Enabled = false;
             }
             else
             {
@@ -185,6 +186,7 @@ namespace ContactsApp
                 listView2.Visible = false;
                 txtSearch.ReadOnly = false;
                 removeAllToolStripMenuItem.Enabled = true;
+                exportToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -776,7 +778,7 @@ namespace ContactsApp
                 text += s + "\n\n";
             }
 
-            MessageBox.Show(text, title);
+            MessageBox.Show(text, Title);
         }
     }
 }
