@@ -3,8 +3,8 @@
 </p>
 
 <h1 align="center">ContactsApp</h1>
-<p align="center">Модерна апликација за менаџирање на контакти и испраќање на <b>*бесплатни</b> SMS пораки</p>
-<p align="center">Modern application for managing contacts and sending <b>*free</b> SMS</p>
+<p align="center">Модерна апликација за менаџирање на контакти и испраќање на <b>бесплатни<sup>1</sup></b> SMS пораки</p>
+<p align="center">Modern application for managing contacts and sending <b>free<sup>1</sup></b> SMS</p>
 
 <div align="center">
     <h3>
@@ -304,7 +304,7 @@ using (var sr = new StreamReader(objResponse.GetResponseStream()))
 1. [Костадин Крстев](https://github.com/krstevkoki) 161 169
 2. [Јован Наков](https://github.com/jovannakov) 161 195
 
-<p><i>*Бесплатните SMS пораки се лимитирани на приближно 20 од страна на веб сервисот за праќање на истите</i></p>
+<p><i><sup>1</sup>Бесплатните SMS пораки се лимитирани на приближно 20 од страна на веб сервисот за праќање на истите</i></p>
 
 ---
 ---
@@ -592,4 +592,4 @@ Within our project, we used one third-party library (**MixERP.Net.VCards** as a 
 1. [Kostadin Krstev](https://github.com/krstevkoki) 161 169
 2. [Jovan Nakov](https://github.com/jovannakov) 161 195
 
-<p><i>*Free SMS is limited to approximately 20 by the web service used for sending them<i></p>
+<p><i><sup>1</sup>Free SMS is limited to approximately 20 by the web service used for sending them<i></p>
