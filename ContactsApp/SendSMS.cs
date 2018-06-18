@@ -14,7 +14,7 @@ namespace ContactsApp
         public DateTime Date { get; set; }
         public ContactEntry SelectedContact { get; set; }
 
-        private const string ApiKey = "uZimEj7Z5nE-TzrBJilwxswnVASyNztawkXQGWyNRw";
+        private const string ApiKey = "v7hecZRWp2g-Cj87Qnt13viumKVCRBKZpYedgZweB9";
         private static readonly Color BlueColor = Color.FromArgb(27, 93, 198);
         private static readonly Color WhiteColor = Color.FromArgb(255, 255, 255);
         private static readonly Color BlackColor = Color.FromArgb(35, 35, 35);
